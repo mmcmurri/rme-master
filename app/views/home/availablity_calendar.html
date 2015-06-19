@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<!-- This site was created in Webflow. http://www.webflow.com-->
+<!-- Last Published: Wed Jun 17 2015 12:59:19 GMT+0000 (UTC) -->
+<html data-wf-site="554eaa03e47085a40aa28e10" data-wf-page="555217ab43c8fafa28fd4700">
+<head>
+  <meta charset="utf-8">
+  <title>Availablity Calendar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="generator" content="Webflow">
+  <link rel="stylesheet" type="text/css" href="/assets/normalize.css">
+  <link rel="stylesheet" type="text/css" href="/assets/webflow.css">
+  <link rel="stylesheet" type="text/css" href="/assets/roofingmadeeasy.webflow.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+  <script>
+    WebFont.load({
+      google: {
+        families: ["PT Sans:400,400italic,700,700italic","Ubuntu:300,300italic,400,400italic,500,500italic,700,700italic","Roboto:300,regular,500","Roboto Condensed:300,regular,700","Roboto Slab:300,regular,700","Arbutus Slab:regular","Ubuntu Mono:regular,italic,700,700italic","Ubuntu Condensed:regular:latin-ext,latin","PT Sans Caption:regular,700"]
+      }
+    });
+  </script>
+  <script type="text/javascript" src="assets/modernizr.js"></script>
+  <link rel="shortcut icon" type="image/x-icon" href="/assets/New icon.ico">
+  <link rel="apple-touch-icon" href="/assets/metric-webclip.png">
+</head>
+<body>
+  <div class="w-nav navigation" data-collapse="medium" data-animation="default" data-duration="400" data-contain="1">
+    <div class="w-container navigation-container">
+      <div class="w-nav navbar" data-collapse="medium" data-animation="default" data-duration="400" data-contain="1" data-easing="linear">
+        <div class="w-clearfix homepage-logo">
+          <div class="logo">Roofing Made Easy.</div><img class="w-hidden-small w-hidden-tiny navlogo" src="/assets/Logo.png" width="85" height="75">
+        </div>
+        <div class="w-container navbar">
+          <nav class="w-nav-menu w-clearfix dropmenu" role="navigation"><a class="w-nav-link nav-link businesses drop" href="login_portal.html">Log In</a><a class="w-nav-link nav-link businesses drop" href="business.html">Business</a><a class="w-nav-link nav-link homeowner drop" href="our_service.html">Homeowner</a><a class="w-nav-link nav-link businesses drop" href="index.html">Home</a>
+          </nav>
+          <div class="w-nav-button">
+            <div class="w-icon-nav-menu hamburger"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="w-section section calendar">
+    <div class="w-container">
+      <h4 class="infohead">Things to note:</h4>
+      <ul class="detailslist">
+        <li>Select a date on the calendar by touching the date</li>
+        <li>Select a job from the “Bookings” list to view details</li>
+        <li>Select “Add Job” to create a booking</li>
+        <li>Select “Revise Job” to &nbsp;edit a booking</li>
+        <li>Ensure all mandatory information is complete</li>
+        <li>JobID and Source will be auto-populated by our system</li>
+      </ul>
+    </div>
+  </div>
+  <div class="w-section section availabilitycalendar">
+    <div class="w-container">
+      <h1>Manage Calendar</h1>
+    </div>
+    <div class="w-container">
+      <div class="w-row availabilitycalendar">
+        <div class="w-col w-col-9"><img class="livecalendar" src="/assets/calendarAvailablility.png">
+        </div>
+        <div class="w-col w-col-3 jobslist">
+          <h3 class="jobshead">Bookings: &lt;Date&gt;</h3>
+          <ul class="w-list-unstyled jobs">
+            <li class="job">Job# 0001 – 4 People</li>
+            <li class="job">Job #0002 – 2 People</li>
+            <li class="job">Job #0003 – 2 People</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="w-container addjob">
+      <div class="w-row">
+        <div class="w-col w-col-6 jobsbutton"><a class="button jobsbutton addbooking" href="#">Add Booking</a>
+        </div>
+        <div class="w-col w-col-6"><a class="button editbooking" href="#">Edit Booking</a>
+        </div>
+      </div>
+    </div>
+    <div class="w-container jobcontainer">
+      <div class="w-row jobrow">
+        <div class="w-col w-col-4 jobcolumn">
+          <div class="w-form jobdetails">
+            <form class="jobdetails info" id="email-form" name="email-form" data-name="Email Form">
+              <label for="name">JobID:</label>
+              <input class="w-input" id="name" type="text" placeholder="Enter your name" name="name" data-name="Name">
+              <label for="name-4">Date:</label>
+              <input class="w-input" id="name-4" type="text" placeholder="Enter your name" name="name-4" data-name="Name 4">
+              <label for="email">Team&nbsp;Size:</label>
+              <input class="w-input" id="email" type="email" placeholder="Enter your email address" name="email" data-name="Email" required="required">
+            </form>
+            <div class="w-form-done">
+              <p>Thank you! Your submission has been received!</p>
+            </div>
+            <div class="w-form-fail">
+              <p>Oops! Something went wrong while submitting the form</p>
+            </div>
+          </div>
+        </div>
+        <div class="w-col w-col-4 jobcolumn">
+          <div class="w-form jobdetails">
+            <form id="email-form-2" name="email-form-2" data-name="Email Form 2">
+              <label for="name-2">Address:</label>
+              <input class="w-input" id="name-2" type="text" placeholder="Enter your name" name="name" data-name="Name 2">
+              <label for="email-2">City:</label>
+              <input class="w-input" id="email-2" type="email" placeholder="Enter your email address" name="email" data-name="Email 2" required="required">
+              <label for="email-2">Country:</label>
+              <input class="w-input" id="email-2" type="email" placeholder="Enter your email address" name="email" data-name="Email 2" required="required">
+            </form>
+            <div class="w-form-done">
+              <p>Thank you! Your submission has been received!</p>
+            </div>
+            <div class="w-form-fail">
+              <p>Oops! Something went wrong while submitting the form</p>
+            </div>
+          </div>
+        </div>
+        <div class="w-col w-col-4 jobcolumn">
+          <div class="w-form jobdetails form">
+            <form id="email-form-3" name="email-form-3" data-name="Email Form 3">
+              <label for="name-3">Customer Name:</label>
+              <input class="w-input" id="name-3" type="text" placeholder="Enter your name" name="name" data-name="Name 3">
+              <label for="email-3">Phone:</label>
+              <input class="w-input" id="email-3" type="email" placeholder="Enter your email address" name="email" data-name="Email 3" required="required">
+              <label for="Source">Source:</label>
+              <input class="w-input" id="Source" type="email" placeholder="Enter your email address" name="Source" data-name="Source" required="required">
+            </form>
+            <div class="w-form-done">
+              <p>Thank you! Your submission has been received!</p>
+            </div>
+            <div class="w-form-fail">
+              <p>Oops! Something went wrong while submitting the form</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="w-section section footer">
+    <div class="w-container">
+      <div class="w-row">
+        <div class="w-col w-col-6">
+          <div class="logo footerlogo">Roofing Made Easy.</div>
+          <div class="findus">Enter your postal/zip code and we will be in your area within 30 days.</div>
+          <div class="w-form newsletter-form">
+            <form class="w-clearfix" id="wf-form-newsletter" name="wf-form-newsletter" data-name="Newsletter">
+              <input class="w-input newsletter-field" id="postal-zip-code-2" type="text" placeholder="Enter postal/zip code" name="postal-zip-code-2" data-name="Postal Zip Code 2" required="required">
+              <input class="w-button newsletter-button" type="submit" value="Submit" data-wait="Sent" wait="Sent">
+            </form>
+            <div class="w-form-done success-message">
+              <p>Thank you! You’ll receive an email shortly.</p>
+            </div>
+            <div class="w-form-fail">
+              <p>Oops! Something went wrong while submitting the form :(</p>
+            </div>
+          </div>
+          <div class="social-icon-group">
+            <a class="w-inline-block social-icon" href="#"><img src="/assets/facebook-icon.svg">
+            </a>
+            <a class="w-inline-block social-icon" href="#"><img src="/assets/twitter-icon.svg">
+            </a>
+            <a class="w-inline-block social-icon" href="#"><img src="/assets/linkdin-icon-white.svg">
+            </a>
+            <a class="w-inline-block social-icon" href="#"><img src="/assets/email-icon-white.svg">
+            </a>
+          </div>
+        </div>
+        <div class="w-col w-col-2">
+          <h4 class="footer-title">Homeowner</h4><a class="page-link in-footer" href="our_service.html">Our Service</a><a class="page-link in-footer" href="customer_information.html">Get a Quote</a><a class="page-link in-footer" href="file_complaint.html">File Complaint</a>
+        </div>
+        <div class="w-col w-col-2">
+          <h4 class="footer-title">Business</h4><a class="page-link in-footer" href="business.html">Information</a><a class="page-link in-footer" href="register.html">Register</a><a class="page-link in-footer" href="availablity_calendar.html">Availability</a><a class="page-link in-footer" href="forms_submissions_home.html">Forms&nbsp;</a>
+        </div>
+        <div class="w-col w-col-2">
+          <h4 class="footer-title">Contact us</h4><a class="page-link in-footer" href="contact_us.html">Get In Touch</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script type="text/javascript" src="assets/webflow.js"></script>
+  <!--[if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif]-->
+</body>
+</html>
