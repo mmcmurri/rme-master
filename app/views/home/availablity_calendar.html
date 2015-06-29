@@ -3,16 +3,10 @@
 <head>
   <meta charset="utf-8">
   <title>Availablity Calendar</title>
-  <link rel="stylesheet" type="text/css" href="../../css/normalize.css">
-  <link rel="stylesheet" type="text/css" href="../../css/webflow.css">
-  <link rel="stylesheet" type="text/css" href="../../css/roofingmadeeasy.webflow.css">
-  <!-- --> 
-    <link rel="stylesheet" href="../lib/cupertino/jquery-ui.min.css">
-    <link href="./fullcalendar.css" rel="stylesheet">
-    <link href="./fullcalendar.print.css" rel="stylesheet" media="print">
-    <script src="../lib/moment.min.js"></script>
-    <script src="../lib/jquery.min.js"></script>
-    <script src="./fullcalendar.min.js"></script>
+  
+    <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
+    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+    
     <script> 
     
         var jobIDNumber = 1; 
@@ -307,4 +301,4 @@
   <!--[if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif]-->
    
 </body>
-</html>
+</html>    
