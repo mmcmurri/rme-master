@@ -1,36 +1,172 @@
 <!DOCTYPE html>
-<!-- This site was created in Webflow. http://www.webflow.com-->
-<!-- Last Published: Wed Jun 17 2015 12:59:19 GMT+0000 (UTC) -->
-<html data-wf-site="554eaa03e47085a40aa28e10" data-wf-page="555217ab43c8fafa28fd4700">
+<html>
 <head>
   <meta charset="utf-8">
   <title>Availablity Calendar</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="generator" content="Webflow">
-  <link rel="stylesheet" type="text/css" href="/assets/normalize.css">
-  <link rel="stylesheet" type="text/css" href="/assets/webflow.css">
-  <link rel="stylesheet" type="text/css" href="/assets/roofingmadeeasy.webflow.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
-  <script>
-    WebFont.load({
-      google: {
-        families: ["PT Sans:400,400italic,700,700italic","Ubuntu:300,300italic,400,400italic,500,500italic,700,700italic","Roboto:300,regular,500","Roboto Condensed:300,regular,700","Roboto Slab:300,regular,700","Arbutus Slab:regular","Ubuntu Mono:regular,italic,700,700italic","Ubuntu Condensed:regular:latin-ext,latin","PT Sans Caption:regular,700"]
-      }
-    });
-  </script>
-  <script type="text/javascript" src="assets/modernizr.js"></script>
-  <link rel="shortcut icon" type="image/x-icon" href="/assets/New icon.ico">
-  <link rel="apple-touch-icon" href="/assets/metric-webclip.png">
+  <link rel="stylesheet" type="text/css" href="../../css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="../../css/webflow.css">
+  <link rel="stylesheet" type="text/css" href="../../css/roofingmadeeasy.webflow.css">
+  <!-- --> 
+    <link rel="stylesheet" href="../lib/cupertino/jquery-ui.min.css">
+    <link href="./fullcalendar.css" rel="stylesheet">
+    <link href="./fullcalendar.print.css" rel="stylesheet" media="print">
+    <script src="../lib/moment.min.js"></script>
+    <script src="../lib/jquery.min.js"></script>
+    <script src="./fullcalendar.min.js"></script>
+    <script> 
+    
+        var jobIDNumber = 1; 
+        var eventCollects    = new Array();
+                      
+        function validateInputData(){
+            
+                if($('#jobID').val() == "" ) {
+                        prompt("JobID wasn't created... You can create the NewJob by clicking the Add Booking.");
+                        return false;
+                    }
+                if($('#startDate').val() == ""){
+                        prompt("startDate wasn't created...");
+                        return false;
+                    } 
+                if($('#teamSize').val() == ""){
+                        prompt("teamSize wasn't created...");
+                        return false;
+                    }  
+                if($('#address').val() == ""){
+                        prompt("address wasn't created...");
+                        return false;
+                    }  
+                if($('#city').val() == "" ){
+                        prompt("city wasn't created...");
+                        return false;
+                    }  
+                if($('#country').val() == ""){
+                        prompt("country wasn't created...");
+                        return false;
+                    }  
+                if($('#customerName').val() == ""){
+                        prompt("customerName wasn't created...");
+                        return false;
+                    }  
+                if($('#phone').val() == ""){                                                                               
+                        prompt("phone wasn't created...");
+                        return false;
+                    }  
+                if($('#source').val() == ""){
+                        prompt("SourceData wasn't referenced...");
+                        return false;
+                    }  
+                return true;
+            };     
+                        
+        function set_associated_data(){    
+            
+                alert("New JobID will be created automatically.");    
+                                
+                document.getElementById("jobID").value = jobIDNumber;    
+                document.getElementById("startDate").value = "";
+                document.getElementById("teamSize").value = "";
+                document.getElementById("address").value = "";
+                document.getElementById("city").value = "";
+                document.getElementById("country").value = "";
+                document.getElementById("customerName").value = "";
+                document.getElementById("phone").value = "";
+        };            
+        
+        $(document).ready(function(){    
+            
+            $('#calendar').fullCalendar({     
+                
+                theme: true,
+                editable: true,    
+                selectable: true,
+                selectHelper: true,     
+                editable: true,
+                
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                    },
+                <!-- --> 
+                events: eventCollects,
+                
+               
+
+                dayClick: function(date, jsEvent, view) {
+
+                    document.getElementById("startDate").value = date.format();
+
+                }
+            });
+                
+            $('#savingCommand').click(function(){  
+                
+                    if(validateInputData()){
+                        
+                        var job_id = $('#jobID').val();    
+                        var team_size = $('#teamSize').val();
+                        
+                        $("ul").append("<li>Job" + job_id +" - " + team_size + "People" + "<a href='javascript:void(0);' class='remove'>               Remove</a></li>"); 
+                        $("ul li").addClass('job-log');
+                        
+                        jobIDNumber++; 
+                        
+                        var newEvent = new Object();
+                        newEvent.title = $('#customerName').val();                                                     
+                        newEvent.start = $('#startDate').val();
+                        newEvent.allDay = false;
+                        
+                        $('#calendar').fullCalendar( 'renderEvent', newEvent );  
+                    }
+                    
+                    var sepEvent = [$('#customerName').val(), $('#startDate').val()];
+                    
+                    
+
+                    
+                    
+            });    
+                
+            $(document).on("click", "a.remove" , function() {
+                
+                    $(this).parent().remove();
+                    
+            });                   
+              
+        });                           
+         </script>  
+    <style>
+
+            body {
+                margin: 40px 10px;
+                padding: 0;
+                font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+                font-size: 14px;
+            }
+
+            #calendar {
+                max-width: 900px;
+                margin: 0 auto;
+            }
+            
+            .job-log {
+                color: red;
+            }
+
+    </style>
+  
 </head>
 <body>
+
   <div class="w-nav navigation" data-collapse="medium" data-animation="default" data-duration="400" data-contain="1">
     <div class="w-container navigation-container">
       <div class="w-nav navbar" data-collapse="medium" data-animation="default" data-duration="400" data-contain="1" data-easing="linear">
         <div class="w-clearfix homepage-logo">
-          <div class="logo">Roofing Made Easy.</div><img class="w-hidden-small w-hidden-tiny navlogo" src="/assets/Logo.png" width="85" height="75">
+          <div class="logo">Roofing Made Easy.</div><img class="w-hidden-small w-hidden-tiny navlogo" src="../../images/Logo.png" width="85" height="75">
         </div>
         <div class="w-container navbar">
-          <nav class="w-nav-menu w-clearfix dropmenu" role="navigation"><a class="w-nav-link nav-link businesses drop" href="login_portal.html">Log In</a><a class="w-nav-link nav-link businesses drop" href="business.html">Business</a><a class="w-nav-link nav-link homeowner drop" href="our_service.html">Homeowner</a><a class="w-nav-link nav-link businesses drop" href="index.html">Home</a>
+          <nav class="w-nav-menu w-clearfix dropmenu" role="navigation"><a class="w-nav-link nav-link businesses drop" href="../../business-portal/log-in/login-portal.html">Log In</a><a class="w-nav-link nav-link businesses drop" href="../../roofing-made-easy/business.html">Business</a><a class="w-nav-link nav-link homeowner drop" href="../../homeowners-home/our-service.html">Homeowner</a><a class="w-nav-link nav-link businesses drop" href="../../index.html">Home</a>
           </nav>
           <div class="w-nav-button">
             <div class="w-icon-nav-menu hamburger"></div>
@@ -38,43 +174,33 @@
         </div>
       </div>
     </div>
+  </div> 
+  <div class="w-section section calendar">  
   </div>
-  <div class="w-section section calendar">
-    <div class="w-container">
-      <h4 class="infohead">Things to note:</h4>
-      <ul class="detailslist">
-        <li>Select a date on the calendar by touching the date</li>
-        <li>Select a job from the “Bookings” list to view details</li>
-        <li>Select “Add Job” to create a booking</li>
-        <li>Select “Revise Job” to &nbsp;edit a booking</li>
-        <li>Ensure all mandatory information is complete</li>
-        <li>JobID and Source will be auto-populated by our system</li>
-      </ul>
-    </div>
-  </div>
-  <div class="w-section section availabilitycalendar">
-    <div class="w-container">
-      <h1>Manage Calendar</h1>
-    </div>
+  
     <div class="w-container">
       <div class="w-row availabilitycalendar">
-        <div class="w-col w-col-9"><img class="livecalendar" src="/assets/calendarAvailablility.png">
+        <div class="w-col w-col-9" >       
+           <div id='calendar'></div>
         </div>
         <div class="w-col w-col-3 jobslist">
           <h3 class="jobshead">Bookings: &lt;Date&gt;</h3>
           <ul class="w-list-unstyled jobs">
-            <li class="job">Job# 0001 – 4 People</li>
+            <!--<li class="job">Job# 0001 – 4 People</li>
             <li class="job">Job #0002 – 2 People</li>
             <li class="job">Job #0003 – 2 People</li>
-          </ul>
+          </ul>-->
+          
         </div>
       </div>
     </div>
     <div class="w-container addjob">
       <div class="w-row">
-        <div class="w-col w-col-6 jobsbutton"><a class="button jobsbutton addbooking" href="#">Add Booking</a>
+        <div class="w-col w-col-4 jobsbutton"><a class="button jobsbutton addbooking" id="bookingCommand" onclick="set_associated_data()" >Add Booking</a>
         </div>
-        <div class="w-col w-col-6"><a class="button editbooking" href="#">Edit Booking</a>
+        <div class="w-col w-col-4"><a class="button editbooking"  >Edit Booking</a>
+        </div>
+        <div class="w-col w-col-4 savebutton"><a class="button savebutton saving" id="savingCommand" >Save Job</a>
         </div>
       </div>
     </div>
@@ -84,11 +210,11 @@
           <div class="w-form jobdetails">
             <form class="jobdetails info" id="email-form" name="email-form" data-name="Email Form">
               <label for="name">JobID:</label>
-              <input class="w-input" id="name" type="text" placeholder="Enter your name" name="name" data-name="Name">
-              <label for="name-4">Date:</label>
-              <input class="w-input" id="name-4" type="text" placeholder="Enter your name" name="name-4" data-name="Name 4">
+              <input class="w-input" id="jobID" type="text" placeholder="Enter your name" name="name" data-name="Name" required>
+              <label for="name-4">Start Date:</label>
+              <input class="w-input" id="startDate" type="text" placeholder="Enter your name" name="name-4" data-name="Name 4" required>
               <label for="email">Team&nbsp;Size:</label>
-              <input class="w-input" id="email" type="email" placeholder="Enter your email address" name="email" data-name="Email" required="required">
+              <input class="w-input" id="teamSize" type="email" placeholder="Enter your email address" name="email" data-name="Email" required>
             </form>
             <div class="w-form-done">
               <p>Thank you! Your submission has been received!</p>
@@ -102,11 +228,11 @@
           <div class="w-form jobdetails">
             <form id="email-form-2" name="email-form-2" data-name="Email Form 2">
               <label for="name-2">Address:</label>
-              <input class="w-input" id="name-2" type="text" placeholder="Enter your name" name="name" data-name="Name 2">
+              <input class="w-input" id="address" type="text" placeholder="Enter your name" name="name" data-name="Name 2">
               <label for="email-2">City:</label>
-              <input class="w-input" id="email-2" type="email" placeholder="Enter your email address" name="email" data-name="Email 2" required="required">
+              <input class="w-input" id="city" type="email" placeholder="Enter your email address" name="email" data-name="Email 2" required="required">
               <label for="email-2">Country:</label>
-              <input class="w-input" id="email-2" type="email" placeholder="Enter your email address" name="email" data-name="Email 2" required="required">
+              <input class="w-input" id="country" type="email" placeholder="Enter your email address" name="email" data-name="Email 2" required="required">
             </form>
             <div class="w-form-done">
               <p>Thank you! Your submission has been received!</p>
@@ -120,11 +246,11 @@
           <div class="w-form jobdetails form">
             <form id="email-form-3" name="email-form-3" data-name="Email Form 3">
               <label for="name-3">Customer Name:</label>
-              <input class="w-input" id="name-3" type="text" placeholder="Enter your name" name="name" data-name="Name 3">
+              <input class="w-input" id="customerName" type="text" placeholder="Enter your name" name="name" data-name="Name 3">
               <label for="email-3">Phone:</label>
-              <input class="w-input" id="email-3" type="email" placeholder="Enter your email address" name="email" data-name="Email 3" required="required">
+              <input class="w-input" id="phone" type="email" placeholder="Enter your email address" name="email" data-name="Email 3" required="required">
               <label for="Source">Source:</label>
-              <input class="w-input" id="Source" type="email" placeholder="Enter your email address" name="Source" data-name="Source" required="required">
+              <input class="w-input" id="source" type="email" placeholder="Enter your email address" name="Source" data-name="Source" required="required">
             </form>
             <div class="w-form-done">
               <p>Thank you! Your submission has been received!</p>
@@ -156,30 +282,29 @@
             </div>
           </div>
           <div class="social-icon-group">
-            <a class="w-inline-block social-icon" href="#"><img src="/assets/facebook-icon.svg">
+            <a class="w-inline-block social-icon" href="#"><img src="../../images/facebook-icon.svg">
             </a>
-            <a class="w-inline-block social-icon" href="#"><img src="/assets/twitter-icon.svg">
+            <a class="w-inline-block social-icon" href="#"><img src="../../images/twitter-icon.svg">
             </a>
-            <a class="w-inline-block social-icon" href="#"><img src="/assets/linkdin-icon-white.svg">
+            <a class="w-inline-block social-icon" href="#"><img src="../../images/linkdin-icon-white.svg">
             </a>
-            <a class="w-inline-block social-icon" href="#"><img src="/assets/email-icon-white.svg">
+            <a class="w-inline-block social-icon" href="#"><img src="../../images/email-icon-white.svg">
             </a>
           </div>
         </div>
         <div class="w-col w-col-2">
-          <h4 class="footer-title">Homeowner</h4><a class="page-link in-footer" href="our_service.html">Our Service</a><a class="page-link in-footer" href="customer_information.html">Get a Quote</a><a class="page-link in-footer" href="file_complaint.html">File Complaint</a>
+          <h4 class="footer-title">Homeowner</h4><a class="page-link in-footer" href="../../homeowners-home/our-service.html">Our Service</a><a class="page-link in-footer" href="../../generate-quote/customer-information.html">Get a Quote</a><a class="page-link in-footer" href="../../contact/file-complaint.html">File Complaint</a>
         </div>
         <div class="w-col w-col-2">
-          <h4 class="footer-title">Business</h4><a class="page-link in-footer" href="business.html">Information</a><a class="page-link in-footer" href="register.html">Register</a><a class="page-link in-footer" href="availablity_calendar.html">Availability</a><a class="page-link in-footer" href="forms_submissions_home.html">Forms&nbsp;</a>
+          <h4 class="footer-title">Business</h4><a class="page-link in-footer" href="../../roofing-made-easy/business.html">Information</a><a class="page-link in-footer" href="../../roofing-made-easy/roofers-contractors/register.html">Register</a><a class="page-link in-footer" href="../../roofing-made-easy/availability/availablity-calendar.html">Availability</a><a class="page-link in-footer" href="../../roofing-made-easy/job-protocals/forms-submissions-home.html">Forms&nbsp;</a>
         </div>
         <div class="w-col w-col-2">
-          <h4 class="footer-title">Contact us</h4><a class="page-link in-footer" href="contact_us.html">Get In Touch</a>
+          <h4 class="footer-title">Contact us</h4><a class="page-link in-footer" href="../../contact/contact-us.html">Get In Touch</a>
         </div>
       </div>
     </div>
-  </div>
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-  <script type="text/javascript" src="assets/webflow.js"></script>
+  </div>    
   <!--[if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif]-->
+   
 </body>
 </html>
