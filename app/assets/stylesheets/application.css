@@ -14,8 +14,8 @@
  *= require webflow 
  *= require roofingmadeeasy.webflow 
  *= require jquery-ui.min 
- *= require fullcalendar 
  *= require fullcalendar.print
+ *= require fullcalendar 
  *= require_tree . 
  *= require_self
  */

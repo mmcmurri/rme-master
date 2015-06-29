@@ -198,5 +198,5 @@ tbody,
 
 .fc-button-group,
 .fc button {
-	display: none; /* don't display any button-related controls */
+	/*display: none;*/ /* don't display any button-related controls */
 }
