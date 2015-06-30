@@ -1,140 +1,173 @@
-<div class="w-nav navigation" data-collapse="medium" data-animation="default" data-duration="400" data-contain="1">
-  <div class="w-container navigation-container">
-    <div class="w-nav navbar" data-collapse="medium" data-animation="default" data-duration="400" data-contain="1" data-easing="linear">
-      <div class="w-clearfix homepage-logo">
-        <div class="logo">Roofing Made Easy.</div><img class="w-hidden-small w-hidden-tiny navlogo" src="../../images/Logo.png" width="85" height="75">
-      </div>
-      <div class="w-container navbar">
-        <nav class="w-nav-menu w-clearfix dropmenu" role="navigation"><a class="w-nav-link nav-link businesses drop" href="../../business-portal/log-in/login-portal.html">Log In</a><a class="w-nav-link nav-link businesses drop" href="../../roofing-made-easy/business.html">Business</a><a class="w-nav-link nav-link homeowner drop" href="../../homeowners-home/our-service.html">Homeowner</a><a class="w-nav-link nav-link businesses drop" href="../../index.html">Home</a>
-        <!-- <div class="w-nav-button">
-          <div class="w-icon-nav-menu hamburger"></div>
-        </div> -->
-      </div>
-    </div>
-  </div>
-</div> 
-<div class="w-section section calendar">  
-</div>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Availablity Calendar</title>
+    <style>
 
-  <div class="w-container">
-    <div class="w-row availabilitycalendar">
-      <div class="w-col w-col-9" >       
-         <div id='calendar'></div>
-      </div>
-      <div class="w-col w-col-3 jobslist">
-        <h3 class="jobshead">Bookings: &lt;Date&gt;</h3>
-        <ul class="w-list-unstyled jobs">
-        
-      </div>
-    </div>
-  </div>
-  <div class="w-container addjob">
-    <div class="w-row">
-      <div class="w-col w-col-4 jobsbutton"><a class="button jobsbutton addbooking" id="bookingCommand" onclick="set_associated_data()" >Add Booking</a>
-      </div>
-      <div class="w-col w-col-4"><a class="button editbooking"  >Edit Booking</a>
-      </div>
-      <div class="w-col w-col-4 savebutton"><a class="button savebutton saving" id="savingCommand" >Save Job</a>
-      </div>
-    </div>
-  </div>
-  <div class="w-container jobcontainer">
-    <div class="w-row jobrow">
-      <div class="w-col w-col-4 jobcolumn">
-        <div class="w-form jobdetails">
-          <form class="jobdetails info" id="email-form" name="email-form" data-name="Email Form">
-            <label for="name">JobID:</label>
-            <input class="w-input" id="jobID" type="text" placeholder="Enter your name" name="name" data-name="Name" required>
-            <label for="name-4">Start Date:</label>
-            <input class="w-input" id="startDate" type="text" placeholder="Enter your name" name="name-4" data-name="Name 4" required>
-            <label for="email">Team&nbsp;Size:</label>
-            <input class="w-input" id="teamSize" type="email" placeholder="Enter your email address" name="email" data-name="Email" required>
-          </form>
-          <div class="w-form-done">
-            <p>Thank you! Your submission has been received!</p>
-          </div>
-          <div class="w-form-fail">
-            <p>Oops! Something went wrong while submitting the form</p>
-          </div>
+            body {
+                margin: 40px 10px;
+                padding: 0;
+                font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+                font-size: 14px;
+            }
+
+            #calendar {
+                max-width: 900px;
+                margin: 0 auto;
+            }
+            
+            .job-log {
+                color: red;
+            }
+
+    </style>
+  
+</head>
+<body>
+
+  <div class="w-nav navigation" data-collapse="medium" data-animation="default" data-duration="400" data-contain="1">
+    <div class="w-container navigation-container">
+      <div class="w-nav navbar" data-collapse="medium" data-animation="default" data-duration="400" data-contain="1" data-easing="linear">
+        <div class="w-clearfix homepage-logo">
+          <div class="logo">Roofing Made Easy.</div><img class="w-hidden-small w-hidden-tiny navlogo" src="../../images/Logo.png" width="85" height="75">
         </div>
-      </div>
-      <div class="w-col w-col-4 jobcolumn">
-        <div class="w-form jobdetails">
-          <form id="email-form-2" name="email-form-2" data-name="Email Form 2">
-            <label for="name-2">Address:</label>
-            <input class="w-input" id="address" type="text" placeholder="Enter your name" name="name" data-name="Name 2">
-            <label for="email-2">City:</label>
-            <input class="w-input" id="city" type="email" placeholder="Enter your email address" name="email" data-name="Email 2" required="required">
-            <label for="email-2">Country:</label>
-            <input class="w-input" id="country" type="email" placeholder="Enter your email address" name="email" data-name="Email 2" required="required">
-          </form>
-          <div class="w-form-done">
-            <p>Thank you! Your submission has been received!</p>
-          </div>
-          <div class="w-form-fail">
-            <p>Oops! Something went wrong while submitting the form</p>
-          </div>
-        </div>
-      </div>
-      <div class="w-col w-col-4 jobcolumn">
-        <div class="w-form jobdetails form">
-          <form id="email-form-3" name="email-form-3" data-name="Email Form 3">
-            <label for="name-3">Customer Name:</label>
-            <input class="w-input" id="customerName" type="text" placeholder="Enter your name" name="name" data-name="Name 3">
-            <label for="email-3">Phone:</label>
-            <input class="w-input" id="phone" type="email" placeholder="Enter your email address" name="email" data-name="Email 3" required="required">
-            <label for="Source">Source:</label>
-            <input class="w-input" id="source" type="email" placeholder="Enter your email address" name="Source" data-name="Source" required="required">
-          </form>
-          <div class="w-form-done">
-            <p>Thank you! Your submission has been received!</p>
-          </div>
-          <div class="w-form-fail">
-            <p>Oops! Something went wrong while submitting the form</p>
+        <div class="w-container navbar">
+          <nav class="w-nav-menu w-clearfix dropmenu" role="navigation"><a class="w-nav-link nav-link businesses drop" href="../../business-portal/log-in/login-portal.html">Log In</a><a class="w-nav-link nav-link businesses drop" href="../../roofing-made-easy/business.html">Business</a><a class="w-nav-link nav-link homeowner drop" href="../../homeowners-home/our-service.html">Homeowner</a><a class="w-nav-link nav-link businesses drop" href="../../index.html">Home</a>
+          </nav>
+          <div class="w-nav-button">
+            <div class="w-icon-nav-menu hamburger"></div>
           </div>
         </div>
       </div>
     </div>
+  </div> 
+  <div class="w-section section calendar">  
   </div>
-</div>
-<div class="w-section section footer">
-  <div class="w-container">
-    <div class="w-row">
-      <div class="w-col w-col-6">
-        <div class="logo footerlogo">Roofing Made Easy.</div>
-        <div class="findus">Enter your postal/zip code and we will be in your area within 30 days.</div>
-        <div class="w-form newsletter-form">
-          <form class="w-clearfix" id="wf-form-newsletter" name="wf-form-newsletter" data-name="Newsletter">
-            <input class="w-input newsletter-field" id="postal-zip-code-2" type="text" placeholder="Enter postal/zip code" name="postal-zip-code-2" data-name="Postal Zip Code 2" required="required">
-            <input class="w-button newsletter-button" type="submit" value="Submit" data-wait="Sent" wait="Sent">
-          </form>
-          <div class="w-form-done success-message">
-            <p>Thank you! You’ll receive an email shortly.</p>
-          </div>
-          <div class="w-form-fail">
-            <p>Oops! Something went wrong while submitting the form :(</p>
-          </div>
+  
+    <div class="w-container">
+      <div class="w-row availabilitycalendar">
+        <div class="w-col w-col-9" >       
+           <div id='calendar'></div>
         </div>
-        <div class="social-icon-group">
-          <a class="w-inline-block social-icon" href="#"><img src="../../images/facebook-icon.svg">
-          </a>
-          <a class="w-inline-block social-icon" href="#"><img src="../../images/twitter-icon.svg">
-          </a>
-          <a class="w-inline-block social-icon" href="#"><img src="../../images/linkdin-icon-white.svg">
-          </a>
-          <a class="w-inline-block social-icon" href="#"><img src="../../images/email-icon-white.svg">
-          </a>
+        <div class="w-col w-col-3 jobslist">
+          <h3 class="jobshead">Bookings: &lt;Date&gt;</h3>
+          <ul class="w-list-unstyled jobs">
+          
         </div>
       </div>
-      <div class="w-col w-col-2">
-        <h4 class="footer-title">Homeowner</h4><a class="page-link in-footer" href="../../homeowners-home/our-service.html">Our Service</a><a class="page-link in-footer" href="../../generate-quote/customer-information.html">Get a Quote</a><a class="page-link in-footer" href="../../contact/file-complaint.html">File Complaint</a>
+    </div>
+    <div class="w-container addjob">
+      <div class="w-row">
+        <div class="w-col w-col-4 jobsbutton"><a class="button jobsbutton addbooking" id="bookingCommand" onclick="set_associated_data()" >Add Booking</a>
+        </div>
+        <div class="w-col w-col-4"><a class="button editbooking" id="editBooking" >Edit Booking</a>
+        </div>
+        <div class="w-col w-col-4 savebutton"><a class="button savebutton saving" id="savingCommand" >Save Job</a>
+        </div>
       </div>
-      <div class="w-col w-col-2">
-        <h4 class="footer-title">Business</h4><a class="page-link in-footer" href="../../roofing-made-easy/business.html">Information</a><a class="page-link in-footer" href="../../roofing-made-easy/roofers-contractors/register.html">Register</a><a class="page-link in-footer" href="../../roofing-made-easy/availability/availablity-calendar.html">Availability</a><a class="page-link in-footer" href="../../roofing-made-easy/job-protocals/forms-submissions-home.html">Forms&nbsp;</a>
-      </div>
-      <div class="w-col w-col-2">
-        <h4 class="footer-title">Contact us</h4><a class="page-link in-footer" href="../../contact/contact-us.html">Get In Touch</a>
+    </div>
+    <div class="w-container jobcontainer">
+      <div class="w-row jobrow">
+        <div class="w-col w-col-4 jobcolumn">
+          <div class="w-form jobdetails">
+            <form class="jobdetails info" id="email-form" name="email-form" data-name="Email Form">
+              <label for="name">JobID:</label>
+              <input class="w-input" id="jobID" type="text" placeholder="Enter your name" name="name" data-name="Name" required>
+              <label for="name-4">Start Date:</label>
+              <input class="w-input" id="startDate" type="text" placeholder="Enter your name" name="name-4" data-name="Name 4" required>
+              <label for="email">Team&nbsp;Size:</label>
+              <input class="w-input" id="teamSize" type="email" placeholder="Enter your email address" name="email" data-name="Email" required>
+            </form>
+            <div class="w-form-done">
+              <p>Thank you! Your submission has been received!</p>
+            </div>
+            <div class="w-form-fail">
+              <p>Oops! Something went wrong while submitting the form</p>
+            </div>
+          </div>
+        </div>
+        <div class="w-col w-col-4 jobcolumn">
+          <div class="w-form jobdetails">
+            <form id="email-form-2" name="email-form-2" data-name="Email Form 2">
+              <label for="name-2">Address:</label>
+              <input class="w-input" id="address" type="text" placeholder="Enter your name" name="name" data-name="Name 2">
+              <label for="email-2">City:</label>
+              <input class="w-input" id="city" type="email" placeholder="Enter your email address" name="email" data-name="Email 2" required="required">
+              <label for="email-2">Country:</label>
+              <input class="w-input" id="country" type="email" placeholder="Enter your email address" name="email" data-name="Email 2" required="required">
+            </form>
+            <div class="w-form-done">
+              <p>Thank you! Your submission has been received!</p>
+            </div>
+            <div class="w-form-fail">
+              <p>Oops! Something went wrong while submitting the form</p>
+            </div>
+          </div>
+        </div>
+        <div class="w-col w-col-4 jobcolumn">
+          <div class="w-form jobdetails form">
+            <form id="email-form-3" name="email-form-3" data-name="Email Form 3">
+              <label for="name-3">Customer Name:</label>
+              <input class="w-input" id="customerName" type="text" placeholder="Enter your name" name="name" data-name="Name 3">
+              <label for="email-3">Phone:</label>
+              <input class="w-input" id="phone" type="email" placeholder="Enter your email address" name="email" data-name="Email 3" required="required">
+              <label for="Source">Source:</label>
+              <input class="w-input" id="source" type="email" placeholder="Enter your email address" name="Source" data-name="Source" required="required">
+            </form>
+            <div class="w-form-done">
+              <p>Thank you! Your submission has been received!</p>
+            </div>
+            <div class="w-form-fail">
+              <p>Oops! Something went wrong while submitting the form</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</div>
+  <div class="w-section section footer">
+    <div class="w-container">
+      <div class="w-row">
+        <div class="w-col w-col-6">
+          <div class="logo footerlogo">Roofing Made Easy.</div>
+          <div class="findus">Enter your postal/zip code and we will be in your area within 30 days.</div>
+          <div class="w-form newsletter-form">
+            <form class="w-clearfix" id="wf-form-newsletter" name="wf-form-newsletter" data-name="Newsletter">
+              <input class="w-input newsletter-field" id="postal-zip-code-2" type="text" placeholder="Enter postal/zip code" name="postal-zip-code-2" data-name="Postal Zip Code 2" required="required">
+              <input class="w-button newsletter-button" type="submit" value="Submit" data-wait="Sent" wait="Sent">
+            </form>
+            <div class="w-form-done success-message">
+              <p>Thank you! You’ll receive an email shortly.</p>
+            </div>
+            <div class="w-form-fail">
+              <p>Oops! Something went wrong while submitting the form :(</p>
+            </div>
+          </div>
+          <div class="social-icon-group">
+            <a class="w-inline-block social-icon" href="#"><img src="../../images/facebook-icon.svg">
+            </a>
+            <a class="w-inline-block social-icon" href="#"><img src="../../images/twitter-icon.svg">
+            </a>
+            <a class="w-inline-block social-icon" href="#"><img src="../../images/linkdin-icon-white.svg">
+            </a>
+            <a class="w-inline-block social-icon" href="#"><img src="../../images/email-icon-white.svg">
+            </a>
+          </div>
+        </div>
+        <div class="w-col w-col-2">
+          <h4 class="footer-title">Homeowner</h4><a class="page-link in-footer" href="../../homeowners-home/our-service.html">Our Service</a><a class="page-link in-footer" href="../../generate-quote/customer-information.html">Get a Quote</a><a class="page-link in-footer" href="../../contact/file-complaint.html">File Complaint</a>
+        </div>
+        <div class="w-col w-col-2">
+          <h4 class="footer-title">Business</h4><a class="page-link in-footer" href="../../roofing-made-easy/business.html">Information</a><a class="page-link in-footer" href="../../roofing-made-easy/roofers-contractors/register.html">Register</a><a class="page-link in-footer" href="../../roofing-made-easy/availability/availablity-calendar.html">Availability</a><a class="page-link in-footer" href="../../roofing-made-easy/job-protocals/forms-submissions-home.html">Forms&nbsp;</a>
+        </div>
+        <div class="w-col w-col-2">
+          <h4 class="footer-title">Contact us</h4><a class="page-link in-footer" href="../../contact/contact-us.html">Get In Touch</a>
+        </div>
+      </div>
+    </div>
+  </div>    
+  <!--[if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif]-->
+   
+</body>
+</html>
