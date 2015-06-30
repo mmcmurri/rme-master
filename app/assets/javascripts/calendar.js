@@ -103,7 +103,7 @@ var jobIDNumber = 1;
                         var source = $('#source').val();
                         
                         insert_eventlist();
-                        $("ul").append("<li>Job" + jobId +" - " + team_size + "People" + "</li>"); 
+                        $("ul").append("<li>Job" + jobId +" - " + teamSize + "People" + "</li>"); 
                         $("ul li").addClass('job-log'); 
                             
                         var newEvent = new Object();
