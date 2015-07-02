@@ -14,4 +14,5 @@
 //= require jquery.min
 //= require fullcalendar.min
 //= require calendar
+//= require_tree .
 
