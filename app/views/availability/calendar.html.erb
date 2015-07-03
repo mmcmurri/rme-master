@@ -1,11 +1,43 @@
+<!DOCTYPE html>
+<!-- This site was created in Webflow. http://www.webflow.com-->
+<!-- Last Published: Wed Jun 17 2015 12:59:19 GMT+0000 (UTC) -->
+<html data-wf-site="554eaa03e47085a40aa28e10" data-wf-page="55514155c7786dfb2802b56b">
+<head>
+  <meta charset="utf-8">
+  <title>Business</title>
+  <meta name="description" content="The number one roofing tool for contractors, suppliers and disposal companies, we provide you with access to North America's largest collection of roofing customers. Our full service platform enables you to receive and confirm new booking requests, manage your availability, offer products, and maximize your teams utilization. We provide desktop and mobile access to our platform so you can stay in the game 24 hours a day, 7 days a week. We also provide free marketplace recommendations to help you increase your marketability, and maximize your sales throughout the season.">
+  <meta name="keywords" content="Contractors, Roofers, Suppliers, Distributors, Platform, Service, Sales, Increase Sales, Optimize Sales, Grow Sales, Top Sales, Marketing, Roof Customers, Roof Recommendations, Roof Quality, Roof Service, Roof Products, Roof Teams, Roof Utilization">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="generator" content="Webflow">
+  <link rel="stylesheet" type="text/css" href="/assets/normalize.css">
+  <link rel="stylesheet" type="text/css" href="/assets/webflow.css">
+  <link rel="stylesheet" type="text/css" href="/assets/roofingmadeeasy.webflow.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+  <script>
+    WebFont.load({
+      google: {
+        families: ["PT Sans:400,400italic,700,700italic","Ubuntu:300,300italic,400,400italic,500,500italic,700,700italic","Roboto:300,regular,500","Roboto Condensed:300,regular,700","Roboto Slab:300,regular,700","Arbutus Slab:regular","Ubuntu Mono:regular,italic,700,700italic","Ubuntu Condensed:regular:latin-ext,latin","PT Sans Caption:regular,700"]
+      }
+    });
+  </script>
+  <script type="text/javascript" src="assets/modernizr.js"></script>
+  <link rel="shortcut icon" type="image/x-icon" href="/assets/New icon.ico">
+  <link rel="apple-touch-icon" href="/assets/metric-webclip.png">
+</head>
+
 <div class="w-nav navigation" data-collapse="medium" data-animation="default" data-duration="400" data-contain="1">
     <div class="w-container navigation-container">
       <div class="w-nav navbar" data-collapse="medium" data-animation="default" data-duration="400" data-contain="1" data-easing="linear">
         <div class="w-clearfix homepage-logo">
-          <div class="logo">Roofing Made Easy.</div><img class="w-hidden-small w-hidden-tiny navlogo" src="../../images/Logo.png" width="85" height="75">
+          <div class="logo">Roofing Made Easy.</div><img class="w-hidden-small w-hidden-tiny navlogo" src="/assets/Logo.png" width="85" height="75">
         </div>
         <div class="w-container navbar">
-          <nav class="w-nav-menu w-clearfix dropmenu" role="navigation"><a class="w-nav-link nav-link businesses drop" href="../../business-portal/log-in/login-portal.html">Log In</a><a class="w-nav-link nav-link businesses drop" href="../../roofing-made-easy/business.html">Business</a><a class="w-nav-link nav-link homeowner drop" href="../../homeowners-home/our-service.html">Homeowner</a><a class="w-nav-link nav-link businesses drop" href="../../index.html">Home</a>
+          <nav class="w-nav-menu w-clearfix dropmenu" role="navigation">
+            <a class="w-nav-link nav-link businesses drop" href="login_portal.html">Log In</a>
+            <a class="w-nav-link nav-link businesses drop" href="business.html">Business</a>
+            <a class="w-nav-link nav-link homeowner drop" href="our_service.html">Homeowner</a>
+            <a class="w-nav-link nav-link businesses drop" href="/shop">Select Product</a>
+            <a class="w-nav-link nav-link businesses drop" href="index.html">Home</a>
           </nav>
           <div class="w-nav-button">
             <div class="w-icon-nav-menu hamburger"></div>
@@ -14,8 +46,6 @@
       </div>
     </div>
   </div>
-  <div class="w-section section calendar">
-  </div> <!---->
 
 <div style="display: none" id="bookings-data">
   <%= @bookings.to_json %>
@@ -23,7 +53,7 @@
 
 <div class="w-container">
   <span class="w-col w-col-12">
-    <h1>Availability Calendar</h1>
+    <h1 class="booking-title">Availability Calendar</h1>
     <div id="availability-calendar"></div>
   </span>
 
