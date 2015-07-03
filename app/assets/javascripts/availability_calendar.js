@@ -6,7 +6,7 @@
       );
     }
   });
-  $("#booking_date").datepicker();
+  $("#booking_date").datepicker({dateFormat: "yy-mm-dd"});
 
   var form = document.getElementById("booking-form");
   var bookingSubmitter = document.getElementById("booking-submitter");
