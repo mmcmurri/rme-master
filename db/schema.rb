@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150617183248) do
+ActiveRecord::Schema.define(version: 20150702175910) do
+
+  create_table "bookings", force: :cascade do |t|
+    t.date    "date"
+    t.integer "team_size"
+    t.text    "address"
+    t.text    "city"
+    t.text    "country"
+    t.text    "customer_name"
+    t.text    "phone_number"
+    t.text    "source"
+  end
 
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string   "slug",                      null: false

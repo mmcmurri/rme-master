@@ -26,5 +26,9 @@ Rails.application.routes.draw do
   get '/catalogue_setup', to: 'home#catalogue_setup', as: 'catalogue_setup'
   get '/forgot_password', to: 'home#forgot_password', as: 'forgot_password'
 
+  get "availability/calendar", to: "availability#calendar"
+
+  resources("bookings")
+
   mount Spree::Core::Engine, :at => '/shop'
   end
