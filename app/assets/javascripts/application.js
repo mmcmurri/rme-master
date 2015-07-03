@@ -14,6 +14,5 @@
 //= require jquery.min
 //= require jquery-ui.min
 //= require fullcalendar.min
-//= require calendar
-//= require_tree .
+//= require availability_calendar
 
