@@ -11,11 +11,16 @@
  * file per style scope.
  *
  *= require normalize
- *= require webflow 
- *= require roofingmadeeasy.webflow 
- *= require jquery-ui.min 
+ *= require webflow
+ *= require roofingmadeeasy.webflow
+ *= require jquery-ui.min
  *= require fullcalendar.print
- *= require fullcalendar 
- *= require_tree . 
+ *= require fullcalendar
+ *= require_tree .
  *= require_self
  */
+
+.alert {
+  margin-top: 75px;
+}
+
