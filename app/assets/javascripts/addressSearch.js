@@ -11,7 +11,7 @@
     function codeAddress() {
         var place = autocomplete.getPlace();
         var latlng = place.geometry.location;
-        location.href = "/mappage.html?x=" + latlng.lng() + "&y=" + latlng.lat();
+        location.href = "/assets/mappage.html?x=" + latlng.lng() + "&y=" + latlng.lat();
     }
 
     google.maps.event.addDomListener(window, 'load', initialize);
