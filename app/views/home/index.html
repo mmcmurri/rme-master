@@ -13,6 +13,11 @@
   <link rel="stylesheet" type="text/css" href="/assets/webflow.css">
   <link rel="stylesheet" type="text/css" href="/assets/roofingmadeeasy.webflow.css">
   <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+    <!--eao-->
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
+    <script src="assets/addressSearch.js"></script>
+    <link rel="stylesheet" type="text/css" href="/assets/addressSearch.css">
+    <script>initGeocode();</script>
   <script>
     WebFont.load({
       google: {
@@ -55,9 +60,13 @@
         </div>
         <div class="w-col w-col-6 animation1">
           <div class="w-form">
+          <div class="formcontainer main">
+            <label class="fieldlabel" for="Home-Address">Address</label>
+            <!--eao-->
+                <input id="address" class="w-input" placeholder="Enter your address"  type="text" />
+            </div>
             <form class="formcontainer main" id="email-form" name="email-form" data-name="Email Form">
-              <label class="fieldlabel" for="Home-Address">Address</label>
-              <input class="w-input" id="Home-Address" type="text" placeholder="e.g. 1234 Street, Zip/Postal Code, Country" name="Home-Address" data-name="Home Address" required="required">
+            <!--  <input class="w-input" id="Home-Address" type="text" placeholder="e.g. 1234 Street, Zip/Postal Code, Country" name="Home-Address" data-name="Home Address" required="required">-->
               <label class="fieldlabel" for="email">Email Address:</label>
               <input class="w-input" id="email" type="email" placeholder="Enter your email address" name="email" data-name="Email">
               <input class="w-button mainbutton" type="submit" value="Get Quote" data-wait="Please wait...">
