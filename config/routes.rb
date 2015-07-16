@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   get '/disposal_configuration', to: 'home#disposal_configuration', as: 'disposal_configuration'
   get '/catalogue_setup', to: 'home#catalogue_setup', as: 'catalogue_setup'
   get '/forgot_password', to: 'home#forgot_password', as: 'forgot_password'
+  get '/map', to: 'home#map', as: 'map'
 
   get "availability/calendar", to: "availability#calendar"
 
