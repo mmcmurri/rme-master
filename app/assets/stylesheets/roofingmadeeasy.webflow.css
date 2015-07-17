@@ -183,7 +183,7 @@ p {
 }
 .logo-text.footer {
   margin-top: 0px;
-  margin-bottom: 19px;
+  /*margin-bottom: 19px;*/
   color: #e6eaed;
 }
 .navigation {
@@ -254,7 +254,7 @@ p {
 }
 .section.main {
   display: block;
-  height: 325px;
+  height: 525px;
   margin-top: 75px;
   padding-top: 50px;
   padding-bottom: 50px;
@@ -281,13 +281,13 @@ p {
   bottom: 0px;
   margin-top: auto;
   padding-top: 42px;
-  padding-bottom: 42px;
+  /*padding-bottom: 42px;*/
   background-color: #2b2c2e;
   color: #e4e8eb;
 }
 .section.footer.copyright {
   padding-top: 19px;
-  padding-bottom: 19px;
+  /*padding-bottom: 19px;*/
   background-color: #1c1d1f;
   color: #939596;
   font-size: 14px;
@@ -450,7 +450,7 @@ p {
   color: black;
 }
 .footer-slogan {
-  margin-bottom: 11px;
+  /*margin-bottom: 11px;*/
   color: #939596;
 }
 .social-icon {
@@ -1736,3 +1736,46 @@ html.w-mod-js *[data-ix="fade-in-on-scroll"] {
   }
 }
 
+
+
+.undo-button {
+  width: 40%;
+  height: 40px;
+  margin-top:4px;
+   margin-bottom:4px;
+  padding-top: 9px;
+  padding-bottom: 9px;
+  float: left;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+  background-color: #489fd9;
+  -webkit-transition: all 500ms ease;
+  transition: all 500ms ease;
+  color: black;
+}
+.undo-button:hover {
+ background-color: #ff8b63;
+  color: white;
+}
+
+
+.continue-button {
+  width: 40%;
+  height: 40px;
+  margin-top:4px;
+   margin-bottom:4px;
+  padding-top: 9px;
+  padding-bottom: 9px;
+  float: right;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+  background-color: #489fd9;
+  -webkit-transition: all 500ms ease;
+  transition: all 500ms ease;
+  color: black;
+}
+.continue-button:hover {
+ 
+   background-color: #ff8b63;
+  color: white;
+}
