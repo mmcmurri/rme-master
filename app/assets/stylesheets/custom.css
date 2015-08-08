@@ -1,0 +1,218 @@
+.custom-manage{
+  margin: 10px 5px 10px 0;
+}
+.custom-manage .custom-content{
+  height: 620px;
+}
+.custom-manage .custom-content #custom-calendar{
+  height: 20%;
+}
+#custom-calendar #caledar-selector{
+  padding:50px 0 0 50px;
+}
+#caledar-selector #calendar-label{
+  float: left;
+  color: #50C0FB;
+  font-size: 27px;
+  font-weight: bold;
+  text-align: right;
+}
+#calendar-select img{
+  margin-left: 40px;
+}
+.calendar-style{
+  float: left;
+  margin-left: 40px;
+}
+.custom-manage .custom-content #contractor-selector{
+  height: 80%;
+  background-color: #50C0FB;
+  overflow-y:scroll;
+}
+.custom-manage .custom-panel{
+  height: 620px;
+}
+.panel-input{
+  height: 18%;
+}
+.panel-input .nextbutton{
+  width: 100%;
+  margin: 10px 0px;
+  padding: 10px 0px;
+  background-color: #BA202A;
+  color: #FFF;
+  border-radius: 10px;
+  font-size: 20px;
+  font-weight: bold;
+}
+.panel-header{
+  padding: 20px 0 10px 20px;
+  font-weight: bold;
+  font-size: 25px;
+  color: #50C0FB;
+}
+.panel-content{
+  text-align: center;
+  color: #898683;
+}
+.contractor-box{
+  width: 80%;
+  height: 170px;
+  border: 2px solid black;
+  border-radius: 8px;
+  margin: 20px auto;
+  background-color: #a6c2fe;
+}
+#contractor-selector .company-logo{
+  display: block;
+  width: 25%;
+  float: left;
+}
+#contractor-selector .company-logo .logo-img{
+  border: 2px solid black;
+  border-radius: 15px;
+  width: 120px;
+  height: 120px;
+  margin: 15px auto;
+  background-color: white;
+}
+#contractor-selector .company-logo .logo-img img{
+  width: 100%;
+  height: 100%;
+}
+#contractor-selector .company-info{
+  display: block;
+  width: 30%;
+  float: left;
+  color: #5f5e5e;
+  margin-top: 15px;
+  padding-left: 10px;
+}
+#contractor-selector .company-info .company-name{
+  font-size: 25px;
+  height: 50px;
+  font-weight: bold;
+}
+#contractor-selector .company-info .company-desc{
+  height: 45px;
+}
+#contractor-selector .company-info .company-certif img{
+  width: 100px;
+  height: 50px;
+  float: left;
+  margin-left: 10px;
+  border-radius: 30px;
+}
+#contractor-selector .company-info .certifi-img{
+  width: 100px;
+  height: 50px;
+  float: left;
+  margin-left: 10px;
+  border-radius: 30px;
+  background-color: white;
+}
+#contractor-selector .company-controller{
+  display: block;
+  float: left;
+  margin: 50px auto;
+  text-align: center;
+  width: 45%;
+}
+#contractor-selector .company-controller button{
+  background-color: #ba202a;
+  color: white;
+  width: 30%;
+  height: 40px;
+  border-radius: 10px;
+  font-size: 20px;
+  font-weight: bold;
+}
+#contractor-selector .company-controller .button-select{
+  margin-left: 30px;
+}
+@media (max-width: 600px) {
+  .contractor-box{
+    height: 300px;
+  }
+  #contractor-selector .company-logo{
+    width:40%;
+  }
+  #contractor-selector .company-info{
+    width:60%;
+  }
+  #contractor-selector .company-controller{
+    width: 100%;
+  }
+}
+@media (max-width: 470px) {
+  .contractor-box{
+    height: 375px;
+  }
+  #contractor-selector .company-logo{
+    width:100%;
+    float: none;
+  }
+  #contractor-selector .company-info{
+    width:100%;
+    float: none;
+  }
+  #contractor-selector .company-controller{
+    width: 100%;
+    float: none;
+    margin: 10px auto;
+  }
+}
+@media only screen and (min-width:601px) and (max-width: 1050px){
+  #contractor-selector .company-controller button{
+    font-size: 12px;
+  }
+}
+@media only screen and (min-width:768px) and (max-width: 810px) {
+     .panel-header{
+        padding: 20px 0 10px 0;
+     }
+}
+@media (max-width: 767px) {
+  .custom-manage .custom-content #custom-calendar{
+    height: 22%;
+  }
+  #calendar-select img{
+    margin-left: 20px;
+  }
+  .calendar-style{
+    float: left;
+    margin-left: 0px;
+  }
+  .custom-manage .custom-panel{
+    margin: 20px 10px 20px 10px;
+    width: calc(100% - 20px);
+  }
+}
+@media (max-width: 351px) {
+  .custom-manage .custom-content #custom-calendar{
+    height: 27%;
+  }
+  #calendar-select img{
+    margin-left: 0px;
+  }
+}
+#next-button-valid{
+  display: block;
+  float: left;
+  color: #B94A48;
+  background-color: #EED3D7;
+  border-radius: 5px;
+  text-align: center;
+}
+#next-button-valid p{
+  text-align: center;
+}
+#company-valid{
+  text-align: center;
+  margin-top: 190px;
+  font-size: 20px;
+}
+#company-valid p{
+  color: #B94A48;
+  font-weight: bold;
+}

@@ -9,6 +9,17 @@ class HomeController < ApplicationController
   def business
   end
 
+  def custom
+    @Contractors = Contractor.joins('LEFT OUTER JOIN Companyimgs ON Companyimgs.name = Contractors.name').select("Contractors.*, Companyimgs.logo, Companyimgs.certi1, Companyimgs.certi2, Companyimgs.carousel")
+  end
+
+  def getselector
+    pt = Contractor.where("id = #{params[:selector]}")
+    respond_to do |format|
+      format.js {render :json => {:result => pt} }
+    end
+  end
+
   def login_portal
   end
 

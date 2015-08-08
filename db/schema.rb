@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150702175910) do
+ActiveRecord::Schema.define(version: 20150808091101) do
 
   create_table "bookings", force: :cascade do |t|
     t.date    "date"
@@ -22,6 +22,26 @@ ActiveRecord::Schema.define(version: 20150702175910) do
     t.text    "customer_name"
     t.text    "phone_number"
     t.text    "source"
+  end
+
+  create_table "companyimgs", force: :cascade do |t|
+    t.string   "name"
+    t.string   "logo"
+    t.string   "certi1"
+    t.string   "certi2"
+    t.string   "carousel"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "contractors", force: :cascade do |t|
+    t.string   "add"
+    t.string   "name"
+    t.string   "description"
+    t.date     "servicedate"
+    t.integer  "appro"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "friendly_id_slugs", force: :cascade do |t|

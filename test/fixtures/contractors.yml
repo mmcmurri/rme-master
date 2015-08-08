@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  add: MyString
+  name: MyString
+  description: MyString
+  servicedate: 2015-08-08
+  appro: 1
+
+two:
+  add: MyString
+  name: MyString
+  description: MyString
+  servicedate: 2015-08-08
+  appro: 1

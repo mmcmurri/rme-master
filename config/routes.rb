@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   get '/index', to: 'home#index', as: 'index'
   get '/our_service', to: 'home#our_service', as: 'our_service'
+  get '/custom', to: 'home#custom', as: 'custom'
   get '/business', to: 'home#business', as: 'business'
   get '/login_portal', to: 'home#login_portal', as: 'login_portal'
   get '/customer_information', to: 'home#customer_information', as: 'customer_information'
@@ -28,6 +29,9 @@ Rails.application.routes.draw do
   get '/map', to: 'home#map', as: 'map'
 
   get "availability/calendar", to: "availability#calendar"
+
+  #ajax url
+  get '/custom/:selector', :to => 'home#getselector', as: :exportFile
 
   resources("bookings")
 

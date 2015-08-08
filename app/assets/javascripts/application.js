@@ -16,3 +16,12 @@
 //= require fullcalendar.min
 //= require availability_calendar
 
+$(function(){
+	$('.calendar-datepicker').datepicker({
+	  showOn: "button",
+      buttonImage: "assets/calendar.png",
+      buttonImageOnly: true,
+      buttonText: "Select date"
+	});
+	$( ".calendar-datepicker" ).datepicker( "option", "showAnim", "slideDown" );
+});

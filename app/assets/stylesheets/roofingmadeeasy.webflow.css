@@ -379,6 +379,13 @@ p {
   background-repeat: repeat;
   background-attachment: scroll;
 }
+.custom-rect{
+  border: 2px solid #ba202a;
+  border-radius: 2px;
+}
+.section.custom{
+  background-color: #5490ff; 
+}
 .section.advantages.one {
   position: static;
   display: block;
