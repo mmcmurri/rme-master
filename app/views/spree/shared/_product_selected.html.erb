@@ -1,5 +1,5 @@
 <%
-  product = @products.first
+   product = @products.first
 %>
 
 <% if product %>
@@ -14,10 +14,12 @@
             <div class="panel-body text-center product-body">
               <%= link_to small_image(product, itemprop: "image"), url, itemprop: 'url' %><br/>
               <%= link_to truncate(product.name, length: 50), url, class: 'info', itemprop: "name", title: product.name %>
+
             </div>
             <div class="panel-footer text-center">
               <span itemprop="offers" itemscope itemtype="https://schema.org/Offer">
                 <span class="price selling lead" itemprop="price"><%= display_price(product) %></span>
+                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>Add to Cart</button>
               </span>
             </div>
           <% end %>

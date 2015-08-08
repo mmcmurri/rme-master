@@ -24,8 +24,9 @@
 </div>
 
 <% if products.any? %>
+  <div class="panel panel-default text-center">
   <h4> Items I Like (count: <%=@products.count%>)</h4>
-  <div id="products" class="row" data-hook>
+  <div id="products" class="row products_liked" data-hook>
     <% products.each do |product| %>
       <% url = spree.product_url(product, taxon_id: @taxon.try(:id)) %>
       <div id="product_<%= product.id %>" class="col-md-12 col-sm-12 product-list-item" data-hook="products_list_item" itemscope itemtype="https://schema.org/Product">
@@ -36,9 +37,10 @@
               <%= link_to truncate(product.name, length: 50), url, class: 'info', itemprop: "name", title: product.name %>
             </div>
             <div class="panel-footer text-center">
-              <span itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-                <span class="price selling lead" itemprop="price"><%= display_price(product) %></span>
-              </span>
+              <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Select</button>
+              <!--<span itemprop="offers" itemscope itemtype="https://schema.org/Offer">-->
+                <!--<span class="price selling lead" itemprop="price"><%= display_price(product) %></span>-->
+              <!--</span>-->
             </div>
           <% end %>
         </div>
@@ -46,6 +48,11 @@
     <% end %>
     <% reset_cycle("classes") %>
   </div>
+    </div>
+
+    <!--<div id="infinite-scrolling">-->
+      <!--<%#= will_paginate(@products_will) #%>-->
+    <!--</div>-->
 <% end %>
 
 <% if paginated_products.respond_to?(:num_pages) %>
