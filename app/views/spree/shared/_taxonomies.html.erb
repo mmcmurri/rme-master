@@ -1,3 +1,25 @@
+<% if @materials.present? %>
+    <h4 class='taxonomy-root'><%= Spree.t(:shop_by_material) %> </h4>
+    <% @materials.each do |item| %>
+        <a href="#" class="list-group-item"><%=item.name%></a>
+    <% end %>
+
+<% else %>
+<% end %>
+
+<% if @colors.present? %>
+    <h4 class='taxonomy-root'><%= Spree.t(:shop_by_color) %> </h4>
+    <div class="list-group">
+      <% @colors.each do |item| %>
+          <!--<a href="#" class="list-group-item"><input type="checkbox" aria-label="..."><%=item.name%></a>-->
+          <a href="#" class="list-group-item"><%=item.name%></a>
+      <% end %>
+
+<% else %>
+<% end %>
+
+
+
 <% max_level = Spree::Config[:max_level_in_taxons_menu] || 1 %>
 
 <nav id="taxonomies" class="sidebar-item" data-hook>
@@ -8,3 +30,4 @@
     <% end %>
   <% end %>
 </nav>
+
