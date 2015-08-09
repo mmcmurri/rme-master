@@ -50,7 +50,7 @@
     </div>
   </div>
   <div class="w-section w-row custom-manage">
-    <div class="w-col w-col-9 custom-content">
+    <div class="w-col w-col-8 custom-content">
       <div id="custom-calendar" class="custom-rect">
         <div id="caledar-selector" class="w-row">
           <div id="calendar-label" class="w-col w-col-3">Desired Start Date:</div>
@@ -78,9 +78,9 @@
                     <div class="certifi-img"></div>
                   <% end %>
                   <% if con.certi2 %>
-                    <img src="assets/<%= con.certi2 %>">
+                    <img src="assets/<%= con.certi2 %>" class="last-img">
                   <% else %>
-                    <div class="certifi-img"></div>
+                    <div class="certifi-img last-img"></div>
                   <% end %>
                 </div>
               </div>
@@ -99,7 +99,7 @@
       </div>
     </div>
 
-    <div class="w-col w-col-3 custom-panel custom-rect">
+    <div class="w-col w-col-4 custom-panel custom-rect">
       <div class="w-row panel-input">
         <div id="custom-address-header" class="panel-header">Your Address:</div>
         <div id="custom-address-content" class="panel-content">In Progress</div>

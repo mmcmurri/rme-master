@@ -1,8 +1,9 @@
 .custom-manage{
   margin: 10px 5px 10px 0;
+  min-width: 300px;
 }
 .custom-manage .custom-content{
-  height: 620px;
+  height: 630px;
 }
 .custom-manage .custom-content #custom-calendar{
   height: 20%;
@@ -30,10 +31,10 @@
   overflow-y:scroll;
 }
 .custom-manage .custom-panel{
-  height: 620px;
+  height: 630px;
 }
 .panel-input{
-  height: 18%;
+  height: 17%;
 }
 .panel-input .nextbutton{
   width: 100%;
@@ -42,7 +43,6 @@
   background-color: #BA202A;
   color: #FFF;
   border-radius: 10px;
-  font-size: 20px;
   font-weight: bold;
 }
 .panel-header{
@@ -56,7 +56,7 @@
   color: #898683;
 }
 .contractor-box{
-  width: 80%;
+  width: 85%;
   height: 170px;
   border: 2px solid black;
   border-radius: 8px;
@@ -65,8 +65,8 @@
 }
 #contractor-selector .company-logo{
   display: block;
-  width: 25%;
   float: left;
+  width: 25%;
 }
 #contractor-selector .company-logo .logo-img{
   border: 2px solid black;
@@ -82,8 +82,8 @@
 }
 #contractor-selector .company-info{
   display: block;
-  width: 30%;
   float: left;
+  width: 35%;
   color: #5f5e5e;
   margin-top: 15px;
   padding-left: 10px;
@@ -100,23 +100,22 @@
   width: 100px;
   height: 50px;
   float: left;
-  margin-left: 10px;
-  border-radius: 30px;
 }
 #contractor-selector .company-info .certifi-img{
+  float: left;
   width: 100px;
   height: 50px;
-  float: left;
-  margin-left: 10px;
-  border-radius: 30px;
   background-color: white;
+}
+.company-certif .last-img{
+  margin-left: 10px;
 }
 #contractor-selector .company-controller{
   display: block;
   float: left;
   margin: 50px auto;
   text-align: center;
-  width: 45%;
+  width: 40%;
 }
 #contractor-selector .company-controller button{
   background-color: #ba202a;
@@ -130,7 +129,15 @@
 #contractor-selector .company-controller .button-select{
   margin-left: 30px;
 }
-@media (max-width: 600px) {
+@media only screen and (min-width:1324px) and (max-width: 1345px){
+  #contractor-selector .company-info .company-certif img{
+    width: 40%;
+  }
+  #contractor-selector .company-info .certifi-img{
+    width: 40%;
+  }
+}
+@media (max-width: 1323px) {
   .contractor-box{
     height: 300px;
   }
@@ -144,35 +151,24 @@
     width: 100%;
   }
 }
-@media (max-width: 470px) {
-  .contractor-box{
-    height: 375px;
-  }
-  #contractor-selector .company-logo{
-    width:100%;
-    float: none;
-  }
-  #contractor-selector .company-info{
-    width:100%;
-    float: none;
-  }
-  #contractor-selector .company-controller{
-    width: 100%;
-    float: none;
-    margin: 10px auto;
-  }
-}
-@media only screen and (min-width:601px) and (max-width: 1050px){
-  #contractor-selector .company-controller button{
-    font-size: 12px;
-  }
-}
 @media only screen and (min-width:768px) and (max-width: 810px) {
      .panel-header{
         padding: 20px 0 10px 0;
      }
 }
+@media (max-width: 785px) {
+  #custom-calendar #caledar-selector {
+    padding: 25px 0px 0px 50px;
+  }
+}
 @media (max-width: 767px) {
+  #caledar-selector #calendar-label{
+    float: none;
+    text-align: left;
+  }
+  .custom-manage .custom-content #contractor-selector{
+    height: 78%;
+  }
   .custom-manage .custom-content #custom-calendar{
     height: 22%;
   }
@@ -188,7 +184,36 @@
     width: calc(100% - 20px);
   }
 }
-@media (max-width: 351px) {
+@media (max-width: 514px) {
+  .contractor-box{
+    height: 375px;
+  }
+  #contractor-selector .company-logo{
+    width:100%;
+  }
+  #contractor-selector .company-info{
+    width:100%;
+  }
+  #contractor-selector .company-controller{
+    width: 100%;
+  }
+  #contractor-selector .company-info .company-certif img{
+    width: 40%;
+  }
+  #contractor-selector .company-info .certifi-img{
+    width: 40%;
+  }
+  #contractor-selector .company-controller{
+    margin: 10px auto;
+  }
+}
+@media (max-width: 351px){
+  .custom-manage .custom-content #contractor-selector{
+    height: 73%;
+  }
+  #contractor-selector .company-controller button{
+    font-size: 12px;
+  }
   .custom-manage .custom-content #custom-calendar{
     height: 27%;
   }
