@@ -2,9 +2,59 @@ var companyIndex = -1;
 var boolNextOop = -1;
 var companyData = "";
 var boolSelect = -1;
-var customAddress = "50.30.20.30";
-function select(index){
-	
+
+function filter_date(selectDate){
+	$.ajax({
+		type: "GET",
+		dataType: "json",
+		url: "/date/" + encodeURIComponent(selectDate),
+		success: function(data){
+			var tbox = $("#contractor-selector");
+			tbox.empty();
+			var res = "";
+			if(data["dateresult"].length > 0){
+				$.each(data["dateresult"], function(index, value){
+					res += "<div class='contractor-box'>";
+		            res += "<div class='company-logo'>";
+		            res += "<div class='logo-img'><img src='assets/" + value.logo + "' />"
+		            res += "</div>";
+		            res += "</div>";
+		            res += "<div class='company-info'>";
+		            res += "<div class='company-name'>" +  value.name +"</div>";
+		            res += "<div class='company-desc'>" + value.description + "</div>";
+		            res += "<div class='company-certif'>";
+		            if(value.certi1) 
+		                res += "<img src='assets/" + value.certi1 +"' />";
+		            else
+		             	res += "<div class='certifi-img'></div>";
+		                 
+		            if(value.certi2) 
+		                res += "<img src='assets/" + value.certi2 + "' class='last-img' />";
+		            else 
+		                res += "<div class='certifi-img last-img'></div>";
+		               
+		            res += "</div>";
+		            res += "</div>";
+		            res += "<div class='company-controller'>";
+		            res += "<button class='button-gallery' onclick='gallery(" + value.id + ")'>Gallery</button>";
+		            res += "<button class='button-select' onclick='select(" + value.id + ");'>Select</button>";
+		            res += "</div>";
+		            res += "</div>";
+				});
+			}
+			else{
+				res += "<div id='company-valid'>";
+            	res += "<p>Sorry!</p>";
+            	res += "<p>There is no contractor company to service to you!</p>";
+          		res += "</div>";
+			}
+			tbox.append(res);
+		},
+		error: function(req, status, err) {console.log(status, err);}
+	});
+}
+
+function select(index){	
 	companyIndex = index;
 	$.ajax({
 			type: "GET",
@@ -29,9 +79,7 @@ function select(index){
 					tArea.append(resArea);
 					if(boolSelect == -1){
 						tSelect.empty();
-						$("#custom-address-content").empty();
-						tSelect.append('Welcome! Contractor is selected by you.');
-						$("#custom-address-content").append(customAddress);
+						tSelect.append('Welcome! Contractor is selected by you.');	
 					}
 					boolSelect = 0;
 				}
@@ -47,13 +95,31 @@ function select(index){
 		});
 }
 function submitService(){
-	if( $("#custom-product-content").html() == "In Progress" && boolNextOop != 0 ){
+	if( ( $("#custom-product-content").html() == "In Progress" || $("#custom-product-content").html() == "No Data!" ) && boolNextOop != 0 ){
 		boolNextOop = 0;
 		$('#next-button-valid').append("<p style='font-weight:bold;'>Oops!</p><p> You haven’t selected a contractor yet. Take a look through the list and select a contractor by clicking “select” next to the contractors name.</p>"); 
 		return false;
 	}
-	else if( $("#custom-product-content").html() != "In Progress" ){
+	else if( $("#custom-product-content").html() != "In Progress" || $("#custom-product-content").html() == "No Data!" ){
 		alert(companyData);
 		location.href = "/index";
 	}
+}
+
+function gallery(index){
+	$.ajax({
+		type: "GET",
+		dataType: "json",
+		url: "/gallery/" + encodeURIComponent(index),
+		success: function(data){
+			if(data["galleryresult"].length > 0){
+				$.each(data["galleryresult"], function(index, value) {
+					alert(value.carousel);
+				});
+			}
+		},
+		error: function(req, status, err){
+			console.log(status, err);
+		}
+	});
 }

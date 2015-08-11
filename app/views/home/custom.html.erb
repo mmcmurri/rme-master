@@ -22,6 +22,7 @@
   </script>
   <script type="text/javascript" src="assets/modernizr.js"></script>
   <script type="text/javascript" src="assets/custom.js"></script>
+  <script type="text/javascript" src="assets/jquery.min.js"></script>
   <link rel="shortcut icon" type="image/x-icon" href="/assets/New icon.ico">
   <link rel="apple-touch-icon" href="/assets/metric-webclip.png">
 </head>
@@ -36,6 +37,7 @@
           <div class="w-container navbar">
             <nav class="w-nav-menu w-clearfix dropmenu" role="navigation">
               <a class="w-nav-link nav-link businesses drop" href="login_portal.html">Log In</a>
+              <a class="w-nav-link nav-link businesses drop" href="custom.html">Custom</a>
               <a class="w-nav-link nav-link businesses drop" href="business.html">Business</a>
               <a class="w-nav-link nav-link homeowner drop" href="our_service.html">Homeowner</a>
               <a class="w-nav-link nav-link businesses drop" href="/shop">Select Product</a>
@@ -62,7 +64,7 @@
 
       </div>
       <div id="contractor-selector" class="custom-rect">
-        <% if @Contractors %>
+        <% if @Contractors.empty? == false %>
           <%@Contractors.each do |con| %>
             <div class="contractor-box">
               <div class="company-logo">
@@ -70,7 +72,7 @@
               </div>
               <div class="company-info">
                 <div class="company-name"><%= con.name%></div>
-                <div class="company-desc">Service Area Range: <%= con.appro%>, Content: <%= con.description%></div>
+                <div class="company-desc"><%= con.description%></div>
                 <div class="company-certif">
                   <% if con.certi1 %>
                     <img src="assets/<%= con.certi1 %>">
@@ -85,7 +87,7 @@
                 </div>
               </div>
               <div class="company-controller">
-                <button class="button-gallery">Gallery</button>
+                <button class="button-gallery" onclick="gallery(<%= con.id %>);">Gallery</button>
                 <button class="button-select" onclick="select(<%= con.id %>);">Select</button>
               </div>
             </div>
@@ -102,7 +104,7 @@
     <div class="w-col w-col-4 custom-panel custom-rect">
       <div class="w-row panel-input">
         <div id="custom-address-header" class="panel-header">Your Address:</div>
-        <div id="custom-address-content" class="panel-content">In Progress</div>
+        <div id="custom-address-content" class="panel-content"><%= @Customaddress %></div>
       </div>
       <div class="w-row panel-input">
         <div id="custom-area-header" class="panel-header">Approx.Prof Area:</div>

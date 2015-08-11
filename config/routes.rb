@@ -31,7 +31,9 @@ Rails.application.routes.draw do
   get "availability/calendar", to: "availability#calendar"
 
   #ajax url
-  get '/custom/:selector', :to => 'home#getselector', as: :exportFile
+  get '/custom/:selector', :to => 'home#filter_address', as: :exportFile
+  get '/date/:selector', :to => 'home#filter_date'
+  get '/gallery/:selector', :to => 'home#show_gallery'
 
   resources("bookings")
 
