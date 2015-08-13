@@ -11,6 +11,8 @@
   <link rel="stylesheet" type="text/css" href="/assets/webflow.css">
   <link rel="stylesheet" type="text/css" href="/assets/roofingmadeeasy.webflow.css">
   <link rel="stylesheet" type="text/css" href="/assets/custom.css">
+  <link type="text/css" rel="stylesheet" href="/assets/featherlight.min.css" title="Featherlight Styles" />
+  <link type="text/css" rel="stylesheet" href="/assets/featherlight.gallery.min.css" title="Featherlight Styles" />
   
   <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
   <script>
@@ -23,6 +25,7 @@
   <script type="text/javascript" src="assets/modernizr.js"></script>
   <script type="text/javascript" src="assets/custom.js"></script>
   <script type="text/javascript" src="assets/jquery.min.js"></script>
+  <script type="text/javascript" src="assets/jquey-1.11.1.min.js"></script>
   <link rel="shortcut icon" type="image/x-icon" href="/assets/New icon.ico">
   <link rel="apple-touch-icon" href="/assets/metric-webclip.png">
 </head>
@@ -87,16 +90,49 @@
                 </div>
               </div>
               <div class="company-controller">
-                <button class="button-gallery" onclick="gallery(<%= con.id %>);">Gallery</button>
-                <button class="button-select" onclick="select(<%= con.id %>);">Select</button>
+                <div class="wrap-gallery-btm<%= con.id %>">
+                  <a href="assets/<%= con.carousel[0] %>" class="gallery click-btn button-gallery">Gallery</a>
+                  <% con.carousel.each_with_index do |img, index| %>
+                    <% if index != 0 %>
+                      <a class="gallery" href="assets/<%= img %>"></a>
+                    <% end %>
+                  <% end %>
+                </div>
+                <a href="#" class="click-btn button-select" onclick="select(<%= con.id %>);">Select</a>
               </div>
             </div>
           <% end %>
+          <script type="text/javascript" src="assets/featherlight.min.js" charset="utf-8"></script>
+          <script type="text/javascript" src="assets/featherlight.gallery.min.js" charset="utf-8"></script>
+          <script type="text/javascript">
+            set_contractor_count(<%= @Contractors.length %>);
+            var wrap;
+            for(var i = 1; i <= get_contractor_count(); i ++){
+              wrap = "";
+              wrap = ".wrap-gallery-btm";
+              wrap += i;
+              wrap += " .gallery";
+              $(wrap).featherlightGallery({
+                gallery: {
+                  fadeIn: 100,
+                  fadeOut: 100,
+                  next: '&#9664;',
+                  previous: '&#9654'
+                },
+                openSpeed:    300,
+                closeSpeed:   300,
+                variant: 'featherlight-gallery'
+              });    
+            } 
+          </script>
         <% else %>
           <div id="company-valid">
             <p>Sorry!</p>
             <p>There is no contractor company to service to you!</p>
           </div>
+           <script type="text/javascript">
+            set_contractor_count(0);
+          </script>
         <% end %>
       </div>
     </div>
@@ -165,7 +201,6 @@
       </div>
     </div>
   </div>
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script type="text/javascript" src="assets/webflow.js"></script>
   <!--[if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif]-->
 </body>

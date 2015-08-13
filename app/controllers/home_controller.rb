@@ -20,6 +20,8 @@ class HomeController < ApplicationController
                   select("Contractors.*, Companyimgs.logo, Companyimgs.certi1, Companyimgs.certi2, Companyimgs.carousel")
     contractall.each do |con|
       if calc_distance(splcusadd, split_data(con.address) ) <= con.appro
+        jobimgs = con.carousel.split(",")
+        con.carousel = jobimgs        
         @Contractors << con;
       end
     end
@@ -79,15 +81,6 @@ class HomeController < ApplicationController
   def split_data(data)
     spldata = data.split(",")
     return spldata
-  end
-
-  def show_gallery
-    pt = Contractor.joins('LEFT OUTER JOIN Companyimgs ON Companyimgs.name = Contractors.name').
-                  select("Contractors.*, Companyimgs.logo, Companyimgs.certi1, Companyimgs.certi2, Companyimgs.carousel").
-                  where("Contractors.id = ?", params[:selector])
-    respond_to do |format|
-      format.js {render :json => {:galleryresult => pt} }
-    end
   end
 
   def login_portal

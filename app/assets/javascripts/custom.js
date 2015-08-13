@@ -2,7 +2,8 @@ var companyIndex = -1;
 var boolNextOop = -1;
 var companyData = "";
 var boolSelect = -1;
-
+var galleryIndex = -1;
+var contractor_count = 0;
 function filter_date(selectDate){
 	$.ajax({
 		type: "GET",
@@ -12,6 +13,7 @@ function filter_date(selectDate){
 			var tbox = $("#contractor-selector");
 			tbox.empty();
 			var res = "";
+			var galleryImgs;
 			if(data["dateresult"].length > 0){
 				$.each(data["dateresult"], function(index, value){
 					res += "<div class='contractor-box'>";
@@ -36,17 +38,28 @@ function filter_date(selectDate){
 		            res += "</div>";
 		            res += "</div>";
 		            res += "<div class='company-controller'>";
-		            res += "<button class='button-gallery' onclick='gallery(" + value.id + ")'>Gallery</button>";
-		            res += "<button class='button-select' onclick='select(" + value.id + ");'>Select</button>";
+		            res += "<div class='wrap-gallery-btm" + value.id + "'>";
+		            galleryImgs = value.carousel.split(",");
+                  	res += "<a href='assets/" + galleryImgs[0] + "' class='gallery click-btn button-gallery'>Gallery</a>";
+                  	for(var i = 1; i < galleryImgs.length; i++)
+                	{
+                		res += "<a class='gallery' href='assets/" + galleryImgs[i] + "'></a>";
+                	}
+                	res += "</div>";
+               	 	res += "<a href='#' class='click-btn button-select' onclick='select(" + value.id + ");'>Select</a>";
 		            res += "</div>";
 		            res += "</div>";
 				});
+				res += "<script type='text/javascript' src='assets/featherlight.min.js' charset='utf-8'></script>";
+  				res += "<script type='text/javascript' src='assets/featherlight.gallery.min.js' charset='utf-8'></script>";
+				res += "<script type='text/javascript'>var wrap;for(var i = 1; i <= " + galleryImgs.length + "; i ++){wrap = '';wrap = '.wrap-gallery-btm';wrap += i;wrap += ' .gallery';$(wrap).featherlightGallery({gallery: {fadeIn: 100,fadeOut: 100,next: '&#9664;',previous: '&#9654'},openSpeed:    300,closeSpeed:   300,variant: 'featherlight-gallery'});} </script>";
 			}
 			else{
 				res += "<div id='company-valid'>";
             	res += "<p>Sorry!</p>";
             	res += "<p>There is no contractor company to service to you!</p>";
           		res += "</div>";
+          		contractor_count = 0;
 			}
 			tbox.append(res);
 		},
@@ -67,13 +80,13 @@ function select(index){
 				tDetail.empty();
 				tArea.empty();
 				if(data["result"].length > 0){
-					companyData = data["result"];
 					var resDetail = '';
 					var resArea = '';
 					$.each(data["result"], function(index, value) {
-					resDetail = value.description;
-					resArea = value.appro;
-					resArea += " KM";
+						companyData = value;
+						resDetail = value.description;
+						resArea = value.appro;
+						resArea += " KM";
 					});
 					tDetail.append(resDetail);
 					tArea.append(resArea);
@@ -101,25 +114,15 @@ function submitService(){
 		return false;
 	}
 	else if( $("#custom-product-content").html() != "In Progress" || $("#custom-product-content").html() == "No Data!" ){
-		alert(companyData);
+		alert(companyData.name);
 		location.href = "/index";
 	}
 }
 
-function gallery(index){
-	$.ajax({
-		type: "GET",
-		dataType: "json",
-		url: "/gallery/" + encodeURIComponent(index),
-		success: function(data){
-			if(data["galleryresult"].length > 0){
-				$.each(data["galleryresult"], function(index, value) {
-					alert(value.carousel);
-				});
-			}
-		},
-		error: function(req, status, err){
-			console.log(status, err);
-		}
-	});
+function set_contractor_count(setCount){
+	contractor_count = setCount;
+}
+
+function get_contractor_count(){
+	return contractor_count;
 }

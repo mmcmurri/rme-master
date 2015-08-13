@@ -117,14 +117,19 @@
   text-align: center;
   width: 40%;
 }
-#contractor-selector .company-controller button{
-  background-color: #ba202a;
+#contractor-selector .company-controller .click-btn{
+  display: block;
+  float: left;
+  padding: 6px 0;  
   color: white;
-  width: 30%;
+  width: 40%;
   height: 40px;
   border-radius: 10px;
+  border: 3px solid white;
   font-size: 20px;
   font-weight: bold;
+  text-decoration: none;
+  background-color: #ba202a;
 }
 #contractor-selector .company-controller .button-select{
   margin-left: 30px;
@@ -149,6 +154,9 @@
   }
   #contractor-selector .company-controller{
     width: 100%;
+  }
+  .company-controller .button-gallery{
+    margin-left: 8%;
   }
 }
 @media only screen and (min-width:768px) and (max-width: 810px) {
@@ -211,7 +219,7 @@
   .custom-manage .custom-content #contractor-selector{
     height: 73%;
   }
-  #contractor-selector .company-controller button{
+  #contractor-selector .company-controller a{
     font-size: 12px;
   }
   .custom-manage .custom-content #custom-calendar{
@@ -219,6 +227,9 @@
   }
   #calendar-select img{
     margin-left: 0px;
+  }
+  .company-controller .button-gallery{
+    margin-left: 2%;
   }
 }
 #next-button-valid{
