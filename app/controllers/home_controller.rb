@@ -14,7 +14,7 @@ class HomeController < ApplicationController
   def custom
     customadd = "50,30"
     splcusadd = split_data(customadd)
-    @Customaddress = customadd;
+    @Customaddress = customadd
     @Contractors = []
     contractall = Contractor.joins('LEFT OUTER JOIN Companyimgs ON Companyimgs.name = Contractors.name').
                   select("Contractors.*, Companyimgs.logo, Companyimgs.certi1, Companyimgs.certi2, Companyimgs.carousel")
