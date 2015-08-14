@@ -4,6 +4,19 @@ var companyData = "";
 var boolSelect = -1;
 var galleryIndex = -1;
 var contractor_count = 0;
+$(function(){
+	$('.calendar-datepicker').datepicker({
+	  showOn: "button",
+	  dateFormat: 'yy/mm/dd',
+      buttonImage: "assets/calendar.png",
+      buttonImageOnly: true,
+      buttonText: "Select date",
+      onSelect: function(dateText, inst) { 
+      	filter_date(dateText);
+      }
+	});
+	$( ".calendar-datepicker" ).datepicker( "option", "showAnim", "slideDown" );
+});
 function filter_date(selectDate){
 	$.ajax({
 		type: "GET",

@@ -34,8 +34,9 @@ ActiveRecord::Schema.define(version: 20150808091101) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "contractors", force: :cascade do |t|
-    t.string   "add"
+  create_table "contractors", id: false, force: :cascade do |t|
+    t.integer  "id",          null: false
+    t.string   "address"
     t.string   "name"
     t.string   "description"
     t.date     "servicedate"
