@@ -27,7 +27,6 @@
 }
 .custom-manage .custom-content #contractor-selector{
   height: 80%;
-  background-color: #50C0FB;
   overflow-y:scroll;
 }
 .custom-manage .custom-panel{
@@ -40,7 +39,7 @@
   width: 100%;
   margin: 10px 0px;
   padding: 10px 0px;
-  background-color: #BA202A;
+  background-color: black;
   color: #FFF;
   border-radius: 10px;
   font-weight: bold;
@@ -61,7 +60,6 @@
   border: 2px solid black;
   border-radius: 8px;
   margin: 20px auto;
-  background-color: #a6c2fe;
 }
 #contractor-selector .company-logo{
   display: block;
@@ -100,12 +98,14 @@
   width: 100px;
   height: 50px;
   float: left;
+  border: 1px solid black;
 }
 #contractor-selector .company-info .certifi-img{
   float: left;
   width: 100px;
   height: 50px;
   background-color: white;
+  border: 1px solid black;
 }
 .company-certif .last-img{
   margin-left: 10px;
@@ -125,11 +125,11 @@
   width: 40%;
   height: 40px;
   border-radius: 10px;
-  border: 3px solid white;
+  border: 3px solid black;
   font-size: 20px;
   font-weight: bold;
   text-decoration: none;
-  background-color: #ba202a;
+  background-color: black;
 }
 #contractor-selector .company-controller .button-select{
   margin-left: 30px;
