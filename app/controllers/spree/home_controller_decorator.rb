@@ -16,6 +16,22 @@ Spree::HomeController.class_eval do
     @colors = Spree::OptionType.find_by(presentation:"Color").option_values
     @materials = Spree::OptionType.find_by(presentation:"Material").option_values
 
+    @prices = [
+        {name:"$", min:"0", max:"10"},
+        {name:"$$", min:"11", max:"100"},
+        {name:"$$$", min:"101", max:"1000"},
+        {name:"$$$$", min:"1001", max:"10000"},
+        {name:"$$$$$", min:"10001", max:"100000"}
+    ]
+
+    if request.xhr?
+      render :json => {
+          :products => @products, searcher:@searcher, taxonomies:@taxonomies, colors:@colors, materials:@materials, prices:@prices
+      }
+      #respond_to do |format|
+      #  format.js
+      #end
+    end
   end
 
   private
