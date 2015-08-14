@@ -4,6 +4,7 @@ var companyData = "";
 var boolSelect = -1;
 var galleryIndex = -1;
 var contractor_count = 0;
+alert('dd');
 function filter_date(selectDate){
 	$.ajax({
 		type: "GET",
