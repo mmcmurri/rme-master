@@ -16,12 +16,12 @@ class HomeController < ApplicationController
     splcusadd = split_data(customadd)
     @Customaddress = customadd
     @Contractors = []
+    @JobImgs = []
     contractall = Contractor.joins('LEFT OUTER JOIN Companyimgs ON Companyimgs.name = Contractors.name').
                   select("Contractors.*, Companyimgs.logo, Companyimgs.certi1, Companyimgs.certi2, Companyimgs.carousel")
     contractall.each do |con|
       if calc_distance(splcusadd, split_data(con.address) ) <= con.appro
-        jobimgs = con.carousel.split(",")
-        con.carousel = jobimgs        
+        @JobImgs[con.id] = con.carousel.split(",")       
         @Contractors << con;
       end
     end
