@@ -202,6 +202,21 @@
     </div>
   </div>
   <script type="text/javascript" src="assets/webflow.js"></script>
+  <script type="text/javascript">
+    $(function(){
+      $('.calendar-datepicker').datepicker({
+        showOn: "button",
+        dateFormat: 'yy/mm/dd',
+          buttonImage: "assets/calendar.png",
+          buttonImageOnly: true,
+          buttonText: "Select date",
+          onSelect: function(dateText, inst) { 
+            filter_date(dateText);
+          }
+      });
+      $( ".calendar-datepicker" ).datepicker( "option", "showAnim", "slideDown" );
+    });
+  </script>
   <!--[if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif]-->
 </body>
 </html>
