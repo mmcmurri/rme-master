@@ -92,6 +92,7 @@
               <div class="company-controller">
                 <div class="wrap-gallery-btm<%= con.id %>">
                   <a href="assets/<%= con.carousel[0] %>" class="gallery click-btn button-gallery">Gallery</a>
+                  <%= con.carousel %>
                   <% con.carousel.each_with_index do |img, index| %>
                     <% if index != 0 %>
                       <a class="gallery" href="assets/<%= img %>"></a>
