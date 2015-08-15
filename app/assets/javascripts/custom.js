@@ -80,22 +80,21 @@ function select(index){
 				var tSelect = $("#custom-consel-content");
 				tDetail.empty();
 				tArea.empty();
+				tSelect.empty();
 				if(data["result"].length > 0){
 					var resDetail = '';
 					var resArea = '';
+					var resName = '';
 					$.each(data["result"], function(index, value) {
 						companyData = value;
 						resDetail = value.description;
+						resName = value.name;
 						resArea = value.appro;
 						resArea += " KM";
 					});
 					tDetail.append(resDetail);
 					tArea.append(resArea);
-					if(boolSelect == -1){
-						tSelect.empty();
-						tSelect.append('Welcome! Contractor is selected by you.');	
-					}
-					boolSelect = 0;
+					tSelect.append(resName);	
 				}
 				else{
 					tDetail.append('No Data!');
