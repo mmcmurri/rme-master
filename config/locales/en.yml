@@ -21,3 +21,4 @@
 
 en:
   hello: "Hello world"
+  search_product_code_not_found: "Unfortunately, we couldn’t find a match in our system. Be sure to include all characters including"

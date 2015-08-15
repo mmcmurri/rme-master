@@ -5,7 +5,7 @@
 //$( document ).ready(function() {
 (function() {
     Spree.ready(function() {
-        var url = "/shop/shops_ajax";
+        var url = "/shop/shops_ajax.js";
 
         function add_params_to_url(param_name, params) {
 //            if (url_params.length < 1) url_params = "?";
@@ -19,6 +19,7 @@
         }
 
         $("#lsidebar input[type='checkbox']").change(function() {
+
             var url_params = "?";
 
             var materials = $("#lsidebar #shop_by_material :input:checkbox:checked");
@@ -39,6 +40,23 @@
             console.log(url_current);
 
 
+            //$("a#filter").attr("href", url).click();
+
+            $.ajax({
+                method: "GET",
+                url: url,
+//                dataType: "json"
+                //data: { name: "query", colors: "Red" }
+            })
+                .done(function( msg ) {
+                    //alert( "Data Saved: " + msg["ajax"] );
+                    //$("#products").html(msg);
+                    //console.log(msg);
+                }).error(function( msg ) {
+                    //alert( "error: " + msg["ajax"] );
+                });
+
+
 //            var items = $("#lsidebar input:checkbox:checked");
 //            $.each(items, function(index, item) {
 //                var selector = $(item);
@@ -47,3 +65,4 @@
         });
     });
 }).call(this);
+

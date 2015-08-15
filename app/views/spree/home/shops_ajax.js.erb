@@ -1,0 +1,2 @@
+$("#products").replaceWith("<%= escape_javascript(render partial: 'spree/shared/products', locals: { products: @products } ) %>");
+$('#products').slideDown(350);

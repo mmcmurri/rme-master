@@ -1,8 +1,8 @@
 <% if @materials.present? %>
     <h4 class='taxonomy-root'><%= Spree.t(:shop_by_materials) %> </h4>
     <div id="shop_by_material" class="row">
-      <% @materials.each do |item| %>
-          <div class="col-lg-6">
+      <div class="col-md-12">
+        <% @materials.each do |item| %>
             <div class="input-group">
               <input type="text" class="form-control" aria-label="" value="<%= item.name %>" readonly>
               <span class="input-group-addon">
@@ -10,47 +10,46 @@
               </span>
             </div>
             <!-- /input-group -->
-          </div>
-          <!-- /.col-lg-6 -->
-      <% end %>
+        <% end %>
+      </div>
+      <!-- /.col-lg-6 -->
     </div>
-
 <% else %>
 <% end %>
 
 <% if @colors.present? %>
     <h4 class='taxonomy-root'><%= Spree.t(:shop_by_colors) %> </h4>
     <div id="shop_by_color" class="row">
-      <% @colors.each do |item| %>
-          <div class="col-lg-6">
+      <div class="col-md-12">
+        <% @colors.each do |item| %>
             <div class="input-group">
               <input type="text" class="form-control" aria-label="" value="<%= item.name %>" readonly>
               <span class="input-group-addon">
                 <input type="checkbox" id="<%= item.id %>" value="<%= item.name %>" aria-label="">
               </span>
             </div>
-          </div>
-      <% end %>
+        <% end %>
+      </div>
     </div>
 <% else %>
 <% end %>
 
 <% if @taxonomies.present? %>
     <% @taxonomies.each do |taxonomy| %>
-        <h4 class='taxonomy-root'><%= Spree.t(:shop_by_taxonomy, taxonomy:taxonomy.name) %></h4>
-        <div id="shop_by_<%=taxonomy.name.downcase %>" class="row">
-          <% taxonomy.taxons.each do |item| %>
-              <% if item.parent_id == taxonomy.id %>
-              <div class="col-lg-6">
-                <div class="input-group">
-                  <input type="text" class="form-control" aria-label="" value="<%= item.name %>" readonly>
+        <h4 class='taxonomy-root'><%= Spree.t(:shop_by_taxonomy, taxonomy: taxonomy.name) %></h4>
+        <div id="shop_by_<%= taxonomy.name.downcase %>" class="row">
+          <div class="col-md-12">
+            <% taxonomy.taxons.each do |item| %>
+                <% if item.parent_id == taxonomy.id %>
+                    <div class="input-group">
+                      <input type="text" class="form-control" aria-label="" value="<%= item.name %>" readonly>
                 <span class="input-group-addon">
                 <input type="checkbox" id="<%= item.id %>" value="<%= item.name %>" aria-label="">
                 </span>
-                </div>
-              </div>
-              <% end %>
-          <% end %>
+                    </div>
+                <% end %>
+            <% end %>
+          </div>
         </div>
     <% end %>
 <% else %>
@@ -59,16 +58,19 @@
 <% if @prices.present? %>
     <h4 class='taxonomy-root'><%= Spree.t(:shop_by_price) %> </h4>
     <div id="shop_by_price" class="row">
-      <% @prices.each do |item| %>
-          <div class="col-lg-6">
+      <div class="col-md-12">
+        <% @prices.each do |item| %>
             <div class="input-group">
               <input type="text" class="form-control" aria-label="" value="<%= item[:name] %>" readonly>
               <span class="input-group-addon">
-                <input type="checkbox" id="<%= item[:name]%>" value="<%= item[:min] %>,<%= item[:max] %>" aria-label="">
+                <input type="checkbox" id="<%= item[:name] %>" value="<%= item[:min] %>,<%= item[:max] %>" aria-label="">
               </span>
             </div>
-          </div>
-      <% end %>
+        <% end %>
+      </div>
     </div>
 <% else %>
 <% end %>
+
+<%#= button_to "Apply Filter", id:"filter", class:"btn btn-default", remote: true #%>
+<%#= link_to "Go", shops_ajax_path, id:"filter", class:"", remote: true #%>
