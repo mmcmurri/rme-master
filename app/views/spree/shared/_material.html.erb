@@ -67,7 +67,7 @@
                 <div class="input-group">
                   <input type="text" class="form-control" aria-label="" value="<%= item[:name] %>" readonly>
                   <span class="input-group-addon">
-                    <input type="checkbox" name="prices" id="<%= item[:name] %>" value="<%= item[:min] %>,<%= item[:max] %>" aria-label="">
+                    <input type="checkbox" name="prices[]" id="<%= item[:name] %>" value="<%= item[:min] %>,<%= item[:max] %>" aria-label="">
                   </span>
                 </div>
             <% end %>
