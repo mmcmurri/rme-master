@@ -38,6 +38,7 @@ Spree::HomeController.class_eval do
     logger.info request.env
     #@products = Spree::Product.limit(2)
     @colors = Spree::OptionType.find_by(presentation:"Color").try(:option_values)
+    @materials = Spree::OptionType.find_by(presentation:"Material").try(:option_values)
 
     @product_list = [];
     @error = "";
@@ -46,6 +47,16 @@ Spree::HomeController.class_eval do
       @error += "no colors in request\n"
       splitItems = params[:colors].split(",")
       @colors.where(name: splitItems).each do |color|
+        color.variants.each do |variant|
+          @product_list << variant.product if variant.present? && variant.product.present?
+        end
+      end
+    end
+
+    if params[:materials].present?
+      @error += "no materials in request\n"
+      splitItems = params[:materials].split(",")
+      @materials.where(name: splitItems).each do |color|
         color.variants.each do |variant|
           @product_list << variant.product if variant.present? && variant.product.present?
         end
@@ -72,7 +83,6 @@ Spree::HomeController.class_eval do
       end
     end
 
-
     if params[:prices].present?
       @error += "no prices in request\n"
       splitItems = params[:prices].split(",")
@@ -86,7 +96,12 @@ Spree::HomeController.class_eval do
       end
     end
 
-    @products = @product_list.uniq!
+    if @product_list.present?
+      @products = @product_list.uniq()
+    else
+      @products = Spree::Product.all
+    end
+
     #if !@product_list.present?
     #  @products = Spree::Product.limit(3)
     #end

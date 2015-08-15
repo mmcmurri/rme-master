@@ -18,8 +18,7 @@
             return url_params;
         }
 
-        $("#lsidebar input[type='checkbox']").change(function() {
-
+        function make_url_for_ajax_call() {
             var url_params = "?";
 
             var materials = $("#lsidebar #shop_by_material :input:checkbox:checked");
@@ -39,14 +38,13 @@
             var url_current = url+url_params;
             console.log(url_current);
 
-
-            //$("a#filter").attr("href", url).click();
+            //$("a#filter").attr("href", url).click(); //make ajax call automatically
 
             $.ajax({
                 method: "GET",
                 url: url,
-//                dataType: "json"
-                //data: { name: "query", colors: "Red" }
+                //dataType: "json",
+                //data: data //{ name: "query", colors: "Red" }
             })
                 .done(function( msg ) {
                     //alert( "Data Saved: " + msg["ajax"] );
@@ -56,6 +54,15 @@
                     //alert( "error: " + msg["ajax"] );
                 });
 
+
+        }
+
+        $("#lsidebar input[type='checkbox']").change(function() {
+
+            //make_url_for_ajax_call(); //commented/disabled, because in backend don't detected/exist in params["param_name"]
+
+            var data = $('form#form_filters').serializeJSON();
+            $("#btnFilter").click();
 
 //            var items = $("#lsidebar input:checkbox:checked");
 //            $.each(items, function(index, item) {
