@@ -7,15 +7,33 @@ Spree::HomeController.class_eval do
     @products = @searcher.retrieve_products
     @taxonomies = Spree::Taxonomy.includes(root: :children)
 
-    #@material = Spree::Property.find_by(name:"Material")
-    #@color = Spree::Property.find_by(name:"Color")
+    # @material = Spree::Property.find_by(name:"Material")
+    # @color = Spree::Property.find_by(name:"Color")
 
     #@material = Spree::OptionType.find_by_presentation("Material")
     #@color = Spree::OptionType.find_by_presentation("Color")
 
     #@colors = get_available_colors_from_variants()
-    @colors = Spree::OptionType.find_by(presentation: "Color").option_values
-    @materials = Spree::OptionType.find_by(presentation: "Material").option_values
+
+    propertyColor = Spree::Property.find_by(name:"Color")
+    propertyMaterial = Spree::Property.find_by(name:"Material")
+    materialsFromProperties = Spree::ProductProperty.where(property_id:propertyMaterial)
+    colorsFromProperties = Spree::ProductProperty.where(property_id:propertyColor)
+
+    colorsFromOptionValues = Spree::OptionType.find_by(presentation: "Color").option_values
+    materialsFromOptionValues = Spree::OptionType.find_by(presentation: "Material").option_values
+
+
+    @colors = []
+    colorsFromOptionValues.each { |p| @colors << p.presentation }
+    colorsFromProperties.each { |p| @colors << p.value }
+
+    @materials = []
+    materialsFromOptionValues.each { |p| @materials << p.presentation }
+    materialsFromProperties.each { |p| @materials << p.value }
+
+    @materials.uniq!
+    @colors.uniq!
 
     @prices = get_prices();
 
@@ -78,7 +96,19 @@ Spree::HomeController.class_eval do
 
     # if only ShopByColor and ShopByMaterial filters are applied together.
     if arrColors.present? && arrMaterials.present? && arrPrices.blank? && arrCategories.blank?
-
+      # arrMaterials = ["Canvas"]
+      # arrColors = ["White"]
+      values = arrColors+arrMaterials
+      products = Spree::Product.
+          includes(:product_properties, :properties).
+          where("spree_product_properties.value" => values,"spree_properties.name" => ["Color","Material"]
+          ).uniq
+      # products = Spree::Product.
+      #     includes(:product_properties, :properties).
+      #     where("spree_product_properties.value" => arrColors,"spree_properties.name" => "Color"
+      #     ).where(
+      #     "spree_product_properties.value" => arrMaterials,"spree_properties.name" => "Material"
+      # ).uniq
     end
 
     # if no any selected filters - display all products

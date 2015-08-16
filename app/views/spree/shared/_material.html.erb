@@ -8,9 +8,9 @@
           <div class="col-md-12">
             <% @materials.each do |item| %>
                 <div class="input-group">
-                  <input type="text" class="form-control" aria-label="" value="<%= item.presentation %>" readonly>
+                  <input type="text" class="form-control" aria-label="" value="<%= item %>" readonly>
                   <span class="input-group-addon">
-                    <input type="checkbox" name="materials[]" id="<%= item.id %>" value="<%= item.presentation %>" aria-label="">
+                    <input type="checkbox" name="materials[]" id="" value="<%= item %>" aria-label="">
                   </span>
                 </div>
                 <!-- /input-group -->
@@ -27,9 +27,9 @@
           <div class="col-md-12">
             <% @colors.each do |item| %>
                 <div class="input-group">
-                  <input type="text" class="form-control" aria-label="" value="<%= item.name %>" readonly>
+                  <input type="text" class="form-control" aria-label="" value="<%= item %>" readonly>
                   <span class="input-group-addon">
-                    <input type="checkbox" name="colors[]" id="<%= item.id %>" value="<%= item.name %>" aria-label="">
+                    <input type="checkbox" name="colors[]" id="" value="<%= item %>" aria-label="">
                   </span>
                 </div>
             <% end %>
