@@ -212,6 +212,16 @@ Spree::HomeController.class_eval do
       products = productColors
     end
 
+    # if only filters (ShopByMaterial, ShopByBrand, ShopByCategory) applied
+    if arrMaterials.present? && arrCategories.present? && arrPrices.blank? && arrColors.blank?
+      taxons = Spree::Taxon.where(name: arrCategories)
+      productMaterials = Spree::Product.includes(:product_properties, :properties).
+          where("spree_product_properties.value" => arrMaterials, "spree_properties.name" => "Material")
+
+      #TODO: add variants from option_values to products if needed
+      products = productMaterials
+    end
+
 
     # if no any selected filters - display all products
     if arrCategories.blank? && arrColors.blank? && arrMaterials.blank? && arrPrices.blank?
