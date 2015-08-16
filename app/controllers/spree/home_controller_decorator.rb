@@ -42,15 +42,19 @@ Spree::HomeController.class_eval do
 
     products = []
 
-    #Search/filtering the products by their brands or/and their categories only.
+    # Search/filtering the products by their brands or/and their categories only.
     if arrCategories.present? && arrColors.blank? && arrMaterials.blank? && arrPrices.blank?
       taxons = Spree::Taxon.where(name: arrCategories)
-      products += Spree::Product.in_taxons(taxons)
+      products = Spree::Product.in_taxons(taxons)
       respond_to_and_exit(products)
       return
     end
 
-
+    # if only filter.shop_by_price applied
+    if arrPrices.present?
+      priceMix, priceMax = get_min_and_max_price_from_string_array(arrPrices)
+      products = Spree::Product.price_between(priceMix, priceMax)
+    end
 
     # if no any selected filters - display all products
     if arrCategories.blank? && arrColors.blank? && arrMaterials.blank? && arrPrices.blank?
@@ -59,11 +63,6 @@ Spree::HomeController.class_eval do
 
     respond_to_and_exit(products)
     return
-
-    if arrPrices.present?
-      priceMix, priceMax = get_min_and_max_price_from_string_array(arrPrices)
-      products += Spree::Product.price_between(priceMix, priceMax)
-    end
 
     #handle product variants
     @shops = []
