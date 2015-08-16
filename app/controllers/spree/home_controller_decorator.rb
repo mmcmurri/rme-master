@@ -165,7 +165,7 @@ Spree::HomeController.class_eval do
                              .uniq.price_between(priceMin, priceMax)
 
       #TODO: check it (may be return duplicates of variants)
-      productsForVariants = Spree::Product.in_taxons(taxons)
+      productsForVariants = Spree::Product.in_taxons(taxons).uniq.price_between(priceMin, priceMax)
       productsForVariants.each do |product|
         variants = product.variants.includes(:option_values).where("spree_option_values.presentation" => arrMaterials).uniq if product.present? && product.variants.present?
         variants.each { |variant| productMaterials << variant if variant.present? } if variants.present?# add variant to products
@@ -194,6 +194,22 @@ Spree::HomeController.class_eval do
         variants.each { |variant| productColors << variant if variant.present? } if variants.present?# add variant to products
       end
       products = productColors#.uniq
+    end
+
+    # if only filters (ShopByColor and ShopByPrice) applied
+    if arrColors.present? && arrPrices.present? && arrCategories.blank? && arrMaterials.blank?
+      priceMin, priceMax = get_min_and_max_price_from_string_array(arrPrices)
+
+      productColors = Spree::Product.includes(:product_properties, :properties).
+          where("spree_product_properties.value" => arrColors, "spree_properties.name" => "Color").
+          uniq.price_between(priceMin, priceMax)
+
+      # searching in product variants
+      variants = Spree::Variant.includes(:option_values).where("spree_option_values.presentation" => arrColors).
+          joins(:prices).where("spree_prices.amount > ? and spree_prices.amount < ?", priceMin, priceMax) #search products by color in his variants.
+      variants.each { |variant| productColors << variant if variant.present? && variant.product.present? } # add variant to products
+
+      products = productColors
     end
 
 
