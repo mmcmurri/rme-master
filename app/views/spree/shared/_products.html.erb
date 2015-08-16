@@ -37,6 +37,7 @@
             <div class="panel-body text-center product-body">
               <%= link_to small_image(product, itemprop: "image"), url, itemprop: 'url' %><br/>
               <%= link_to truncate(product.name, length: 50), url, class: 'info', itemprop: "name", title: product.name %>
+              <p><%=product.sku%></p>
             </div>
             <div class="panel-footer text-center">
               <span itemprop="offers" itemscope itemtype="https://schema.org/Offer">
