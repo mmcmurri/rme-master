@@ -64,8 +64,8 @@ Spree::HomeController.class_eval do
       splitItems = params[:materials].split(",")
       productMaterials = Spree::Product.includes(:product_properties, :properties).where("spree_product_properties.value" => splitItems, "spree_properties.name" => "Material")
 
-      variants = Spree::Variant.includes(:option_values).where("spree_option_values.name" => splitItems) #search products by color in his variants.
-      variants.each { |variant| productMaterials << variant if variant.present? && variant.product.present? }        #add variants to products
+      variants = Spree::Variant.includes(:option_values).where("spree_option_values.name" => splitItems)          #search products by color in his variants.
+      variants.each { |variant| productMaterials << variant if variant.present? && variant.product.present? }     #add variants to products
 
       # @materials = Spree::OptionType.find_by(name:"Material").try(:option_values)
       # splitItems = params[:materials].split(",")
@@ -84,12 +84,31 @@ Spree::HomeController.class_eval do
 
     productCategories = []
     if params[:categories].present?
-      splitItems = params[:categories].split(",")
-      Spree::Taxon.where(name: splitItems).each do |taxon|
-        taxon.products.each do |product|
-          productCategories << product if product.present?
-        end
-      end
+
+      # splitItems = params[:categories].split(",")
+      # #productCategories = Spree::Product.includes(:product_properties, :properties).where("spree_product_properties.value" => splitItems, "spree_properties.name" => "Brand")
+      # productCategories = Spree::Product.includes(:taxons).where("spree_taxons.name" => splitItems)
+      # if productCategories.blank? #search in taxonomies ("Clothing" for example)
+      #   productCategories = Spree::Taxonomy.where(:name => splitItems)
+      # end
+
+      splitItems = params[:categories].split(",") # ["Bags","Mugs", "Clothing"]
+      #productCategories = Spree::Product.includes(:taxons).where("spree_taxons.name":splitItems)
+
+      taxons = Spree::Taxon.where(name: splitItems)
+      productCategories = Spree::Product.in_taxons(taxons)
+
+      # splitItems = ["Mugs", "Bags"]
+      # splitItems = ["Clothing"]
+      # t=Spree::Taxon.where(name:splitItems)
+      # Spree::Product.in_taxons(t).count
+
+      # Spree::Taxon.find_by(name: splitItems).each do |taxon|
+      #   taxon.products.each do |product|
+      #     productCategories << product if product.present?
+      #   end
+      # end
+
       @errors << "no any products with selected categor(y/ies) or brand(s) in request." if productCategories.blank?
     else
       #TODO: display the filters at the top of the products section.
