@@ -49,13 +49,13 @@ Spree::HomeController.class_eval do
     end
 
     # if only filter.shop_by_price applied
-    if arrPrices.present? && arrCategories.blank && arrColors.blank? && arrMaterials.blank?
+    if arrPrices.present? && arrCategories.blank? && arrColors.blank? && arrMaterials.blank?
       priceMix, priceMax = get_min_and_max_price_from_string_array(arrPrices)
       products = Spree::Product.price_between(priceMix, priceMax)
     end
 
     # if only filter.shop_by_material applied
-    if arrMaterials.present? && arrPrices.blank && arrCategories.blank && arrColors.blank?
+    if arrMaterials.present? && arrPrices.blank? && arrCategories.blank? && arrColors.blank?
       productMaterials = Spree::Product.includes(:product_properties, :properties).where("spree_product_properties.value" => arrMaterials, "spree_properties.name" => "Material").uniq
 
       # searching in product variants
@@ -66,7 +66,7 @@ Spree::HomeController.class_eval do
     end
 
     # if only filter.shop_by_color applied
-    if arrColors.present? && arrPrices.blank && arrCategories.blank && arrMaterials.blank?
+    if arrColors.present? && arrPrices.blank? && arrCategories.blank? && arrMaterials.blank?
       productColors = Spree::Product.includes(:product_properties, :properties).where("spree_product_properties.value" => arrColors, "spree_properties.name" => "Color").uniq
 
       # searching in product variants
@@ -76,16 +76,17 @@ Spree::HomeController.class_eval do
       products = productColors
     end
 
+    # if only ShopByColor and ShopByMaterial filters are applied together.
+    if arrColors.present? && arrMaterials.present? && arrPrices.blank? && arrCategories.blank?
 
-    
+    end
+
     # if no any selected filters - display all products
     if arrCategories.blank? && arrColors.blank? && arrMaterials.blank? && arrPrices.blank?
-      products = Product.all
+      products = Spree::Product.all
     end
 
     respond_to_and_exit(products)
-    return
-
 
     # products.each do |product|
     #   if product.variants.present?
@@ -107,14 +108,6 @@ Spree::HomeController.class_eval do
     #     #@shops << product
     #   end
     # end
-
-    @products = products.uniq
-    @errors = []
-    respond_to do |format|
-      format.js # { render errors: @errors, :products => @products }
-    end
-
-
   end
 
   def shop_ajax_add_mode
@@ -261,7 +254,7 @@ Spree::HomeController.class_eval do
   private
 
   def respond_to_and_exit(items)
-    @products = items.uniq
+    @products = items#.uniq
     respond_to do |format|
       format.js # { render errors: @errors, :products => @products }
     end
