@@ -50,6 +50,16 @@ Spree::HomeController.class_eval do
       return
     end
 
+
+
+    # if no any selected filters - display all products
+    if arrCategories.blank? && arrColors.blank? && arrMaterials.blank? && arrPrices.blank?
+      products = Product.all
+    end
+
+    respond_to_and_exit(products)
+    return
+
     if arrPrices.present?
       priceMix, priceMax = get_min_and_max_price_from_string_array(arrPrices)
       products += Spree::Product.price_between(priceMix, priceMax)
