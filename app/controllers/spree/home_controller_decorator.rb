@@ -35,62 +35,61 @@ Spree::HomeController.class_eval do
   end
 
   def shops_ajax
-    logger.info request.env
-    #@products = Spree::Product.limit(2)
-    @colors = Spree::OptionType.find_by(presentation:"Color").try(:option_values)
-    @materials = Spree::OptionType.find_by(presentation:"Material").try(:option_values)
-
-    product_list = [];
-    @error = "";
-
+    product_list = []
+    @errors = []
 
     if params[:colors].present?
-      @error += "no colors in request\n"
-      splitItems = params[:colors].split(",")
-      @colors.where(name: splitItems).each do |color|
-        color.variants.each do |variant|
-          product_list << variant.product if variant.present? && variant.product.present?
-        end
-      end
-    end
+      splitItems = params[:colors].split(",") # here we create the color array/hash for searching products by them.
 
+      #search products by color in his properties
+      product_list = Spree::Product.includes(:product_properties, :properties).where("spree_product_properties.value" => splitItems, "spree_properties.name"=>"Color")
+
+      variants = Spree::Variant.includes(:option_values).where("spree_option_values.presentation" => splitItems) #search products by color in his variants.
+      variants.each { |variant| product_list << variant if variant.present? && variant.product.present? }        #add variants to products
+
+      @errors << "no products with selected color(s) in request" if product_list.blank?
+
+      # @colors = Spree::OptionType.find_by(presentation:"Color").try(:option_values)
+      # @colors.where(name: splitItems).each do |color|
+      #   color.variants.each do |variant|
+      #     product_list << variant.product if variant.present? && variant.product.present?
+      #   end
+      # end
+    else
+      #TODO: display the filters at the top of the products section.
+    end
 
     productMaterials = []
     if params[:materials].present?
-      @error += "no materials in request\n"
+      @materials = Spree::OptionType.find_by(presentation:"Material").try(:option_values)
       splitItems = params[:materials].split(",")
       @materials.where(name: splitItems).each do |color|
         color.variants.each do |variant|
           productMaterials << variant.product if variant.present? && variant.product.present?
         end
       end
+      @errors << "no products with selected material(s) in request" if productMaterials.blank?
+    else
+      #TODO: display the filters at the top of the products section.
     end
     product_list = add_or_eq(product_list, productMaterials)
 
 
     productCategories = []
     if params[:categories].present?
-      @error += "no categories in request\n"
       splitItems = params[:categories].split(",")
       Spree::Taxon.where(name: splitItems).each do |taxon|
         taxon.products.each do |product|
           productCategories << product if product.present?
         end
       end
+      @errors << "no any products with selected categor(y/ies) or brand(s) in request." if productCategories.blank?
+    else
+      #TODO: display the filters at the top of the products section.
     end
     product_list = add_or_eq(product_list, productCategories)
 
     if params[:prices].present?
-      @error += "no prices in request\n"
-
-      # Spree::Product.add_search_scope :price_range_any do |*opts|
-      #   conds = opts.map {|o| price_filter[:conds][o]}.reject { |c| c.nil? }
-      #   scope = conds.shift
-      #   conds.each do |new_scope|
-      #     scope = scope.or(new_scope)
-      #   end
-      #   Spree::Product.joins(master: :default_price).where(scope)
-      # end
 
       productPrices = params[:prices]
       intPrices = []
@@ -106,7 +105,10 @@ Spree::HomeController.class_eval do
 
       productPrices = Spree::Product.price_between(priceMin, priceMax)
       product_list = add_or_eq(product_list, productPrices)
+      @errors << "no products with selected price(s) in request" if productPrices.blank?
 
+    else
+      #TODO: display the filters at the top of the products section.
     end
 
     if product_list.present?
@@ -116,7 +118,7 @@ Spree::HomeController.class_eval do
     end
 
     respond_to do |format|
-      format.js { render ajax:"ajaxOk", error:@error, :products => @products }
+      format.js { render ajax:"ajaxOk", errors:@errors, :products => @products }
     end
 
     #render :json => {
@@ -129,13 +131,6 @@ Spree::HomeController.class_eval do
     results = []
     if oldItems.present?
       results = oldItems+newItems
-      # oldItems.each do |oldItem|
-      #   newItems.each do |newItem|
-      #     # results << newItem if newItem.name.equal?(oldItem.name)# && newItem.id==oldItem.id
-      #   end
-      # end
-      #oldItems = oldItems.find(newItems) if newItems.present?
-      #oldItems = [] if oldItems.blank? && oldItems.count<1
     else
       results = newItems
     end
@@ -174,21 +169,6 @@ Spree::HomeController.class_eval do
   def product_selected
     @products = Spree::Product.take(3)
     @product_item = Spree::Product.find(1)
-  end
-
-  def price_filter
-    v = Spree::Price.arel_table
-    conds = [ [ Spree.t(:under_price, price: format_price(10))     , v[:amount].lteq(10)],
-              [ "#{format_price(10)} - #{format_price(15)}"        , v[:amount].in(10..15)],
-              [ "#{format_price(15)} - #{format_price(18)}"        , v[:amount].in(15..18)],
-              [ "#{format_price(18)} - #{format_price(20)}"        , v[:amount].in(18..20)],
-              [ Spree.t(:or_over_price, price: format_price(20)) , v[:amount].gteq(20)]]
-    {
-        name:   Spree.t(:price_range),
-        scope:  :price_range_any,
-        conds:  Hash[*conds.flatten],
-        labels: conds.map { |k,v| [k, k] }
-    }
   end
 
   def format_price(amount)
