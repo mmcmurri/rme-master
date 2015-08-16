@@ -152,6 +152,31 @@ Spree::HomeController.class_eval do
       products = productMaterials
     end
 
+    # if ShopByMaterial, ShopByPrice, ShopByCateory and ShopByBrand filters applied
+    if arrMaterials.present? && arrPrices.present? && arrCategories.present? && arrColors.blank?
+      taxons = Spree::Taxon.where(name: arrCategories)
+      priceMin, priceMax = get_min_and_max_price_from_string_array(arrPrices)
+
+      productMaterials = Spree::Product.in_taxons(taxons).includes(:product_properties, :properties).
+          where("spree_product_properties.value" => values, "spree_properties.name" => ["Color", "Material"]
+          ).
+          includes(:product_properties, :properties)
+                             .where("spree_product_properties.value" => arrMaterials, "spree_properties.name" => "Material")
+                             .uniq.price_between(priceMin, priceMax)
+
+      #TODO: add variants from option_values to products if needed
+      # searching in product variants
+      # variants = Spree::Product.includes(:variants).joins("INNER JOIN ON spree_option_values_variants (spree_option_values_variants.id = spree_variants.device_id)")
+      # .where("spree_option_values.presentation" => arrMaterials).uniq.joins(:prices).where("spree_prices.amount > ? and spree_prices.amount < ?", priceMin, priceMax) #search products by material in his variants.
+      # variants.each { |variant| productMaterials << variant if variant.present? && variant.product.present? } # add variant to products
+      productsForVariants = Spree::Product.in_taxons(taxons)
+      productsForVariants.each do |product|
+        variants = product.variants.includes(:option_values).where("spree_option_values.presentation" => arrMaterials).uniq if product.present? && product.variants.present?
+        variants.each { |variant| productMaterials << variant if variant.present? } if variants.present?# add variant to products
+      end
+      products = productMaterials#.uniq
+    end
+
     # if no any selected filters - display all products
     if arrCategories.blank? && arrColors.blank? && arrMaterials.blank? && arrPrices.blank?
       products = Spree::Product.all
