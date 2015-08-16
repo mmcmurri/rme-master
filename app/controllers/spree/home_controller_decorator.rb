@@ -113,6 +113,40 @@ Spree::HomeController.class_eval do
       products = filter_products_by_price(products, arrPrices) if products.present?
     end
 
+    # if all filters (ShopByColor, ShopByMaterial, ShopByPrice, ShopByCategories) are applied together.
+    if arrColors.present? && arrMaterials.present? && arrPrices.present? && arrCategories.blank?
+      values = arrColors + arrMaterials
+      products = Spree::Product.
+          includes(:product_properties, :properties).
+          where("spree_product_properties.value" => values,"spree_properties.name" => ["Color", "Material"]
+          ).uniq
+      products = filter_products_by_price(products, arrPrices) if products.present?
+      #TODO: add variants from option_values to products if needed
+    end
+
+    # if all filters (ShopByColor, ShopByMaterial, ShopByPrice, ShopByCategory, ShopByBrand) are applied together.
+    if arrColors.present? && arrMaterials.present? && arrPrices.present? && arrCategories.present?
+      # taxon_products = current_taxon.products
+      # children_products = current_taxon.children.includes(:products).map(&:products).flatten.compact.uniq
+
+      values = arrColors + arrMaterials
+      taxons = Spree::Taxon.where(name: arrCategories)
+      products = Spree::Product.in_taxons(taxons).includes(:product_properties, :properties).
+          where("spree_product_properties.value" => values,"spree_properties.name" => ["Color", "Material"]
+          ).uniq
+      products = filter_products_by_price(products, arrPrices) if products.present?
+
+      # if products.present?
+      #   values = arrColors + arrMaterials
+      #   products = products.includes(:product_properties, :properties).
+      #       where("spree_product_properties.value" => values,"spree_properties.name" => ["Color", "Material"]
+      #       ).uniq
+      #   products = filter_products_by_price(products, arrPrices) if products.present?
+      # end
+
+      #TODO: add variants from option_values to products if needed
+    end
+
     # if no any selected filters - display all products
     if arrCategories.blank? && arrColors.blank? && arrMaterials.blank? && arrPrices.blank?
       products = Spree::Product.all
