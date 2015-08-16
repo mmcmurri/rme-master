@@ -68,8 +68,7 @@ Spree::HomeController.class_eval do
 
     # if only filter.shop_by_price applied
     if arrPrices.present? && arrCategories.blank? && arrColors.blank? && arrMaterials.blank?
-      priceMix, priceMax = get_min_and_max_price_from_string_array(arrPrices)
-      products = Spree::Product.price_between(priceMix, priceMax)
+      products = filter_products_by_price(Spree::Product.all, arrPrices)
     end
 
     # if only filter.shop_by_material applied
@@ -96,19 +95,22 @@ Spree::HomeController.class_eval do
 
     # if only ShopByColor and ShopByMaterial filters are applied together.
     if arrColors.present? && arrMaterials.present? && arrPrices.blank? && arrCategories.blank?
-      # arrMaterials = ["Canvas"]
-      # arrColors = ["White"]
       values = arrColors+arrMaterials
       products = Spree::Product.
           includes(:product_properties, :properties).
           where("spree_product_properties.value" => values,"spree_properties.name" => ["Color","Material"]
           ).uniq
-      # products = Spree::Product.
-      #     includes(:product_properties, :properties).
-      #     where("spree_product_properties.value" => arrColors,"spree_properties.name" => "Color"
-      #     ).where(
-      #     "spree_product_properties.value" => arrMaterials,"spree_properties.name" => "Material"
-      # ).uniq
+    end
+
+    # if only ShopByColor, ShopByMaterial and ShopByPrice filters are applied together.
+    if arrColors.present? && arrMaterials.present? && arrPrices.present? && arrCategories.blank?
+
+      values = arrColors+arrMaterials
+      products = Spree::Product.
+          includes(:product_properties, :properties).
+          where("spree_product_properties.value" => values,"spree_properties.name" => ["Color","Material"]
+          ).uniq
+      products = filter_products_by_price(products, arrPrices) if products.present?
     end
 
     # if no any selected filters - display all products
@@ -282,6 +284,11 @@ Spree::HomeController.class_eval do
 
 
   private
+
+  def filter_products_by_price(items, arrPrices)
+    priceMix, priceMax = get_min_and_max_price_from_string_array(arrPrices)
+    products = items.price_between(priceMix, priceMax)
+  end
 
   def respond_to_and_exit(items)
     @products = items#.uniq
