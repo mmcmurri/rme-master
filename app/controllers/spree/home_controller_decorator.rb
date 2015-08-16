@@ -41,9 +41,13 @@ Spree::HomeController.class_eval do
     arrPrices = params[:prices] if params[:prices].present?
 
     products = []
-    if arrCategories.present?
+
+    #Search/filtering the products by their brands or/and their categories only.
+    if arrCategories.present? && arrColors.blank? && arrMaterials.blank? && arrPrices.blank?
       taxons = Spree::Taxon.where(name: arrCategories)
       products += Spree::Product.in_taxons(taxons)
+      respond_to_and_exit(products)
+      return
     end
 
     if arrPrices.present?
@@ -244,6 +248,13 @@ Spree::HomeController.class_eval do
 
 
   private
+
+  def respond_to_and_exit(items)
+    @products = items.uniq
+    respond_to do |format|
+      format.js # { render errors: @errors, :products => @products }
+    end
+  end
 
   def split_params ajax_params
     arrSplit = []
