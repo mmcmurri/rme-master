@@ -180,6 +180,22 @@ Spree::HomeController.class_eval do
       products = filter_products_by_price(products, arrPrices) if products.present?
     end
 
+    # if filters (ShopByColor, ShopByCategory, ShopByBrand) are applied together.
+    if arrColors.present? && arrCategories.present? && arrMaterials.blank? && arrPrices.blank?
+      taxons = Spree::Taxon.where(name: arrCategories)
+      productColors = Spree::Product.in_taxons(taxons).includes(:product_properties, :properties).
+          where("spree_product_properties.value" => arrColors, "spree_properties.name" => "Color"
+          )#.uniq
+      #TODO: add variants from option_values to products if needed
+      #TODO: check it (may be return duplicates of variants)
+      productsForVariants = Spree::Product.in_taxons(taxons)
+      productsForVariants.each do |product|
+        variants = product.variants.includes(:option_values).where("spree_option_values.presentation" => arrColors).uniq if product.present? && product.variants.present?
+        variants.each { |variant| productColors << variant if variant.present? } if variants.present?# add variant to products
+      end
+      products = productColors#.uniq
+    end
+
 
     # if no any selected filters - display all products
     if arrCategories.blank? && arrColors.blank? && arrMaterials.blank? && arrPrices.blank?
