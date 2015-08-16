@@ -49,7 +49,7 @@ Spree::HomeController.class_eval do
 
       @errors << "no products with selected color(s) in request" if product_list.blank?
 
-      # @colors = Spree::OptionType.find_by(presentation:"Color").try(:option_values)
+      # @colors = Spree::OptionType.find_by(name:"Color").try(:option_values)
       # @colors.where(name: splitItems).each do |color|
       #   color.variants.each do |variant|
       #     product_list << variant.product if variant.present? && variant.product.present?
@@ -61,13 +61,20 @@ Spree::HomeController.class_eval do
 
     productMaterials = []
     if params[:materials].present?
-      @materials = Spree::OptionType.find_by(presentation:"Material").try(:option_values)
       splitItems = params[:materials].split(",")
-      @materials.where(name: splitItems).each do |color|
-        color.variants.each do |variant|
-          productMaterials << variant.product if variant.present? && variant.product.present?
-        end
-      end
+      productMaterials = Spree::Product.includes(:product_properties, :properties).where("spree_product_properties.value" => splitItems, "spree_properties.name" => "Material")
+
+      variants = Spree::Variant.includes(:option_values).where("spree_option_values.name" => splitItems) #search products by color in his variants.
+      variants.each { |variant| productMaterials << variant if variant.present? && variant.product.present? }        #add variants to products
+
+      # @materials = Spree::OptionType.find_by(name:"Material").try(:option_values)
+      # splitItems = params[:materials].split(",")
+      # @materials.where(name: splitItems).each do |material|
+      #   material.variants.each do |variant|
+      #     productMaterials << variant.product if variant.present? && variant.product.present?
+      #   end
+      # end
+
       @errors << "no products with selected material(s) in request" if productMaterials.blank?
     else
       #TODO: display the filters at the top of the products section.
