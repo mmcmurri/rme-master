@@ -64,7 +64,7 @@ Spree::HomeController.class_eval do
 
     #searching by sku (product code)
     if sku.present?
-      variants = Spree::Variant.where(sku:sku.upcase)
+      variants = Spree::Variant.where(sku:sku.strip.upcase)
       respond_to_and_exit(variants)
       return
     end

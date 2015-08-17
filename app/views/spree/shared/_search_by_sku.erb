@@ -1,20 +1,9 @@
 <%= form_tag(shops_ajax_path, method: "get", id: "form_filters", remote: true) do %>
     <div class="search_by_sku input-group">
       <span class="input-group-btn">
-
-        <%submit_tag("Go!", remote: true, id: "search_by_sku", class: "btn btn-default btn-group-justified") do %>
-          <%= content_tag(:span, "", class: "glyphicon glyphicon-search") %>
-        <% end %>
-
         <%=button_tag(type: 'submit', class: "btn btn-default", remote: true) do %>
-          <%= content_tag(:span, "", class: "glyphicon glyphicon-search") %>
+          <%=content_tag(:span, "", class: "glyphicon glyphicon-search") %>
         <% end %>
-
-        <%content_tag :button, remote: true, type: submit, class: "btn btn-default" do %>
-            <span class="glyphicon glyphicon-search"></span>
-            Go!
-        <% end %>
-
       </span>
       <input type="text" name="sku" class="form-control" placeholder="Search by sku...">
     </div><!-- /input-group -->
