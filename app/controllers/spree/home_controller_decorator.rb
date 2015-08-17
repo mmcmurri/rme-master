@@ -53,12 +53,21 @@ Spree::HomeController.class_eval do
   end
 
   def shops_ajax
+
+    sku = params[:sku]
     arrColors = split_params params[:colors]
     arrMaterials = split_params params[:materials]
     arrCategories = split_params split_params params[:categories]
     arrPrices = params[:prices] if params[:prices].present?
 
     products = []
+
+    #searching by sku (product code)
+    if sku.present?
+      variants = Spree::Variant.where(sku:sku.upcase)
+      respond_to_and_exit(variants)
+      return
+    end
 
     # Search/filtering the products by their brands or/and their categories only.
     if arrCategories.present? && arrColors.blank? && arrMaterials.blank? && arrPrices.blank?
