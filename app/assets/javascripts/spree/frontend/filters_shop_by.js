@@ -5,6 +5,9 @@
 //$( document ).ready(function() {
 (function() {
     Spree.ready(function() {
+
+        init();
+
         var url = "/shop/shops_ajax.js";
 
         function add_params_to_url(param_name, params) {
@@ -17,6 +20,7 @@
             url_params += "&";
             return url_params;
         }
+
 
         function make_url_for_ajax_call() {
             var url_params = "?";
@@ -54,7 +58,6 @@
                     //alert( "error: " + msg["ajax"] );
                 });
 
-
         }
 
         $("#lsidebar input[type='checkbox']").change(function() {
@@ -70,6 +73,24 @@
 //                console.log(index+") status:"+selector.is(":checked")+" val:"+selector.val()+" id:"+selector.attr("id"))
 //            });
         });
+
+        function init() {
+            $("#product_details img").load(function () {
+                var paddingTop = 40;
+                var heightOfLeftSidebar = $("#lsidebar").height();
+                var heightProductDetails = $("#product_details").height();
+                var heightProducts = heightOfLeftSidebar - heightProductDetails - paddingTop;
+                //console.log("hLS:" + heightOfLeftSidebar + " - hPDetails:" + heightProductDetails + "=" + heightProducts);
+                $("#products.products").css('height', heightProducts);
+
+
+                var heightOfItemsILike = $("#lsidebar").height() - $(".search_by_sku").height() -
+                    $(".rsidebar_products_i_like h4").height() - $(".rsidebar_product_selected").height() - 80;//- paddingTop - 20;
+                $(".products_liked").css('height', heightOfItemsILike);
+             });
+
+        };
+
     });
 }).call(this);
 

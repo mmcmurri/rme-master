@@ -130,7 +130,6 @@ table {
 .products {
   overflow-y: scroll;
   height: 300px;
-
 }
 
 .products_liked {
@@ -140,4 +139,8 @@ table {
 
 .product-body {
   height: auto;
+}
+
+.rsidebar_product_selected {
+  padding-top: 20px;
 }
