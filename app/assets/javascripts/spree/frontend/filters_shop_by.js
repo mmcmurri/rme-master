@@ -6,8 +6,6 @@
 (function() {
     Spree.ready(function() {
 
-        init();
-
         var url = "/shop/shops_ajax.js";
 
         function add_params_to_url(param_name, params) {
@@ -20,7 +18,6 @@
             url_params += "&";
             return url_params;
         }
-
 
         function make_url_for_ajax_call() {
             var url_params = "?";
@@ -74,21 +71,23 @@
 //            });
         });
 
-        function init() {
-            $("#product_details img").load(function () {
-                var paddingTop = 40;
-                var heightOfLeftSidebar = $("#lsidebar").height();
-                var heightProductDetails = $("#product_details").height();
-                var heightProducts = heightOfLeftSidebar - heightProductDetails - paddingTop;
-                //console.log("hLS:" + heightOfLeftSidebar + " - hPDetails:" + heightProductDetails + "=" + heightProducts);
-                $("#products.products").css('height', heightProducts);
 
+        $("#product_details img").load(function () {
+            calculate_heights();
+        });
 
-                var heightOfItemsILike = $("#lsidebar").height() - $(".search_by_sku").height() -
-                    $(".rsidebar_products_i_like h4").height() - $(".rsidebar_product_selected").height() - 80;//- paddingTop - 20;
-                $(".products_liked").css('height', heightOfItemsILike);
-             });
+        function calculate_heights() {
 
+            var paddingTop = 40;
+            var heightOfLeftSidebar = $("#lsidebar").height();
+            var heightProductDetails = $("#product_details").height();
+            var heightProducts = heightOfLeftSidebar - heightProductDetails - paddingTop;
+            //console.log("hLS:" + heightOfLeftSidebar + " - hPDetails:" + heightProductDetails + "=" + heightProducts);
+            $("#products.products").css('height', heightProducts);
+
+            var heightOfItemsILike = $("#lsidebar").height() - $(".search_by_sku").height() -
+                $(".rsidebar_products_i_like h4").height() - $(".rsidebar_product_selected").height() - 80;//- paddingTop - 20;
+            $(".products_liked").css('height', heightOfItemsILike);
         };
 
     });

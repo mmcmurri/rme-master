@@ -1,2 +1,8 @@
 $("#products").replaceWith("<%= escape_javascript(render partial: 'spree/shared/products', locals: { products: @products } ) %>");
 $('#products').slideDown(350);
+var paddingTop = 40;
+var heightOfLeftSidebar = $("#lsidebar").height();
+var heightProductDetails = $("#product_details").height();
+var heightProducts = heightOfLeftSidebar - heightProductDetails - paddingTop;
+//console.log("hLS:" + heightOfLeftSidebar + " - hPDetails:" + heightProductDetails + "=" + heightProducts);
+$("#products.products").css('height', heightProducts);
