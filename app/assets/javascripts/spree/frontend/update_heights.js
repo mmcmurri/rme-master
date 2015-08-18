@@ -87,6 +87,8 @@ $(".products #btn_like").on('click', function() {
 
     $(".rsidebar_products_i_like #btn_select").on('click', function() {
         var parent = $(this).parents(".product-list-item");
+        parent.find("#btn_select").hide();
+        parent.find(".sku").show();
         $(".rsidebar_product_selected .product-list-item").replaceWith(parent);
     });
 });
