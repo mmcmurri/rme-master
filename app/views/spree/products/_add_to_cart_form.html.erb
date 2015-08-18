@@ -1,4 +1,8 @@
-<% @product = product if product.present? %>
+<%
+   @product = product.product if product.present? && product.instance_of?(Spree::Variant)
+
+   @product = product if product.present? && product.instance_of?(Spree::Product)
+%>
 
 <% if @product.present? %>
 <%= form_for :order, :url => populate_orders_path do |f| %>

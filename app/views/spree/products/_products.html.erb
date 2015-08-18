@@ -28,7 +28,7 @@
                       <button id="btn_like" class="btn btn-default btn-group-justified"><%= Spree.t(:btn_like) %></button>
                       <span class="text"><%= product_description(product) %></span>
                       <input type="hidden" class="product_url" value="<%=url%>">
-                      <input type="hidden" class="product_image_url" value='<%=product.images.first.attachment.url(:large)%>'>
+                      <input type="hidden" class="product_image_url" value='<%=product.try(:images).try(:first).try(:attachment).try(:url)%>'>
                     </div>
                     <div class="panel-footer text-center">
                       <span id="price" class="price" itemprop="price"><%= display_price(product) %></span>
