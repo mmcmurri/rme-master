@@ -35,3 +35,4 @@ en:
       brand: "Shop by Brand"
       price: "Shop by Price"
     btn_submit: "Apply and Go!"
+    brand_not_found: "Brand is not found"
