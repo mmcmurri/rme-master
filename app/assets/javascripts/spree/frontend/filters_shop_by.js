@@ -76,10 +76,10 @@
          + Show/Display following fields: price, sku, like and select buttons, when we will hover on a product.
         */
         $.getScript( "assets/spree/frontend/update_heights.js", function( data, textStatus, jqxhr ) {
-            console.log( data ); // Data returned
-            console.log( textStatus ); // Success
-            console.log( jqxhr.status ); // 200
-            console.log( "Successful update of the heights." );
+            //console.log( data ); // Data returned
+            //console.log( textStatus ); // Success
+            //console.log( jqxhr.status ); // 200
+            //console.log( "Successful update of the heights." );
         });
 
     });

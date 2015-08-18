@@ -5,7 +5,7 @@
           <%=content_tag(:span, "", class: "glyphicon glyphicon-search") %>
         <% end %>
       </span>
-      <input type="text" name="sku" class="form-control" placeholder="Search by sku...">
+      <input type="text" name="sku" class="form-control" placeholder="<%=Spree.t(:search_by_sku_placeholder)%>">
     </div><!-- /input-group -->
 <% end %>
 

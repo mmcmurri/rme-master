@@ -3,7 +3,7 @@
     <%#= text_field_tag(:q) #%>
 
     <% if @materials.present? %>
-        <h4 class='taxonomy-root'><%= Spree.t(:shop_by_materials) %> </h4>
+        <h4 class='taxonomy-root'><%= Spree.t("shop_by.material") %> </h4>
         <div id="shop_by_material" class="row">
           <div class="col-md-12">
             <% @materials.each do |item| %>
@@ -22,7 +22,7 @@
     <% end %>
 
     <% if @colors.present? %>
-        <h4 class='taxonomy-root'><%= Spree.t(:shop_by_colors) %> </h4>
+        <h4 class='taxonomy-root'><%= Spree.t("shop_by.color") %> </h4>
         <div id="shop_by_color" class="row">
           <div class="col-md-12">
             <% @colors.each do |item| %>
@@ -60,7 +60,7 @@
     <% end %>
 
     <% if @prices.present? %>
-        <h4 class='taxonomy-root'><%= Spree.t(:shop_by_price) %> </h4>
+        <h4 class='taxonomy-root'><%= Spree.t("shop_by.price") %> </h4>
         <div id="shop_by_price" class="row">
           <div class="col-md-12">
             <% @prices.each do |item| %>
@@ -78,7 +78,7 @@
     <br/>
     <div class="row">
       <div class="col-md-12">
-        <%= submit_tag("Apply filter", remote:true, id:"btnFilter", class:"btn btn-default btn-group-justified", width:"100%") %>
+        <%= submit_tag(Spree.t(:btn_submit), remote:true, id:"btnFilter", class:"btn btn-default btn-group-justified", width:"100%") %>
         <%#= button_to "Apply Filter", id:"filter", class:"btn btn-default", remote: true #%>
         <%#= link_to "Go", shops_ajax_path, id:"filter", class:"", remote: true #%>
       </div>

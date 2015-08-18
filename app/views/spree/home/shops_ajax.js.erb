@@ -1,4 +1,4 @@
-$("#products").replaceWith("<%= escape_javascript(render partial: 'spree/shared/products', locals: { products: @products } ) %>");
+$("#products").replaceWith("<%= escape_javascript(render partial: 'spree/products/products', locals: { products: @products } ) %>");
 $('#products').slideDown(350);
 
 /* Loading and running the script, which:
@@ -6,8 +6,8 @@ $('#products').slideDown(350);
  + Show/Display following fields: price, sku, like and select buttons, when we will hover on a product.
  */
 $.getScript( "assets/spree/frontend/update_heights.js", function( data, textStatus, jqxhr ) {
-    console.log( data ); // Data returned
-    console.log( textStatus ); // Success
-    console.log( jqxhr.status ); // 200
-    console.log( "Successful update of the heights." );
+//    console.log( data ); // Data returned
+//    console.log( textStatus ); // Success
+//    console.log( jqxhr.status ); // 200
+//    console.log( "Successful update of the heights." );
 });
