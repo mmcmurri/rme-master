@@ -1,47 +1,51 @@
 <%
-  paginated_products = @searcher.retrieve_products if params.key?(:keywords)
-  paginated_products ||= products
+   paginated_products = @searcher.retrieve_products if params.key?(:keywords)
+   paginated_products ||= products
 %>
 
 <div id="products" class="row products">
   <% if @errors.present? && @errors.count > 0 %>
-      <% @errors.each do |error|%>
-          <div class="alert alert-info" role="alert"><%=error%></div>
+      <% @errors.each do |error| %>
+          <div class="alert alert-info" role="alert"><%= error %></div>
       <% end %>
   <% end %>
 
-<% if products.present? %>
-    <% products.each do |product| %>
-      <% url = spree.product_url(product, taxon_id: @taxon.try(:id)) %>
-      <div id="product_<%= product.id %>" class="col-md-3 col-sm-6 product-list-item" data-hook="products_list_item" itemscope itemtype="https://schema.org/Product">
-        <div class="panel panel-default">
-          <% cache(@taxon.present? ? [I18n.locale, current_currency, @taxon, product] : [I18n.locale, current_currency, product]) do %>
-            <div class="panel-body text-center product-body">
-              <%= link_to small_image(product, itemprop: "image"), url, itemprop: 'url' %><br/>
-              <%= link_to truncate(product.name, length: 50), url, class: 'info', itemprop: "name", title: product.name %>
-              <p><%=product.sku%></p>
-            </div>
-            <div class="panel-footer text-center">
+  <% if products.present? %>
+      <% products.each do |product| %>
+          <% url = spree.product_url(product, taxon_id: @taxon.try(:id)) %>
+          <div id="product_<%= product.id %>" class="col-md-3 col-sm-6 product-list-item" data-hook="products_list_item" itemscope itemtype="https://schema.org/Product">
+            <div class="panel panel-default">
+              <% cache(@taxon.present? ? [I18n.locale, current_currency, @taxon, product] : [I18n.locale, current_currency, product]) do %>
+                  <div class="panel-body text-center product-body">
+                    <%= link_to small_image(product, itemprop: "image"), url, itemprop: 'url' %><br/>
+                    <%= link_to truncate(product.name, length: 50), url, class: 'info', itemprop: "name", title: product.name %>
+                    <p class="sku"><%= product.sku %></p>
+                    <button class="btn btn-default btn-group-justified">Select</button>
+                    <button class="btn btn-default btn-group-justified">Like</button>
+
+                  </div>
+                  <div class="panel-footer text-center">
               <span itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-                <span class="price selling lead" itemprop="price"><%= display_price(product) %></span>
+                <!--<span class="price selling lead" itemprop="price"><%= display_price(product) %></span>-->
+                <p class="price"><%= display_price(product) %></p>
               </span>
+                  </div>
+              <% end %>
             </div>
-          <% end %>
-        </div>
-      </div>
-    <% end %>
-
-   <div class="col-md-12">
-      <% if paginated_products.respond_to?(:num_pages) #%>
-          <%= paginate paginated_products, theme: 'twitter-bootstrap-3' %>
+          </div>
       <% end %>
-   </div>
 
-    <% reset_cycle("classes") %>
-<% else %>
-    <h4>
+      <div class="col-md-12">
+        <% if paginated_products.respond_to?(:num_pages) #   %>
+            <%= paginate paginated_products, theme: 'twitter-bootstrap-3' %>
+        <% end %>
+      </div>
+
+      <% reset_cycle("classes") %>
+  <% else %>
+      <h4>
         <%= Spree.t(:no_products_found) %>
-    </h4>
-<% end %>
+      </h4>
+  <% end %>
 </div>
 

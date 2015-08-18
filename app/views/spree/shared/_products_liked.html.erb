@@ -7,7 +7,9 @@
 <% if products.present? && products.any? %>
     <div class="rsidebar_products_i_like">
       <div class="panel panel-default text-center">
-        <h4> Items I Like (<%= @products.count %>)</h4>
+        <div class="panel-heading text-center">
+          <h4> Items I Like (<%= @products.count %>)</h4>
+        </div>
         <div class="products_liked">
           <% products.each do |product| %>
               <% url = spree.product_url(product, taxon_id: @taxon.try(:id)) %>

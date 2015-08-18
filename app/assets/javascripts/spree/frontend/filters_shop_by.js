@@ -3,15 +3,15 @@
  */
 
 //$( document ).ready(function() {
-(function() {
-    Spree.ready(function() {
+(function () {
+    Spree.ready(function () {
 
         var url = "/shop/shops_ajax.js";
 
         function add_params_to_url(param_name, params) {
 //            if (url_params.length < 1) url_params = "?";
-            var url_params = param_name+"=";
-            $.each(params, function(index, item) {
+            var url_params = param_name + "=";
+            $.each(params, function (index, item) {
                 var selector = $(item);
                 url_params += selector.val() + ",";
             });
@@ -36,7 +36,7 @@
             url_params += add_params_to_url("brands", brands);
             url_params += add_params_to_url("prices", prices);
 
-            var url_current = url+url_params;
+            var url_current = url + url_params;
             console.log(url_current);
 
             //$("a#filter").attr("href", url).click(); //make ajax call automatically
@@ -47,17 +47,17 @@
                 //dataType: "json",
                 //data: data //{ name: "query", colors: "Red" }
             })
-                .done(function( msg ) {
+                .done(function (msg) {
                     //alert( "Data Saved: " + msg["ajax"] );
                     //$("#products").html(msg);
                     //console.log(msg);
-                }).error(function( msg ) {
+                }).error(function (msg) {
                     //alert( "error: " + msg["ajax"] );
                 });
 
         }
 
-        $("#lsidebar input[type='checkbox']").change(function() {
+        $("#lsidebar input[type='checkbox']").change(function () {
 
             //make_url_for_ajax_call(); //commented/disabled, because in backend don't detected/exist in params["param_name"]
 
@@ -71,24 +71,16 @@
 //            });
         });
 
-
-        $("#product_details img").load(function () {
-            calculate_heights();
+        /* Loading and running the script, which:
+         + is updating a heights for the right sidebar and the product viewer according to height of the left sidebar;
+         + Show/Display following fields: price, sku, like and select buttons, when we will hover on a product.
+        */
+        $.getScript( "assets/spree/frontend/update_heights.js", function( data, textStatus, jqxhr ) {
+            console.log( data ); // Data returned
+            console.log( textStatus ); // Success
+            console.log( jqxhr.status ); // 200
+            console.log( "Successful update of the heights." );
         });
-
-        function calculate_heights() {
-
-            var paddingTop = 40;
-            var heightOfLeftSidebar = $("#lsidebar").height();
-            var heightProductDetails = $("#product_details").height();
-            var heightProducts = heightOfLeftSidebar - heightProductDetails - paddingTop;
-            //console.log("hLS:" + heightOfLeftSidebar + " - hPDetails:" + heightProductDetails + "=" + heightProducts);
-            $("#products.products").css('height', heightProducts);
-
-            var heightOfItemsILike = $("#lsidebar").height() - $(".search_by_sku").height() -
-                $(".rsidebar_products_i_like h4").height() - $(".rsidebar_product_selected").height() - 80;//- paddingTop - 20;
-            $(".products_liked").css('height', heightOfItemsILike);
-        };
 
     });
 }).call(this);
