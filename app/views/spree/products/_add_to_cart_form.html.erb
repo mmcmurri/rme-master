@@ -1,3 +1,5 @@
+<% @product = product if product.present? %>
+
 <% if @product.present? %>
 <%= form_for :order, :url => populate_orders_path do |f| %>
   <div class="row" id="inside-product-cart-form" data-hook="inside_product_cart_form" itemprop="offers" itemscope itemtype="https://schema.org/Offer">

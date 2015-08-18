@@ -31,33 +31,63 @@ function update_heights() {
 // onHover() event for product list
 $('.products .btn').hide();
 $('.products .sku').hide();
-$('.products .price').hide();
+//$('.products #price').hide();
+//$('.products #cart-form').hide();
+//$('.products #cart-form #product-variants').hide();
+
+
 $("#products.products").
     on('mouseenter', ".product-list-item", function () {
         var item = $(this);
-        item.find(".btn").show();
-        item.find(".sku").show();
-        item.find(".price").show();
+        item.find('.btn').show();
+        item.find('.sku').show();
+        //item.find('.price').show();
+        //item.find('#cart-form #price').show();
+
 //            console.log('hovering');
     }).on('mouseleave', '.product-list-item', function () {
         var item = $(this);
-        item.find(".btn").hide();
-        item.find(".sku").hide();
-        item.find(".price").hide();
+        item.find('.btn').hide();
+        item.find('.sku').hide();
+        //item.find('#cart-form #price').hide();
 //            console.log("mouseleave");
     });
 
+// click on select button
 $(".products #btn_select").on('click', function() {
     var parent = $(this).parents(".product-list-item");
-    $(".rsidebar_products_i_like .product-list-item").before(parent);
+    //$(".rsidebar_products_i_like .product-list-item").before(parent); # for no jquery script
+
+    var productLiked = parent.clone();
+    productLiked.find("#btn_like").hide();
+    productLiked.find(".sku").hide();
+    //productLiked.find(".price").hide();
+    // add to products i like
+    $(".rsidebar_products_i_like .products_liked").prepend(productLiked);
+
+    var productSelected = parent.clone();
+    productSelected.find("#btn_select").hide();
+    productSelected.find("#btn_like").hide();
+    //productSelected.find('#cart-form').show();
+    //$('.products #cart-form .price').show();
+
+    // add to selected product viewer
+    $(".rsidebar_product_selected .product-list-item").replaceWith(productSelected);
+
 });
 
+// click on like button
 $(".products #btn_like").on('click', function() {
-    var parent = $(this).parents(".product-list-item");
+    var parent = $(this).parents(".product-list-item").clone();
     parent.find("#btn_like").hide();
     parent.find(".sku").hide();
-    parent.find(".price").hide();
+    //parent.find("#price").hide();
     //$(".rsidebar_products_i_like .product-list-item").before(parent); # for no jquery script
     $(".rsidebar_products_i_like .products_liked").prepend(parent);
 
+    $(".rsidebar_products_i_like #btn_select").on('click', function() {
+        var parent = $(this).parents(".product-list-item");
+        $(".rsidebar_product_selected .product-list-item").replaceWith(parent);
+    });
 });
+
