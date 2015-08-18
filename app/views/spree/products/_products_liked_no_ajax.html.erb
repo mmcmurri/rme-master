@@ -1,0 +1,52 @@
+<%
+   products = @products
+   paginated_products = @searcher.retrieve_products if params.key?(:keywords)
+   paginated_products ||= products
+%>
+
+<% if products.present? && products.any? %>
+    <div class="rsidebar_products_i_like">
+      <div class="panel panel-default text-center">
+        <div class="panel-heading text-center">
+          <h4> Items I Like (<%= @products.count %>)</h4>
+        </div>
+        <div class="products_liked">
+          <% products.each do |product| %>
+              <% url = spree.product_url(product, taxon_id: @taxon.try(:id)) %>
+              <div id="product_<%= product.id %>" class="product-list-item" data-hook="products_list_item" itemscope itemtype="https://schema.org/Product">
+                <div class="panel panel-default">
+                  <% cache(@taxon.present? ? [I18n.locale, current_currency, @taxon, product] : [I18n.locale, current_currency, product]) do %>
+                      <div class="panel-body text-center product-body">
+                        <%= link_to small_image(product, itemprop: "image"), url, itemprop: 'url' %><br/>
+                        <%= link_to truncate(product.name, length: 50), url, class: 'info', itemprop: "name", title: product.name %>
+                      </div>
+                      <div class="panel-footer text-center">
+                        <button type="button" class="btn btn-default">
+                          <span class="glyphicon glyphicon-ok" aria-hidden="true"></span><%=Spree.t(:btn_select)%>
+                        </button>
+                        <!--<span itemprop="offers" itemscope itemtype="https://schema.org/Offer">-->
+                        <!--<span class="price selling lead" itemprop="price"><%= display_price(product) %></span>-->
+                        <!--</span>-->
+                      </div>
+                  <% end %>
+                </div>
+          <% end %>
+          <% reset_cycle("classes") %>
+
+          <div id="paginateProductLikes" class="">
+            <div class="col-md-12">
+              <% if paginated_products.respond_to?(:num_pages) %>
+                  <%= paginate paginated_products, theme: 'twitter-bootstrap-3' %>
+              <% end %>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--<div id="infinite-scrolling">-->
+    <!--<%#= will_paginate(@products_will) #%>-->
+    <!--</div>-->
+
+<% end %>
+

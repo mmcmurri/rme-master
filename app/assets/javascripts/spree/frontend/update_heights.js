@@ -46,3 +46,18 @@ $("#products.products").
         item.find(".price").hide();
 //            console.log("mouseleave");
     });
+
+$(".products #btn_select").on('click', function() {
+    var parent = $(this).parents(".product-list-item");
+    $(".rsidebar_products_i_like .product-list-item").before(parent);
+});
+
+$(".products #btn_like").on('click', function() {
+    var parent = $(this).parents(".product-list-item");
+    parent.find("#btn_like").hide();
+    parent.find(".sku").hide();
+    parent.find(".price").hide();
+    //$(".rsidebar_products_i_like .product-list-item").before(parent); # for no jquery script
+    $(".rsidebar_products_i_like .products_liked").prepend(parent);
+
+});
