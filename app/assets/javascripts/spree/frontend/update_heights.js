@@ -33,53 +33,25 @@ $('.products .btn').hide();
 $('.products .sku').hide();
 $('.products .text').hide();
 $('.products div.panel-heading').hide();
-//$('.products .product_image_large').hide();
-
-//$('.products #price').hide();
-//$('.products #cart-form').hide();
-//$('.products #cart-form #product-variants').hide();
-
+$('.products #cart-form').hide();
 
 $("#products.products").
     on('mouseenter', ".product-list-item", function () {
         var item = $(this);
         item.find('.btn').show();
         item.find('.sku').show();
-        //item.find('.price').show();
-        //item.find('#cart-form #price').show();
-
-//            console.log('hovering');
     }).on('mouseleave', '.product-list-item', function () {
         var item = $(this);
         item.find('.btn').hide();
         item.find('.sku').hide();
-        //item.find('#cart-form #price').hide();
-//            console.log("mouseleave");
     });
 
 // click on select button
 $(".products #btn_select").on('click', function () {
     var parent = $(this).parents(".product-list-item");
-    //$(".rsidebar_products_i_like .product-list-item").before(parent); # for no jquery script
 
-    var productLiked = parent.clone();
-    productLiked.find("#btn_like").hide();
-    productLiked.find(".sku").hide();
-    //productLiked.find(".price").hide();
-    // add to products i like
-    $(".rsidebar_products_i_like .products_liked").prepend(productLiked);
-
-    var productSelected = parent.clone();
-    productSelected.find("#btn_select").hide();
-    productSelected.find("#btn_like").hide();
-    //productSelected.find('#cart-form').show();
-    //$('.products #cart-form .price').show();
-
-    // add to selected product viewer
-    $(".rsidebar_product_selected .product-list-item").replaceWith(productSelected);
-    update_product_details(productSelected);
-
-    product_selection_from_like_products();
+    add_product_to_items_i_like(parent);
+    add_product_to_selected_product(parent);
 });
 
 // click on like button
@@ -87,19 +59,20 @@ $(".products #btn_like").on('click', function () {
     var parent = $(this).parents(".product-list-item").clone();
     parent.find("#btn_like").hide();
     parent.find(".sku").hide();
-    //parent.find("#price").hide();
-    //$(".rsidebar_products_i_like .product-list-item").before(parent); # for no jquery script
     $(".rsidebar_products_i_like .products_liked").prepend(parent);
 
     product_selection_from_like_products();
 });
+
 
 function product_selection_from_like_products() {
     $(".rsidebar_products_i_like #btn_select").on('click', function () {
         var parent = $(this).parents(".product-list-item");
         parent.find("#btn_select").hide();
         parent.find(".sku").show();
+        parent.find("#price").hide();
         $(".rsidebar_product_selected .product-list-item").replaceWith(parent);
+        $(".rsidebar_product_selected #cart-form").show();
 
         update_product_details(parent);
     });
@@ -115,7 +88,8 @@ function update_product_details(item) {
     itemNew.find(".brand").show();
     itemNew.find(".panel-footer").hide();
     itemNew.find(".panel-heading").show();
-    //itemNew.find('.product_details .product-list-item img').remove();
+    itemNew.find("#price").hide();
+    itemNew.find("#cart-form").show();
 
     $("#product_details.product_details").find(".product-list-item").replaceWith(itemNew);
 
@@ -123,10 +97,32 @@ function update_product_details(item) {
     var urlToLargeImage = itemNew.find(".product_image_url").val();
     var image = '<img src="'+urlToLargeImage+'" class="product_image_large"/>';
     $("#product_details img.product_image_large").replaceWith(image);
+}
 
-    //var itemOld = $("#product_details.product_details").find(".product-list-item");
-    //itemOld = itemNew;
-    //itemOld.attr("class","col-md-14 col-sm-14 product-list-item");
-    //itemOld.attr("id","col-md-14 col-sm-14 product-list-item");
 
+
+function add_product_to_items_i_like(parent) {
+    //$(".rsidebar_products_i_like .product-list-item").before(parent); # for no jquery script
+
+    var item = parent.clone();
+    item.find("#btn_like").hide();
+    item.find(".sku").hide();
+    // add to products i like
+    $(".rsidebar_products_i_like .products_liked").prepend(item);
+
+    product_selection_from_like_products();
+}
+
+
+function add_product_to_selected_product(parent) {
+    var item = parent.clone();
+    item.find(".sku").hide();
+    item.find("#btn_select").hide();
+    item.find("#btn_like").hide();
+
+    // add to selected product viewer
+    $(".rsidebar_product_selected .product-list-item").replaceWith(item);
+    update_product_details(productSelected);
+
+    product_selection_from_like_products();
 }
