@@ -24,7 +24,7 @@
 
           <div class="add-to-cart">
             <div class="input-group">
-              <%= number_field_tag :quantity, 1, :class => 'title form-control', :min => 1 %>
+              <%= hidden_field_tag :quantity, 1, :class => 'title form-control', :min => 1 %>
               <span class="input-group-btn">
             <%= button_tag :class => 'btn btn-success', :id => 'add-to-cart-button', :type => :submit do %>
                 <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
@@ -55,7 +55,7 @@
 
       <div class="add-to-cart">
         <div class="input-group">
-          <%= number_field_tag :quantity, 1, :class => 'title form-control', :min => 1 %>
+          <%= hidden_field_tag :quantity, 1, :class => 'title form-control', :min => 1 %>
           <span class="input-group-btn">
             <%= button_tag :class => 'btn btn-success', :id => 'add-to-cart-button', :type => :submit do %>
                 <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
