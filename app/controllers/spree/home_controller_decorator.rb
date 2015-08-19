@@ -42,7 +42,7 @@ Spree::HomeController.class_eval do
     @materials.uniq!
     @colors.uniq!
 
-    @prices = get_prices();
+    @prices = Spree::Price.get_price_levels()
 
     #if request.xhr? # get ajax request or in shops_ajax() method
     #  @product_list = [];
@@ -408,7 +408,6 @@ Spree::HomeController.class_eval do
     #}
   end
 
-
   private
 
   def filter_products_by_price(items, arrPrices)
@@ -471,16 +470,6 @@ Spree::HomeController.class_eval do
     end
 
     return results
-  end
-
-  def get_prices()
-    return [
-        {name: "$", min: "0", max: "10"},
-        {name: "$$", min: "11", max: "100"},
-        {name: "$$$", min: "101", max: "1000"},
-        {name: "$$$$", min: "1001", max: "10000"},
-        {name: "$$$$$", min: "10001", max: "100000"}
-    ]
   end
 
   def get_available_colors_from_variants

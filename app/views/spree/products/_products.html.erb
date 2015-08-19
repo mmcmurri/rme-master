@@ -10,7 +10,7 @@
       <% end %>
   <% end %>
 
-  <% if products.present? %>
+  <% if products.present? && products.any? %>
       <% products.each do |product| %>
           <% url = spree.product_url(product, taxon_id: @taxon.try(:id)) %>
           <div class="col-md-4 col-sm-6 ">
@@ -18,7 +18,7 @@
               <div class="panel panel-default">
                 <div class="panel-heading text-center">
                     <span class="selling lead brand_sku_price">
-                      <%= product.brand_name %> - <%= product.sku %> - <%= display_price(product) %>
+                      <%= product.brand_name %> - <%= product.sku %> - <%= display_price_level(product) %>
                     </span>
                 </div>
                 <% cache(@taxon.present? ? [I18n.locale, current_currency, @taxon, product] : [I18n.locale, current_currency, product]) do %>
@@ -33,7 +33,7 @@
                       <input type="hidden" class="product_image_url" value='<%= product.try(:images).try(:first).try(:attachment).try(:url) %>'>
                     </div>
                     <div class="panel-footer text-center">
-                      <span id="price" class="price" itemprop="price"><%= display_price(product) %></span>
+                      <span id="price" class="price" itemprop="price"><%= display_price_level(product) %></span>
                       <div id="cart-form" class="cart-form" data-hook="cart_form">
                         <%= render :partial => 'spree/products/add_to_cart_form_for_product_or_variant', locals: {product: product} %>
                       </div>

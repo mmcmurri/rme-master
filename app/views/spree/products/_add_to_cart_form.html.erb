@@ -9,7 +9,7 @@
           <div id="product-price">
             <div>
             <span class="lead selling" itemprop="price">
-              <%= display_price(@product) %>
+              <%= display_price_level(@product) %>
             </span>
               <span itemprop="priceCurrency" content="<%= @product.currency %>"></span>
             </div>
@@ -47,7 +47,7 @@
       <div id="product-price">
         <div>
             <span class="lead selling" itemprop="price">
-              <%= display_price(variant) %>
+              <%= display_price_level(variant) %>
             </span>
           <span itemprop="priceCurrency" content="<%= variant.currency %>"></span>
         </div>
