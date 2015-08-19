@@ -6,4 +6,6 @@
 //= require spree/frontend/product
 // require spree/frontend/infinite_scroll
 //= require spree/frontend/filters_shop_by
+//= require spree/frontend/update_heights
 //= require spree/frontend/jquery.serialize-object.min
+

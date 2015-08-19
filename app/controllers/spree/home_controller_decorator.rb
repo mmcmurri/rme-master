@@ -15,22 +15,29 @@ Spree::HomeController.class_eval do
 
     #@colors = get_available_colors_from_variants()
 
-    propertyColor = Spree::Property.find_by(name: "Color")
-    propertyMaterial = Spree::Property.find_by(name: "Material")
+    colorPropertyName = "Color"
+    materialPropertyName = "Material"
+
+    propertyColor = Spree::Property.find_by(name: colorPropertyName)
+    propertyMaterial = Spree::Property.find_by(name: materialPropertyName)
+
     materialsFromProperties = Spree::ProductProperty.where(property_id: propertyMaterial)
     colorsFromProperties = Spree::ProductProperty.where(property_id: propertyColor)
 
-    colorsFromOptionValues = Spree::OptionType.find_by(presentation: "Color").option_values
-    materialsFromOptionValues = Spree::OptionType.find_by(presentation: "Material").option_values
+    colorOptionType = Spree::OptionType.find_by(presentation: colorPropertyName) if Spree::OptionType.exists?(presentation: colorPropertyName)
+    materialOptionType = Spree::OptionType.find_by(presentation: materialPropertyName) if Spree::OptionType.exists?(presentation: materialPropertyName)
+
+    colorsFromOptionValues = colorOptionType.option_values if colorOptionType.present? && colorOptionType.option_values.present?
+    materialsFromOptionValues = materialOptionType.option_values if materialOptionType.present? && materialOptionType.option_values.present?
 
 
     @colors = []
-    colorsFromOptionValues.each { |p| @colors << p.presentation }
-    colorsFromProperties.each { |p| @colors << p.value }
+    colorsFromOptionValues.each { |p| @colors << p.presentation } if colorsFromOptionValues.present?
+    colorsFromProperties.each { |p| @colors << p.value } if materialsFromOptionValues
 
     @materials = []
-    materialsFromOptionValues.each { |p| @materials << p.presentation }
-    materialsFromProperties.each { |p| @materials << p.value }
+    materialsFromOptionValues.each { |p| @materials << p.presentation } if materialsFromOptionValues.present?
+    materialsFromProperties.each { |p| @materials << p.value } if materialsFromProperties.present?
 
     @materials.uniq!
     @colors.uniq!
@@ -64,7 +71,7 @@ Spree::HomeController.class_eval do
 
     #searching by sku (product code)
     if sku.present?
-      variants = Spree::Variant.where(sku:sku.strip.upcase)
+      variants = Spree::Variant.where(sku: sku.strip.upcase)
       respond_to_and_exit(variants)
       return
     end
@@ -177,9 +184,9 @@ Spree::HomeController.class_eval do
       productsForVariants = Spree::Product.in_taxons(taxons).uniq.price_between(priceMin, priceMax)
       productsForVariants.each do |product|
         variants = product.variants.includes(:option_values).where("spree_option_values.presentation" => arrMaterials).uniq if product.present? && product.variants.present?
-        variants.each { |variant| productMaterials << variant if variant.present? } if variants.present?# add variant to products
+        variants.each { |variant| productMaterials << variant if variant.present? } if variants.present? # add variant to products
       end
-      products = productMaterials#.uniq
+      products = productMaterials #.uniq
     end
 
     # If filters (ShopByPrice, ShopByCategory, ShopByBrand) applied together.
@@ -194,15 +201,15 @@ Spree::HomeController.class_eval do
       taxons = Spree::Taxon.where(name: arrCategories)
       productColors = Spree::Product.in_taxons(taxons).includes(:product_properties, :properties).
           where("spree_product_properties.value" => arrColors, "spree_properties.name" => "Color"
-          )#.uniq
+          ) #.uniq
       #TODO: add variants from option_values to products if needed
       #TODO: check it (may be return duplicates of variants)
       productsForVariants = Spree::Product.in_taxons(taxons)
       productsForVariants.each do |product|
         variants = product.variants.includes(:option_values).where("spree_option_values.presentation" => arrColors).uniq if product.present? && product.variants.present?
-        variants.each { |variant| productColors << variant if variant.present? } if variants.present?# add variant to products
+        variants.each { |variant| productColors << variant if variant.present? } if variants.present? # add variant to products
       end
-      products = productColors#.uniq
+      products = productColors #.uniq
     end
 
     # if only filters (ShopByColor and ShopByPrice) applied

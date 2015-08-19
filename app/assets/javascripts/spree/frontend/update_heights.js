@@ -50,8 +50,8 @@ $("#products.products").
 $(".products #btn_select").on('click', function () {
     var parent = $(this).parents(".product-list-item");
 
-    add_product_to_items_i_like(parent);
     add_product_to_selected_product(parent);
+    add_product_to_items_i_like(parent);
 });
 
 // click on like button
@@ -119,10 +119,13 @@ function add_product_to_selected_product(parent) {
     item.find(".sku").hide();
     item.find("#btn_select").hide();
     item.find("#btn_like").hide();
-
+    item.find("#cart-form").show();
+    item.find("#price").hide();
     // add to selected product viewer
     $(".rsidebar_product_selected .product-list-item").replaceWith(item);
-    update_product_details(productSelected);
+    $(".rsidebar_product_selected .product-list-item #cart-form").show();
+
+    update_product_details(item);
 
     product_selection_from_like_products();
 }

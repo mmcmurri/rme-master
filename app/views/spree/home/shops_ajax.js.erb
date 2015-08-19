@@ -5,7 +5,7 @@ $('#products').slideDown(350);
  + is updating a heights for the right sidebar and the product viewer according to height of the left sidebar;
  + Show/Display following fields: price, sku, like and select buttons, when we will hover on a product.
  */
-$.getScript( "assets/spree/frontend/update_heights.js", function( data, textStatus, jqxhr ) {
+$.getScript( "<%= asset_path('spree/frontend/update_heights.js') %>", function( data, textStatus, jqxhr ) {
 //    console.log( data ); // Data returned
 //    console.log( textStatus ); // Success
 //    console.log( jqxhr.status ); // 200
