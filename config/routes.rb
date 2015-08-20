@@ -33,6 +33,8 @@ Rails.application.routes.draw do
   #ajax url
   get '/custom/:selector', :to => 'home#filter_address', as: :exportFile
   get '/date/:selector', :to => 'home#filter_date'
+  get '/summary/:selector', :to => 'home#summary', as: 'summary_select'
+
 
   resources("bookings")
 

@@ -6,7 +6,7 @@ class CreateContractors < ActiveRecord::Migration
       t.string :description
       t.date :servicedate
       t.integer :appro
-
+      t.float :price
       t.timestamps null: false
     end
   end

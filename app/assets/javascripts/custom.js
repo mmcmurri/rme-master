@@ -114,8 +114,8 @@ function submitService(){
 		return false;
 	}
 	else if( $("#custom-product-content").html() != "In Progress" || $("#custom-product-content").html() == "No Data!" ){
-		alert(companyData.name);
-		location.href = "/index";
+		var url = "summary/" + encodeURIComponent(companyData.name);
+		location.href = url;
 	}
 }
 

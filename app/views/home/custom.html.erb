@@ -153,7 +153,7 @@
         <div id="custom-consel-content" class="panel-content">In Progress</div>
       </div>
       <div id="next-button-valid"></div>
-      <div class="w-row panel-input"><button class="nextbutton" onclick="submitService();">NEXT</button>
+      <div class="w-row panel-input"><button class="nextbutton" onclick="check();">NEXT</button>
       </div>
     </div>
   </div>
@@ -214,6 +214,13 @@
       });
       $( ".calendar-datepicker" ).datepicker( "option", "showAnim", "slideDown" );
     });
+
+    function check(){
+      if( !$('input.calendar-datepicker').val() )
+        alert("Select Desired Start Date!");
+      else
+        submitService();
+    }
   </script>
   <!--[if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif]-->
 </body>

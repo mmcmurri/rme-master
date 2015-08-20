@@ -21,6 +21,9 @@
 #calendar-select img{
   margin-left: 40px;
 }
+#calendar-select input{
+  width: 50%;
+}
 .calendar-style{
   float: left;
   margin-left: 40px;
