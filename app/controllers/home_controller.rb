@@ -102,7 +102,6 @@ class HomeController < ApplicationController
     else
       @Deposit = ''
     end
-
     @ProductImg = jobImgs[id][0]
     @Lat = address[0]
     @Lon = address[1] 
