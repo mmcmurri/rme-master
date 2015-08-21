@@ -11,8 +11,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150808091101) do
-
+ActiveRecord::Schema.define(version: 20150821160230) do
+  
   create_table "bookings", force: :cascade do |t|
     t.date    "date"
     t.integer "team_size"
@@ -51,8 +51,10 @@ ActiveRecord::Schema.define(version: 20150808091101) do
     t.string   "sluggable_type", limit: 50
     t.string   "scope"
     t.datetime "created_at"
+    t.datetime "deleted_at"
   end
 
+  add_index "friendly_id_slugs", ["deleted_at"], name: "index_friendly_id_slugs_on_deleted_at"
   add_index "friendly_id_slugs", ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
   add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
   add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
@@ -92,7 +94,7 @@ ActiveRecord::Schema.define(version: 20150808091101) do
     t.datetime "created_at",                                               null: false
     t.datetime "updated_at",                                               null: false
     t.string   "state"
-    t.integer  "order_id"
+    t.integer  "order_id",                                                 null: false
     t.boolean  "included",                                 default: false
   end
 
@@ -128,9 +130,11 @@ ActiveRecord::Schema.define(version: 20150808091101) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.text     "preferences"
+    t.datetime "deleted_at"
   end
 
   add_index "spree_calculators", ["calculable_id", "calculable_type"], name: "index_spree_calculators_on_calculable_id_and_calculable_type"
+  add_index "spree_calculators", ["deleted_at"], name: "index_spree_calculators_on_deleted_at"
   add_index "spree_calculators", ["id", "type"], name: "index_spree_calculators_on_id_and_type"
 
   create_table "spree_countries", force: :cascade do |t|
@@ -216,7 +220,7 @@ ActiveRecord::Schema.define(version: 20150808091101) do
     t.decimal  "additional_tax_total", precision: 10, scale: 2, default: 0.0
     t.decimal  "promo_total",          precision: 10, scale: 2, default: 0.0
     t.decimal  "included_tax_total",   precision: 10, scale: 2, default: 0.0, null: false
-    t.decimal  "pre_tax_amount",       precision: 8,  scale: 2, default: 0.0
+    t.decimal  "pre_tax_amount",       precision: 12, scale: 4, default: 0.0, null: false
   end
 
   add_index "spree_line_items", ["order_id"], name: "index_spree_line_items_on_order_id"
@@ -668,7 +672,7 @@ ActiveRecord::Schema.define(version: 20150808091101) do
     t.decimal  "additional_tax_total", precision: 10, scale: 2, default: 0.0
     t.decimal  "promo_total",          precision: 10, scale: 2, default: 0.0
     t.decimal  "included_tax_total",   precision: 10, scale: 2, default: 0.0, null: false
-    t.decimal  "pre_tax_amount",       precision: 8,  scale: 2, default: 0.0
+    t.decimal  "pre_tax_amount",       precision: 12, scale: 4, default: 0.0, null: false
   end
 
   add_index "spree_shipments", ["address_id"], name: "index_spree_shipments_on_address_id"
