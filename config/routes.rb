@@ -39,4 +39,10 @@ Rails.application.routes.draw do
   resources("bookings")
 
   mount Spree::Core::Engine, :at => '/shop'
+
+  Spree::Core::Engine.routes.draw do
+    #get "/shops_ajax" => 'home#index', as: 'shops_ajax'
+    get "/shops_ajax" => 'home#shops_ajax', as: 'shops_ajax'
+  end
+
   end

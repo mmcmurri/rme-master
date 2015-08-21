@@ -122,3 +122,41 @@ table {
 .navbar-form .form-control {
   height: auto;
 }
+
+#right_sidebar.panel {
+  padding: 10px;
+}
+
+.products {
+  overflow-y: scroll;
+  height: 300px;
+}
+
+.products_liked {
+  overflow-y: scroll;
+  height: 300px;
+}
+
+.product-body {
+  height: auto;
+}
+
+.rsidebar_product_selected {
+  padding-top: 20px;
+}
+
+#spree-header {
+  margin-top: 100px;
+  background-color: white;
+}
+
+#product-variants {
+  overflow-y: scroll;
+  height: 200px;
+}
+
+.table tbody>tr>td.vert-align
+{
+  vertical-align: middle;
+}
+

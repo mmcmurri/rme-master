@@ -1,5 +1,3 @@
-
-
 <% content_for :lsidebar do %>
     <div data-hook="homepage_sidebar_navigation">
       <%= render :partial => 'spree/shared/taxonomies' %>
@@ -7,18 +5,19 @@
 <% end %>
 
 <div data-hook="homepage_products">
-  <% cache(cache_key_for_products) do %>
-      <%= render :partial => 'spree/shared/products', :locals => { :products => @products } %>
-  <% end %>
+
+  <%= render :partial => 'spree/products/product_details' %>
+
+  <%= render :partial => 'spree/products/products', :locals => {:products => @products} %>
 </div>
 
 
 <% content_for :rsidebar do %>
-    <div data-hook="homepage_sidebar_navigation">
-      <%= render :partial => 'spree/shared/product_selected' %>
-    </div>
-    <div data-hook="homepage_sidebar_navigation">
-      <%= render :partial => 'spree/shared/products_liked' %>
-    </div>
+    <div class="row">
+      <%= render :partial => 'spree/shared/search_by_sku' %>
 
+      <%= render :partial => 'spree/products/product_selected' %>
+
+      <%= render :partial => 'spree/products/products_liked' %>
+    </div>
 <% end %>

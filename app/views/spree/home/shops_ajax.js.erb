@@ -1,0 +1,37 @@
+<%
+cur_page=total_pages=1
+cur_page = @products.try(:current_page)
+total_pages = @products.try(:total_pages)
+%>
+<% if cur_page > 1 %>
+    $("#products #append_products").append("<%= escape_javascript(render partial: 'spree/products/products_for_append', locals: { errors:@errors, products: @products } ) %>");
+//    console.log("append");
+<% else %>
+    $("#products").replaceWith("<%= escape_javascript(render partial: 'spree/products/products', locals: { errors:@errors, products: @products } ) %>");
+//    $('#products').slideDown(350);
+//    console.log("replace");
+<% end %>
+
+console.log("cur_page: "+<%=cur_page%>);
+/* Updating of the ajax pagination. */
+<% if cur_page == total_pages %>
+    $('nav .pager a').remove();
+<% else %>
+    var url = '<%= url_for(page: cur_page + 1) %>';
+    var url_filter_params = $('form#form_filters').serialize();
+    url = url + "&" + url_filter_params;
+//    console.log(url);
+    $('nav .pager a').attr('href', url);
+<% end %>
+
+
+/* Loading and running the script, which:
+ + is updating a heights for the right sidebar and the product viewer according to height of the left sidebar;
+ + Show/Display following fields: price, sku, like and select buttons, when we will hover on a product.
+ */
+$.getScript( "<%= asset_path('spree/frontend/update_heights.js') %>", function( data, textStatus, jqxhr ) {
+//    console.log( data ); // Data returned
+//    console.log( textStatus ); // Success
+//    console.log( jqxhr.status ); // 200
+//    console.log( "Successful update of the heights." );
+});
