@@ -96,7 +96,13 @@ class HomeController < ApplicationController
       address = con.add.split(",")  
       id = con.id
     end
-    @Deposit = @contractor.price * 0.1
+
+    if @contractor.price
+      @Deposit = @contractor.price * 0.1
+    else
+      @Deposit = ''
+    end
+
     @ProductImg = jobImgs[id][0]
     @Lat = address[0]
     @Lon = address[1] 
