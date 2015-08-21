@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<!-- This site was created in Webflow. http://www.webflow.com-->
+<!-- Last Published: Wed Jun 17 2015 12:59:18 GMT+0000 (UTC) -->
+<html data-wf-site="554eaa03e47085a40aa28e10" data-wf-page="55522a8fe0a39bc42a5e734b">
+<head>
+  <meta charset="utf-8">
+  <title>Our Service</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="generator" content="Webflow">
+  <link rel="stylesheet" type="text/css" href="/assets/normalize.css">
+  <link rel="stylesheet" type="text/css" href="/assets/webflow.css">
+  <link rel="stylesheet" type="text/css" href="/assets/roofingmadeeasy.webflow.css">
+  <link rel="stylesheet" type="text/css" href="/assets/custom.css">
+  <link type="text/css" rel="stylesheet" href="/assets/featherlight.min.css" title="Featherlight Styles" />
+  <link type="text/css" rel="stylesheet" href="/assets/featherlight.gallery.min.css" title="Featherlight Styles" />
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+  <script>
+    WebFont.load({
+      google: {
+        families: ["PT Sans:400,400italic,700,700italic","Ubuntu:300,300italic,400,400italic,500,500italic,700,700italic","Roboto:300,regular,500","Roboto Condensed:300,regular,700","Roboto Slab:300,regular,700","Arbutus Slab:regular","Ubuntu Mono:regular,italic,700,700italic","Ubuntu Condensed:regular:latin-ext,latin","PT Sans Caption:regular,700"]
+      }
+    });
+  </script>
+  <script type="text/javascript" src="assets/modernizr.js"></script>
+  <script type="text/javascript" src="assets/custom.js"></script>
+  <script type="text/javascript" src="assets/jquery.min.js"></script>
+  <script type="text/javascript" src="assets/jquey-1.11.1.min.js"></script>
+  <link rel="shortcut icon" type="image/x-icon" href="/assets/New icon.ico">
+  <link rel="apple-touch-icon" href="/assets/metric-webclip.png">
+</head>
+<body>
+  <div class="w-section section custom" id="top">
+    <div class="w-nav navigation" data-collapse="medium" data-animation="default" data-duration="400" data-contain="1">
+      <div class="w-container navigation-container">
+        <div class="w-nav navbar" data-collapse="medium" data-animation="default" data-duration="400" data-contain="1" data-easing="linear">
+          <div class="w-clearfix homepage-logo">
+            <div class="logo">Roofing Made Easy.</div><img class="w-hidden-small w-hidden-tiny navlogo" src="assets/Logo.png" width="85" height="75">
+          </div>
+          <div class="w-container navbar">
+            <nav class="w-nav-menu w-clearfix dropmenu" role="navigation">
+              <a class="w-nav-link nav-link businesses drop" href="login_portal.html">Log In</a>
+              <a class="w-nav-link nav-link businesses drop" href="custom.html">Custom</a>
+              <a class="w-nav-link nav-link businesses drop" href="business.html">Business</a>
+              <a class="w-nav-link nav-link homeowner drop" href="our_service.html">Homeowner</a>
+              <a class="w-nav-link nav-link businesses drop" href="/shop">Select Product</a>
+              <a class="w-nav-link nav-link businesses drop" href="index.html">Home</a>
+            </nav>
+            <div class="w-nav-button">
+              <div class="w-icon-nav-menu hamburger"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="w-section w-row custom-manage">
+    <div class="w-col w-col-8 custom-content">
+      <div id="custom-calendar" class="custom-rect">
+        <div id="caledar-selector" class="w-row">
+          <div id="calendar-label" class="w-col w-col-3">Desired Start Date:</div>
+
+          <div id="calendar-select" class="w-col w-col-9">
+            <input type='text' class="calendar-datepicker calendar-style" readonly>
+          </div>
+        </div>
+
+      </div>
+      <div id="contractor-selector" class="custom-rect">
+        <% if @Contractors.empty? == false %>
+          <%@Contractors.each do |con| %>
+            <div class="contractor-box">
+              <div class="company-logo">
+                <div class="logo-img"><img src="assets/<%= con.logo %>"></div>
+              </div>
+              <div class="company-info">
+                <div class="company-name"><%= con.name%></div>
+                <div class="company-desc"><%= con.description%></div>
+                <div class="company-certif">
+                  <% if con.certi1 %>
+                    <img src="assets/<%= con.certi1 %>">
+                  <% else %>
+                    <div class="certifi-img"></div>
+                  <% end %>
+                  <% if con.certi2 %>
+                    <img src="assets/<%= con.certi2 %>" class="last-img">
+                  <% else %>
+                    <div class="certifi-img last-img"></div>
+                  <% end %>
+                </div>
+              </div>
+              <div class="company-controller">
+                <div class="wrap-gallery-btm<%= con.id %>">
+                  <a href="assets/<%= @JobImgs[con.id][0] %>" class="gallery click-btn button-gallery">Gallery</a>
+                  <% for i in 1 ... @JobImgs[con.id].size %>
+                      <a class="gallery" href="assets/<%= @JobImgs[con.id][i] %>"></a>
+                  <% end %>
+                </div>
+                <a href="#" class="click-btn button-select" onclick="select(<%= con.id %>);">Select</a>
+              </div>
+            </div>
+          <% end %>
+          <script type="text/javascript" src="assets/featherlight.min.js" charset="utf-8"></script>
+          <script type="text/javascript" src="assets/featherlight.gallery.min.js" charset="utf-8"></script>
+          <script type="text/javascript">
+            set_contractor_count(<%= @Contractors.length %>);
+            var wrap;
+            for(var i = 1; i <= get_contractor_count(); i ++){
+              wrap = "";
+              wrap = ".wrap-gallery-btm";
+              wrap += i;
+              wrap += " .gallery";
+              $(wrap).featherlightGallery({
+                gallery: {
+                  fadeIn: 100,
+                  fadeOut: 100,
+                  next: '&#9664;',
+                  previous: '&#9654'
+                },
+                openSpeed:    300,
+                closeSpeed:   300,
+                variant: 'featherlight-gallery'
+              });    
+            } 
+          </script>
+        <% else %>
+          <div id="company-valid">
+            <p>Sorry!</p>
+            <p>There is no contractor company to service to you!</p>
+          </div>
+           <script type="text/javascript">
+            set_contractor_count(0);
+          </script>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="w-col w-col-4 custom-panel custom-rect">
+      <div class="w-row panel-input">
+        <div id="custom-address-header" class="panel-header">Your Address:</div>
+        <div id="custom-address-content" class="panel-content"><%= @Customaddress %></div>
+      </div>
+      <div class="w-row panel-input">
+        <div id="custom-area-header" class="panel-header">Roof Area Selected:</div>
+        <div id="custom-area-content" class="panel-content">In Progress</div>
+      </div>
+      <div class="w-row panel-input">
+        <div id="custom-product-header" class="panel-header">Product Selected:</div>
+        <div id="custom-product-content" class="panel-content">In Progress</div>
+      </div>
+      <div class="w-row panel-input">
+        <div id="custom-consel-header" class="panel-header">Contractor Selected:</div>
+        <div id="custom-consel-content" class="panel-content">In Progress</div>
+      </div>
+      <div id="next-button-valid"></div>
+      <div class="w-row panel-input"><button class="nextbutton" onclick="check();">NEXT</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="w-section section footer">
+    <div class="w-container">
+      <div class="w-row">
+        <div class="w-col w-col-6">
+          <div class="logo footerlogo">Roofing Made Easy.</div>
+          <div class="findus">Enter your postal/zip code and we will be in your area within 30 days.</div>
+          <div class="w-form newsletter-form">
+            <form class="w-clearfix" id="wf-form-newsletter" name="wf-form-newsletter" data-name="Newsletter">
+              <input class="w-input newsletter-field" id="postal-zip-code-2" type="text" placeholder="Enter postal/zip code" name="postal-zip-code-2" data-name="Postal Zip Code 2" required="required">
+              <input class="w-button newsletter-button" type="submit" value="Submit" data-wait="Sent" wait="Sent">
+            </form>
+            <div class="w-form-done success-message">
+              <p>Thank you! You’ll receive an email shortly.</p>
+            </div>
+            <div class="w-form-fail">
+              <p>Oops! Something went wrong while submitting the form :(</p>
+            </div>
+          </div>
+          <div class="social-icon-group">
+            <a class="w-inline-block social-icon" href="#"><img src="assets/facebook-icon.svg">
+            </a>
+            <a class="w-inline-block social-icon" href="#"><img src="assets/twitter-icon.svg">
+            </a>
+            <a class="w-inline-block social-icon" href="#"><img src="assets/linkdin-icon-white.svg">
+            </a>
+            <a class="w-inline-block social-icon" href="#"><img src="assets/email-icon-white.svg">
+            </a>
+          </div>
+        </div>
+        <div class="w-col w-col-2">
+          <h4 class="footer-title">Homeowner</h4><a class="page-link in-footer" href="our_service.html">Our Service</a><a class="page-link in-footer" href="customer_information.html">Get a Quote</a><a class="page-link in-footer" href="file_complaint.html">File Complaint</a>
+        </div>
+        <div class="w-col w-col-2">
+          <h4 class="footer-title">Business</h4><a class="page-link in-footer" href="business.html">Information</a><a class="page-link in-footer" href="register.html">Register</a><a class="page-link in-footer" href="availablity_calendar.html">Availability</a><a class="page-link in-footer" href="forms_submissions_home.html">Forms&nbsp;</a>
+        </div>
+        <div class="w-col w-col-2">
+          <h4 class="footer-title">Contact us</h4><a class="page-link in-footer" href="contact_us.html">Get In Touch</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="assets/webflow.js"></script>
+  <script type="text/javascript">
+    $(function(){
+      $('.calendar-datepicker').datepicker({
+        showOn: "button",
+        dateFormat: 'yy/mm/dd',
+          buttonImage: "assets/calendar.png",
+          buttonImageOnly: true,
+          buttonText: "Select date",
+          onSelect: function(dateText, inst) { 
+            filter_date(dateText);
+          }
+      });
+      $( ".calendar-datepicker" ).datepicker( "option", "showAnim", "slideDown" );
+    });
+
+    function check(){
+      if( !$('input.calendar-datepicker').val() )
+        alert("Select Desired Start Date!");
+      else
+        submitService($('input.calendar-datepicker').val());
+    }
+  </script>
+  <!--[if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif]-->
+</body>
+</html>

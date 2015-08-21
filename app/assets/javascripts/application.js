@@ -15,4 +15,4 @@
 //= require jquery-ui.min
 //= require fullcalendar.min
 //= require availability_calendar
-
+//= require calendar

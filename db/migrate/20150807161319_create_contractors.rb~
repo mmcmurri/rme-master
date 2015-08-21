@@ -1,0 +1,12 @@
+class CreateContractors < ActiveRecord::Migration
+  def change
+    create_table :contractors do |t|
+      t.string :address
+      t.string :comname
+      t.date :sdate
+      t.float :sarearange
+
+      t.timestamps null: false
+    end
+  end
+end
