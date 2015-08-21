@@ -20,4 +20,24 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  spree:
+    title: "RME Shop/Store"
+    search_product_code_not_found: "Unfortunately, we couldn’t find a match in our system. Be sure to include all characters including"
+    product_no_selected: "no any selected product found"
+    product_not_found: "product not found"
+    btn_select: "Select"
+    btn_like: "Like"
+    search_by_sku_placeholder: "Searching by sku (product code)"
+    shop_by:
+      material: "Shop by Material"
+      color: "Shop by Color"
+      category: "Shop by Category"
+      brand: "Shop by Brand"
+      price: "Shop by Price"
+    btn_submit: "Apply and Go!"
+    brand_not_found: "Brand is not found"
+  no_price_level: "product price level is not found"
+  load_more: "load more ..."
+  get_more: "get more ..."
+  current_selection: "Current Selection"
+  items_i_like: "Items I Like"

@@ -182,10 +182,10 @@ p {
   font-weight: 500;
 }
 .logo-text.footer {
-  margin-top: 0px;
-  /*margin-bottom: 19px;*/
-  color: #e6eaed;
-}
+     margin-top: 0px;
+     /*margin-bottom: 19px;*/
+     color: #e6eaed;
+ }
 .navigation {
   position: fixed;
   left: 0px;
@@ -995,6 +995,8 @@ p {
 .navbar {
   background-color: #50c0fb;
 }
+
+
 .businesstype {
   position: static;
   display: block;
@@ -1782,7 +1784,7 @@ html.w-mod-js *[data-ix="fade-in-on-scroll"] {
   color: black;
 }
 .continue-button:hover {
- 
+
    background-color: #ff8b63;
   color: white;
 }

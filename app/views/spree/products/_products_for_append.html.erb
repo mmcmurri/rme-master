@@ -1,0 +1,37 @@
+<% if products.present? && products.any? %>
+    <% products.each do |product| %>
+        <% url = spree.product_url(product, taxon_id: @taxon.try(:id)) %>
+        <div class="col-md-4 col-sm-6 ">
+          <div id="product_<%= product.id %>" class="product-list-item" data-hook="products_list_item" itemscope itemtype="https://schema.org/Product">
+            <div class="panel panel-default">
+              <div class="panel-heading text-center">
+                    <span class="selling lead brand_sku_price">
+                      <%= product.brand_name %> - <%= product.sku %> - <%= display_price_level(product) %>
+                    </span>
+              </div>
+              <div class="panel-body text-center product-body">
+                <%= link_to small_image(product, itemprop: "image"), url, itemprop: 'url' %> <br>
+                <%= link_to truncate(product.name, length: 50), url, class: 'info', itemprop: "name", title: product.name %>
+                <p class="sku"><%= product.sku %></p>
+                <button id="btn_select" class="btn btn-default btn-group-justified"><%= Spree.t(:btn_select) %></button>
+                <button id="btn_like" class="btn btn-default btn-group-justified"><%= Spree.t(:btn_like) %></button>
+                <span class="text"><%= product_description(product) %></span>
+                <input type="hidden" class="product_url" value="<%= url %>">
+                <input type="hidden" class="product_image_url" value='<%= product.try(:images).try(:first).try(:attachment).try(:url) %>'>
+              </div>
+              <div class="panel-footer text-center">
+                <span id="price" class="price" itemprop="price"><%= display_price_level(product) %></span>
+
+                <div id="cart-form" class="cart-form" data-hook="cart_form">
+                  <%= render :partial => 'spree/products/add_to_cart_form_for_product_or_variant', locals: {product: product} %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    <% end %>
+<% else %>
+    <h4>
+      <%= Spree.t(:no_products_found) %>
+    </h4>
+<% end %>

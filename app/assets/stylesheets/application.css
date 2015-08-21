@@ -16,11 +16,10 @@
  *= require jquery-ui.min
  *= require fullcalendar.print
  *= require fullcalendar
-
- 
- *= require_tree .
+ *require_tree .
  *= require_self
  */
+
 .alert {
   margin-top: 75px;
 }

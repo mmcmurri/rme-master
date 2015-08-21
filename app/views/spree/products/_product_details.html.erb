@@ -1,0 +1,32 @@
+<% product = @products.first if @products.present? && @products.any? %>
+<div id="product_details" class="product_details">
+  <% if product.present? %>
+      <div class="panel panel-default text-center">
+        <%= image_tag product.try(:images).try(:first).try(:attachment).try(:url), class: "product_image_large" %>
+      </div>
+      <% url = spree.product_url(product, taxon_id: @taxon.try(:id)) %>
+      <div id="product_<%= product.id %>" class="col-md-14 col-sm-14 product-list-item" data-hook="products_list_item" itemscope itemtype="https://schema.org/Product">
+        <div class="panel panel-default">
+          <% cache(@taxon.present? ? [I18n.locale, current_currency, @taxon, product] : [I18n.locale, current_currency, product]) do %>
+              <div class="panel-heading text-center">
+                    <span class="selling lead">
+                      <%= product.try(:brand_name) || Spree.t(:no_brand) %> - <%= product.try(:sku) || Spree.t(:no_sku) %> - <%= display_price_level(product) %></span>
+                </span>
+              </div>
+              <div class="panel-body text-center product-body">
+                <%= product_description(product) %>
+              </div>
+          <% end %>
+        </div>
+      </div>
+  <% else %>
+      <div class="panel panel-default text-center">
+        <%= image_tag "", class: "product_image_large"%>
+      </div>
+      <!--<div class="panel panel-default text-center">-->
+        <div class="product-list-item">
+          <h4 align="center"><%= Spree.t(:product_no_selected) %></h4>
+        <!--</div>-->
+      </div>
+  <% end %>
+</div>

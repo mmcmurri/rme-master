@@ -1,0 +1,82 @@
+/**
+ * Created by Dmitry Kosenko
+ */
+
+//$( document ).ready(function() {
+(function () {
+    Spree.ready(function () {
+
+        var url = "/shop/shops_ajax.js";
+
+        function add_params_to_url(param_name, params) {
+//            if (url_params.length < 1) url_params = "?";
+            var url_params = param_name + "=";
+            $.each(params, function (index, item) {
+                var selector = $(item);
+                url_params += selector.val() + ",";
+            });
+            url_params += "&";
+            return url_params;
+        }
+
+        function make_url_for_ajax_call() {
+            var url_params = "?";
+
+            var materials = $("#lsidebar #shop_by_material :input:checkbox:checked");
+            var colors = $("#lsidebar #shop_by_color :input:checkbox:checked");
+            var categories = $("#lsidebar #shop_by_categories :input:checkbox:checked");
+            var brands = $("#lsidebar #shop_by_brand :input:checkbox:checked");
+            var prices = $("#lsidebar #shop_by_price :input:checkbox:checked");
+
+            //var items = $("#lsidebar input:checkbox:checked");
+
+            url_params += add_params_to_url("materials", materials);
+            url_params += add_params_to_url("colors", colors);
+            url_params += add_params_to_url("categories", categories);
+            url_params += add_params_to_url("brands", brands);
+            url_params += add_params_to_url("prices", prices);
+
+            var url_current = url + url_params;
+            console.log(url_current);
+
+            //$("a#filter").attr("href", url).click(); //make ajax call automatically
+
+            $.ajax({
+                method: "GET",
+                url: url,
+                //dataType: "json",
+                //data: data //{ name: "query", colors: "Red" }
+            })
+                .done(function (msg) {
+                    //alert( "Data Saved: " + msg["ajax"] );
+                    //$("#products").html(msg);
+                    //console.log(msg);
+                }).error(function (msg) {
+                    //alert( "error: " + msg["ajax"] );
+                });
+        }
+
+
+        // making the ajax call for getting products according to selected filters
+        function apply_filter() {
+//            var data = $('form#form_filters').serializeJSON();
+//            var url_params = $('form#form_filters').serialize();
+//            var url = $('nav .pager a').attr('href');
+//            url += url_params;
+////            console.log(url_params);
+//            console.log(url);
+//            $('nav .pager a').attr('href', url);
+
+            $("#lsidebar #btnFilter").click();
+        }
+
+        $("#lsidebar input[type='checkbox']").change(function () {
+            //make_url_for_ajax_call(); //commented/disabled, because in backend don't detected/exist in params["param_name"]
+            apply_filter();
+        });
+
+        apply_filter(); // apply filter and display all products via ajax call
+
+    });
+}).call(this);
+
