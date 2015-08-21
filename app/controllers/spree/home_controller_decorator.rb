@@ -68,6 +68,8 @@ Spree::HomeController.class_eval do
     arrPrices = params[:prices] if params[:prices].present?
 
     products = []
+    property_material_name = "Material"
+    property_color_name = "Color"
 
     #searching by sku (product code)
     if sku.present?
@@ -89,18 +91,18 @@ Spree::HomeController.class_eval do
 
     # if only filter.shop_by_material applied
     if arrMaterials.present? && arrPrices.blank? && arrCategories.blank? && arrColors.blank?
-      productMaterials = Spree::Product.includes(:product_properties, :properties).where("spree_product_properties.value" => arrMaterials, "spree_properties.name" => "Material").uniq.page(page)
+      productItems = Spree::Product.includes(:product_properties, :properties).where("spree_product_properties.value" => arrMaterials, "spree_properties.name" => property_material_name).uniq.page(page)
 
       #TODO: add variants from option_values to products if needed
       ## searching in product variants
       # variants = Spree::Variant.includes(:option_values).where("spree_option_values.presentation" => arrMaterials).uniq.page(page) #search products by material in his variants.
       # variants.each { |variant| productMaterials << variant if variant.present? && variant.product.present? } # add variant to products
-      products = productMaterials
+      products = productItems
     end
 
     # if only filter.shop_by_color applied
     if arrColors.present? && arrPrices.blank? && arrCategories.blank? && arrMaterials.blank?
-      productColors = Spree::Product.includes(:product_properties, :properties).where("spree_product_properties.value" => arrColors, "spree_properties.name" => "Color").uniq.page(page)
+      productColors = Spree::Product.includes(:product_properties, :properties).where("spree_product_properties.value" => arrColors, "spree_properties.name" => property_color_name).uniq.page(page)
 
       #TODO: add variants from option_values to products if needed
       # # searching in product variants
@@ -112,32 +114,27 @@ Spree::HomeController.class_eval do
 
     # if only ShopByColor and ShopByMaterial filters are applied together.
     if arrColors.present? && arrMaterials.present? && arrPrices.blank? && arrCategories.blank?
-      values = arrColors + arrMaterials
-      products = Spree::Product.
-          includes(:product_properties, :properties).
-          where("spree_product_properties.value" => values, "spree_properties.name" => ["Color", "Material"]
-          ).uniq.page(page)
+      values = arrMaterials + arrColors
+      # products = Spree::Product.includes(:product_properties, :properties) \
+      #                .where(spree_product_properties: {value:arrColors}, spree_properties:{name:property_color_name}) \
+      #                .where(spree_product_properties: {value:arrMaterials}, spree_properties:{name:property_material_name})
+
+      products = Spree::Product.includes(:product_properties, :properties).where(spree_product_properties: {value:arrColors}, spree_product_properties: {value:arrMaterials}, spree_properties:{name:[property_material_name, property_color_name]}).page(page)
+      #products = Spree::Product.includes(:product_properties, :properties).where(spree_product_properties: {value:values.uniq}, spree_properties:{name:[property_material_name, property_color_name]}).page(page)#.group(:name)
+
+      #products = Spree::Product.find_by_sql('select p.name, pp.value as pp_value, product.name, product.id as product_id  from  spree_products as product, spree_product_properties as pp, spree_properties as p
+      #   where product.id = pp.product_id and pp.property_id = p.id and p.name in ("Color","Material") and pp.value in ("Canvas","Yellow") group by p.name
+      #    ;');
     end
 
     # if only ShopByColor, ShopByMaterial and ShopByPrice filters are applied together.
     if arrColors.present? && arrMaterials.present? && arrPrices.present? && arrCategories.blank?
-
       values = arrColors + arrMaterials
       products = Spree::Product.
           includes(:product_properties, :properties).
-          where("spree_product_properties.value" => values, "spree_properties.name" => ["Color", "Material"]
-          ).uniq.page(page)
-      products = filter_products_by_price(products, arrPrices) if products.present?
-    end
-
-    # if all filters (ShopByColor, ShopByMaterial, ShopByPrice, ShopByCategories) are applied together.
-    if arrColors.present? && arrMaterials.present? && arrPrices.present? && arrCategories.blank?
-      values = arrColors + arrMaterials
-      products = Spree::Product.
-          includes(:product_properties, :properties).
-          where("spree_product_properties.value" => values, "spree_properties.name" => ["Color", "Material"]
-          ).uniq.page(page)
-      products = filter_products_by_price(products, arrPrices) if products.present?
+          where("spree_product_properties.value" => values, "spree_properties.name" => [property_color_name, property_material_name]
+          ).uniq
+      products = filter_products_by_price(products, arrPrices).page(page) if products.present?
       #TODO: add variants from option_values to products if needed
     end
 
@@ -146,9 +143,9 @@ Spree::HomeController.class_eval do
       values = arrColors + arrMaterials
       taxons = Spree::Taxon.where(name: arrCategories)
       products = Spree::Product.in_taxons(taxons).includes(:product_properties, :properties).
-          where("spree_product_properties.value" => values, "spree_properties.name" => ["Color", "Material"]
-          ).uniq.page(page)
-      products = filter_products_by_price(products, arrPrices) if products.present?
+          where("spree_product_properties.value" => values, "spree_properties.name" => [property_color_name, property_material_name]
+          ).uniq
+      products = filter_products_by_price(products, arrPrices).page(page) if products.present?
       #TODO: add variants from option_values to products if needed
     end
 
@@ -156,9 +153,9 @@ Spree::HomeController.class_eval do
     if arrMaterials.present? && arrPrices.present? && arrCategories.blank? && arrColors.blank?
       priceMin, priceMax = get_min_and_max_price_from_string_array(arrPrices)
 
-      productMaterials = Spree::Product.
+      productItems = Spree::Product.
           includes(:product_properties, :properties)
-                             .where("spree_product_properties.value" => arrMaterials, "spree_properties.name" => "Material")
+                             .where("spree_product_properties.value" => arrMaterials, "spree_properties.name" => property_material_name)
                              .uniq.price_between(priceMin, priceMax).page(page)
 
       #TODO: add variants from option_values to products if needed
@@ -167,7 +164,7 @@ Spree::HomeController.class_eval do
       #                .uniq.joins(:prices).where("spree_prices.amount > ? and spree_prices.amount < ?", priceMin, priceMax).page(page) #search products by material in his variants.
       # variants.each { |variant| productMaterials << variant if variant.present? && variant.product.present? } # add variant to products
 
-      products = productMaterials
+      products = productItems
     end
 
     # if ShopByMaterial, ShopByPrice, ShopByCateory and ShopByBrand filters applied
@@ -175,12 +172,11 @@ Spree::HomeController.class_eval do
       taxons = Spree::Taxon.where(name: arrCategories)
       priceMin, priceMax = get_min_and_max_price_from_string_array(arrPrices)
 
-      productMaterials = Spree::Product.in_taxons(taxons).includes(:product_properties, :properties).
-          where("spree_product_properties.value" => values, "spree_properties.name" => ["Color", "Material"]
-          ).
-          includes(:product_properties, :properties)
-                             .where("spree_product_properties.value" => arrMaterials, "spree_properties.name" => "Material")
-                             .uniq.price_between(priceMin, priceMax).page(page)
+      productItems = Spree::Product.in_taxons(taxons).includes(:product_properties, :properties).
+          where("spree_product_properties.value" => values, "spree_properties.name" => [property_color_name, property_material_name])
+            .includes(:product_properties, :properties)
+              .where("spree_product_properties.value" => arrMaterials, "spree_properties.name" => property_material_name)
+                 .uniq.price_between(priceMin, priceMax).page(page)
 
       #TODO: check it (may be return duplicates of variants but not sure)
       # #TODO: add variants from option_values to products if needed
@@ -189,7 +185,7 @@ Spree::HomeController.class_eval do
       #   variants = product.variants.includes(:option_values).where("spree_option_values.presentation" => arrMaterials).uniq.page(page) if product.present? && product.variants.present?
       #   variants.each { |variant| productMaterials << variant if variant.present? } if variants.present? # add variant to products
       # end
-      products = productMaterials
+      products = productItems
     end
 
     # If filters (ShopByPrice, ShopByCategory, ShopByBrand) applied together.
@@ -202,9 +198,9 @@ Spree::HomeController.class_eval do
     # if filters (ShopByColor, ShopByCategory, ShopByBrand) are applied together.
     if arrColors.present? && arrCategories.present? && arrMaterials.blank? && arrPrices.blank?
       taxons = Spree::Taxon.where(name: arrCategories)
-      productColors = Spree::Product.in_taxons(taxons).includes(:product_properties, :properties).
-          where("spree_product_properties.value" => arrColors, "spree_properties.name" => "Color"
-          ).page(page)
+      productColors = Spree::Product.in_taxons(taxons).includes(:product_properties, :properties)
+          .where("spree_product_properties.value" => arrColors, "spree_properties.name" => property_color_name)
+              .uniq.page(page)
 
       #TODO: check it (may be return duplicates of variants but not sure)
       #TODO: add variants from option_values to products if needed
@@ -219,10 +215,9 @@ Spree::HomeController.class_eval do
     # if only filters (ShopByColor and ShopByPrice) applied
     if arrColors.present? && arrPrices.present? && arrCategories.blank? && arrMaterials.blank?
       priceMin, priceMax = get_min_and_max_price_from_string_array(arrPrices)
-
-      productColors = Spree::Product.includes(:product_properties, :properties).
-          where("spree_product_properties.value" => arrColors, "spree_properties.name" => "Color").
-          uniq.price_between(priceMin, priceMax).page(page)
+      productColors = Spree::Product.includes(:product_properties, :properties)
+          .where("spree_product_properties.value" => arrColors, "spree_properties.name" => property_color_name)
+          .uniq.price_between(priceMin, priceMax).page(page)
 
       #TODO: add variants from option_values to products if needed
       # # searching in product variants
@@ -236,22 +231,44 @@ Spree::HomeController.class_eval do
     # if only filters (ShopByMaterial, ShopByBrand, ShopByCategory) applied
     if arrMaterials.present? && arrCategories.present? && arrPrices.blank? && arrColors.blank?
       taxons = Spree::Taxon.where(name: arrCategories)
-      productMaterials = Spree::Product.includes(:product_properties, :properties).
-          where("spree_product_properties.value" => arrMaterials, "spree_properties.name" => "Material").page(page)
+      productItems = Spree::Product.in_taxons(taxons).includes(:product_properties, :properties)
+        .where("spree_product_properties.value" => arrMaterials, "spree_properties.name" => property_material_name)
+          .uniq.page(page)
 
       #TODO: add variants from option_values to products if needed
-      products = productMaterials
+      products = productItems
     end
 
     # if only filters (ShopByColor, ShopByMaterial, ShopByBrand, ShopByCategory) applied
-    if arrMaterials.present? && arrCategories.present? && arrPrices.blank? && arrColors.present?
+    if arrMaterials.present? && arrColors.present? && arrCategories.present? && arrPrices.blank?
       values = arrMaterials + arrColors
       taxons = Spree::Taxon.where(name: arrCategories)
-      productMaterials = Spree::Product.includes(:product_properties, :properties).
-          where("spree_product_properties.value" => values, "spree_properties.name" => ["Color", "Material"]
-          ).uniq.page(page)
+      productItems = Spree::Product.in_taxons(taxons).includes(:product_properties, :properties)
+        .where("spree_product_properties.value" => values.uniq, "spree_properties.name" => [property_color_name, property_material_name])
+          .uniq.page(page)
       #TODO: add variants from option_values to products if needed
-      products = productMaterials
+      products = productItems
+    end
+
+    # if only filters (ShopByMaterial, ShopByBrand, ShopByCategory) applied
+    if arrMaterials.present? && arrCategories.present? && arrPrices.blank? && arrColors.blank?
+      taxons = Spree::Taxon.where(name: arrCategories)
+      productItems = Spree::Product.in_taxons(taxons).includes(:product_properties, :properties)
+        .where("spree_product_properties.value" => arrMaterials, "spree_properties.name" => property_material_name)
+        .uniq.page(page)
+      #TODO: add variants from option_values to products if needed
+      products = productItems
+    end
+
+    # if only filters (ShopByColors, ShopByPrice, ShopByBrand, ShopByCategory) applied
+    if arrColors.present? && arrCategories.present? && arrPrices.present? && arrMaterials.blank?
+      priceMin, priceMax = get_min_and_max_price_from_string_array(arrPrices)
+      taxons = Spree::Taxon.where(name: arrCategories)
+      productItems = Spree::Product.in_taxons(taxons).includes(:product_properties, :properties)
+         .where("spree_product_properties.value" => arrColors, "spree_properties.name" => property_color_name)
+         .uniq.price_between(priceMin, priceMax).page(page)
+      #TODO: add variants from option_values to products if needed
+      products = productItems
     end
 
     # if no any selected filters - display all products
@@ -260,7 +277,6 @@ Spree::HomeController.class_eval do
     end
 
     respond_to_and_exit(products)
-
   end
 
 
@@ -332,7 +348,7 @@ Spree::HomeController.class_eval do
     colors = []
     Spree::Variant.all.each do |variant|
       variant.product.properties.each do |property|
-        colors << property.name if property.name == "Color" #or property.presentation=="Color"
+        colors << property.name if property.name == property_color_name #or property.presentation==property_color_name
       end
     end
     return colors.uniq!

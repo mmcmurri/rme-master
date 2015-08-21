@@ -15,7 +15,7 @@
       <% if products.present? %>
           <!--pagination with load_more button-->
           <div class="col-md-12">
-            <% unless products.current_page == products.total_pages %>
+            <% unless products.try(:current_page) == products.try(:total_pages) %>
                 <nav>
                   <ul class="pager">
                     <li id="view-more ">

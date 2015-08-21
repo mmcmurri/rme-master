@@ -10,7 +10,7 @@
           <% cache(@taxon.present? ? [I18n.locale, current_currency, @taxon, product] : [I18n.locale, current_currency, product]) do %>
               <div class="panel-heading text-center">
                     <span class="selling lead">
-                      <%= product.brand_name %> - <%= product.sku %> - <%= display_price_level(product) %></span>
+                      <%= product.try(:brand_name) || Spree.t(:no_brand) %> - <%= product.try(:sku) || Spree.t(:no_sku) %> - <%= display_price_level(product) %></span>
                 </span>
               </div>
               <div class="panel-body text-center product-body">
