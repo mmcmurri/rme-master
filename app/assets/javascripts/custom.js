@@ -107,14 +107,16 @@ function select(index){
 			}
 		});
 }
-function submitService(){
+function submitService(date){
+	console.log(date);
+	
 	if( ( $("#custom-product-content").html() == "In Progress" || $("#custom-product-content").html() == "No Data!" ) && boolNextOop != 0 ){
 		boolNextOop = 0;
 		$('#next-button-valid').append("<p style='font-weight:bold;'>Oops!</p><p> You haven’t selected a contractor yet. Take a look through the list and select a contractor by clicking “select” next to the contractors name.</p>"); 
 		return false;
 	}
 	else if( $("#custom-product-content").html() != "In Progress" || $("#custom-product-content").html() == "No Data!" ){
-		var url = "summary/" + encodeURIComponent(companyData.name);
+		var url = "summary/" + encodeURIComponent(companyData.name) + "/" + encodeURIComponent(date);
 		location.href = url;
 	}
 }

@@ -85,17 +85,22 @@ class HomeController < ApplicationController
   def summary
     jobImgs = []
     id = -1
+    address = ''
     contractors = Contractor.joins('LEFT OUTER JOIN Companyimgs ON Companyimgs.name = Contractors.name').
                   select("Contractors.*, Companyimgs.logo, Companyimgs.certi1, Companyimgs.certi2, Companyimgs.carousel").
-                  where("Contractors.name = ?", params[:selector] ).
+                  where("Contractors.name = ?", params[:name] ).
                   limit(1)
     contractors.each do |con|
       @contractor = con;
       jobImgs[con.id] = con.carousel.split(",") 
+      address = con.add.split(",")  
       id = con.id
     end
     @Deposit = @contractor.price * 0.1
     @ProductImg = jobImgs[id][0]
+    @Lat = address[0]
+    @Lon = address[1] 
+    @Date = params[:date]
   end
 
   def login_portal
