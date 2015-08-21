@@ -46,7 +46,6 @@ group :development, :test do
 end
 
 
-gem 'spree', '3.0.1'
+gem 'spree', github: 'spree/spree', branch: '3-0-stable'
 gem 'spree_gateway', github: 'spree/spree_gateway', branch: '3-0-stable'
 gem 'spree_auth_devise', github: 'spree/spree_auth_devise', branch: '3-0-stable'
-#gem 'will_paginate',

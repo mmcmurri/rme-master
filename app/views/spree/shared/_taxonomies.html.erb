@@ -39,24 +39,17 @@
     <% end %>
 
     <% if @taxonomies.present? %>
-        <% @taxonomies.each do |taxonomy| %>
-            <h4 class='taxonomy-root'><%= Spree.t(:shop_by_taxonomy, taxonomy: taxonomy.name) %></h4>
-            <div id="shop_by_<%= taxonomy.name.downcase %>" class="row">
-              <div class="col-md-12">
-                <% taxonomy.taxons.each do |item| %>
-                    <% if item.parent_id == taxonomy.id %>
-                        <div class="input-group">
-                          <input type="text" class="form-control" aria-label="" value="<%= item.name %>" readonly>
-                    <span class="input-group-addon">
-                    <input type="checkbox" name="categories[]" id="<%= item.id %>" value="<%= item.name %>" aria-label="">
-                    </span>
-                        </div>
-                    <% end %>
-                <% end %>
-              </div>
-            </div>
-        <% end %>
+        <% max_level = Spree::Config[:max_level_in_taxons_menu] || 1 %>
+        <nav id="taxonomies" class="sidebar-item" data-hook>
+          <% @taxonomies.each do |taxonomy| %>
+              <% cache [I18n.locale, taxonomy, max_level, @taxon] do %>
+                  <h4 class='taxonomy-root'><%= Spree.t(:shop_by_taxonomy, :taxonomy => taxonomy.name) %></h4>
+                  <%= taxons_tree_with_filters(taxonomy.root, @taxon, max_level) %>
+              <% end %>
+          <% end %>
+        </nav>
     <% else %>
+        <h4><%=Spree.t(:no_taxonomies)%></h4>
     <% end %>
 
     <% if @prices.present? %>
