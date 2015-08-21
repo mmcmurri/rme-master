@@ -8,9 +8,7 @@
 
   <%= render :partial => 'spree/products/product_details' %>
 
-  <% cache(cache_key_for_products) do %>
-      <%= render :partial => 'spree/products/products', :locals => {:products => @products} %>
-  <% end %>
+  <%= render :partial => 'spree/products/products', :locals => {:products => @products} %>
 </div>
 
 

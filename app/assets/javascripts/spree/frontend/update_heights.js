@@ -6,6 +6,8 @@
 update_heights();
 
 
+
+
 //$("#product_details img").load(function () {
 //    update_heights();
 //});
@@ -20,13 +22,15 @@ function update_heights() {
     //console.log("hLS:" + heightOfLeftSidebar + " - hPDetails:" + heightProductDetails + "=" + heightProducts);
     $("#products.products").css('height', heightProducts);
 
-    //update height of the right sidebar
+    update_rsidebar_heights();//update height of the right sidebar
+};
+
+function update_rsidebar_heights() {
     var heightOfItemsILike = $("#lsidebar").height() - $(".search_by_sku").height() -
         $(".rsidebar_products_i_like .panel-heading").height() - $(".rsidebar_product_selected").height() - 80;
     $(".products_liked").css('height', heightOfItemsILike);
+}
 
-
-};
 
 // onHover() event for product list
 $('.products .btn').hide();
@@ -56,11 +60,9 @@ $(".products #btn_select").on('click', function () {
 
 // click on like button
 $(".products #btn_like").on('click', function () {
-    var parent = $(this).parents(".product-list-item").clone();
-    parent.find("#btn_like").hide();
-    parent.find(".sku").hide();
-    $(".rsidebar_products_i_like .products_liked").prepend(parent);
+    var parent = $(this).parents(".product-list-item");
 
+    add_product_to_items_i_like(parent);
     product_selection_from_like_products();
 });
 
@@ -97,19 +99,17 @@ function update_product_details(item) {
     var urlToLargeImage = itemNew.find(".product_image_url").val();
     var image = '<img src="'+urlToLargeImage+'" class="product_image_large"/>';
     $("#product_details img.product_image_large").replaceWith(image);
+
+    update_heights();
 }
 
 
 
 function add_product_to_items_i_like(parent) {
-    //$(".rsidebar_products_i_like .product-list-item").before(parent); # for no jquery script
-
     var item = parent.clone();
     item.find("#btn_like").hide();
     item.find(".sku").hide();
-    // add to products i like
-    $(".rsidebar_products_i_like .products_liked").prepend(item);
-
+    $(".rsidebar_products_i_like .products_liked").prepend(item); // add to products i like
     product_selection_from_like_products();
 }
 
@@ -125,7 +125,11 @@ function add_product_to_selected_product(parent) {
     $(".rsidebar_product_selected .product-list-item").replaceWith(item);
     $(".rsidebar_product_selected .product-list-item #cart-form").show();
 
-    update_product_details(item);
+    //$("#rsidebar #product-variants .list-group").hide(); // hide variants
+    //$("#rsidebar #product-variants .product-section-title").on("click", function() {
+    //    $("#rsidebar #product-variants .list-group").show();
+    //});
 
+    update_product_details(item);
     product_selection_from_like_products();
 }

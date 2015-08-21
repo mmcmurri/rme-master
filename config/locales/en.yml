@@ -37,3 +37,7 @@ en:
     btn_submit: "Apply and Go!"
     brand_not_found: "Brand is not found"
   no_price_level: "product price level is not found"
+  load_more: "load more ..."
+  get_more: "get more ..."
+  current_selection: "Current Selection"
+  items_i_like: "Items I Like"

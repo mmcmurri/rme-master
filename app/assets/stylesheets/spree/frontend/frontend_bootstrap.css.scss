@@ -149,3 +149,14 @@ table {
   margin-top: 100px;
   background-color: white;
 }
+
+#product-variants {
+  overflow-y: scroll;
+  height: 200px;
+}
+
+.table tbody>tr>td.vert-align
+{
+  vertical-align: middle;
+}
+

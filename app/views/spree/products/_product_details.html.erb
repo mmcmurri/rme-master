@@ -1,25 +1,32 @@
-<% product = @products.first %>
+<% product = @products.first if @products.present? && @products.any? %>
 <div id="product_details" class="product_details">
-  <div class="panel panel-default text-center">
-    <% if product.present? %>
-        <%= image_tag product.try(:images).try(:first).try(:attachment).try(:url), class:"product_image_large" %>
-        </div>
-        <% url = spree.product_url(product, taxon_id: @taxon.try(:id)) %>
-        <div id="product_<%= product.id %>" class="col-md-14 col-sm-14 product-list-item" data-hook="products_list_item" itemscope itemtype="https://schema.org/Product">
-          <div class="panel panel-default">
-            <% cache(@taxon.present? ? [I18n.locale, current_currency, @taxon, product] : [I18n.locale, current_currency, product]) do %>
-                <div class="panel-heading text-center">
+  <% if product.present? %>
+      <div class="panel panel-default text-center">
+        <%= image_tag product.try(:images).try(:first).try(:attachment).try(:url), class: "product_image_large" %>
+      </div>
+      <% url = spree.product_url(product, taxon_id: @taxon.try(:id)) %>
+      <div id="product_<%= product.id %>" class="col-md-14 col-sm-14 product-list-item" data-hook="products_list_item" itemscope itemtype="https://schema.org/Product">
+        <div class="panel panel-default">
+          <% cache(@taxon.present? ? [I18n.locale, current_currency, @taxon, product] : [I18n.locale, current_currency, product]) do %>
+              <div class="panel-heading text-center">
                     <span class="selling lead">
                       <%= product.brand_name %> - <%= product.sku %> - <%= display_price_level(product) %></span>
-                    </span>
-                </div>
-                <div class="panel-body text-center product-body">
-                  <%= product_description(product) %>
-                </div>
-            <% end %>
-          </div>
+                </span>
+              </div>
+              <div class="panel-body text-center product-body">
+                <%= product_description(product) %>
+              </div>
+          <% end %>
         </div>
-    <% else %>
-        <h4><%= Spree.t(:spree.product_no_selected) %></h4>
-    <% end %>
+      </div>
+  <% else %>
+      <div class="panel panel-default text-center">
+        <%= image_tag "", class: "product_image_large"%>
+      </div>
+      <!--<div class="panel panel-default text-center">-->
+        <div class="product-list-item">
+          <h4 align="center"><%= Spree.t(:product_no_selected) %></h4>
+        <!--</div>-->
+      </div>
+  <% end %>
 </div>

@@ -54,33 +54,28 @@
                 }).error(function (msg) {
                     //alert( "error: " + msg["ajax"] );
                 });
+        }
 
+
+        // making the ajax call for getting products according to selected filters
+        function apply_filter() {
+//            var data = $('form#form_filters').serializeJSON();
+//            var url_params = $('form#form_filters').serialize();
+//            var url = $('nav .pager a').attr('href');
+//            url += url_params;
+////            console.log(url_params);
+//            console.log(url);
+//            $('nav .pager a').attr('href', url);
+
+            $("#lsidebar #btnFilter").click();
         }
 
         $("#lsidebar input[type='checkbox']").change(function () {
-
             //make_url_for_ajax_call(); //commented/disabled, because in backend don't detected/exist in params["param_name"]
-
-            var data = $('form#form_filters').serializeJSON();
-            $("#btnFilter").click();
-
-//            var items = $("#lsidebar input:checkbox:checked");
-//            $.each(items, function(index, item) {
-//                var selector = $(item);
-//                console.log(index+") status:"+selector.is(":checked")+" val:"+selector.val()+" id:"+selector.attr("id"))
-//            });
+            apply_filter();
         });
 
-        /* Loading and running the script, which:
-         + is updating a heights for the right sidebar and the product viewer according to height of the left sidebar;
-         + Show/Display following fields: price, sku, like and select buttons, when we will hover on a product.
-        */
-        $.getScript( "<%= asset_path('spree/frontend/update_heights.js') %>", function( data, textStatus, jqxhr ) {
-            //console.log( data ); // Data returned
-            //console.log( textStatus ); // Success
-            //console.log( jqxhr.status ); // 200
-            //console.log( "Successful update of the heights." );
-        });
+        apply_filter(); // apply filter and display all products via ajax call
 
     });
 }).call(this);

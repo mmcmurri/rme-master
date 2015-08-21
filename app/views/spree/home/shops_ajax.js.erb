@@ -1,5 +1,27 @@
-$("#products").replaceWith("<%= escape_javascript(render partial: 'spree/products/products', locals: { products: @products } ) %>");
-$('#products').slideDown(350);
+<% if @products.current_page > 1 %>
+    $("#products #append_products").append("<%= escape_javascript(render partial: 'spree/products/products_for_append', locals: { errors:@errors, products: @products } ) %>");
+//    console.log("append");
+<% else %>
+    $("#products").replaceWith("<%= escape_javascript(render partial: 'spree/products/products', locals: { errors:@errors, products: @products } ) %>");
+//    $('#products').slideDown(350);
+//    console.log("replace");
+<% end %>
+
+console.log("cur_page: "+<%=@products.current_page%>);
+/* Updating of the ajax pagination. */
+<% if @products.current_page == @products.total_pages %>
+    $('nav .pager a').remove();
+<% else %>
+
+//    $('nav .pager a').attr('href', '<%= url_for(page: @products.current_page + 1) %>');
+//    var url = $('nav .pager a').attr('href');
+    var url = '<%= url_for(page: @products.current_page + 1) %>';
+    var url_filter_params = $('form#form_filters').serialize();
+    url = url + "&" + url_filter_params;
+//    console.log(url);
+    $('nav .pager a').attr('href', url);
+<% end %>
+
 
 /* Loading and running the script, which:
  + is updating a heights for the right sidebar and the product viewer according to height of the left sidebar;
