@@ -12,7 +12,7 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 20150821160230) do
-  
+
   create_table "bookings", force: :cascade do |t|
     t.date    "date"
     t.integer "team_size"
