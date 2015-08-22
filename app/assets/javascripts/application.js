@@ -13,6 +13,7 @@
 //= require moment.min
 //= require jquery.min
 //= require jquery-ui.min
+//= require calendar
 //= require fullcalendar.min
 //= require availability_calendar
-//= require calendar
+
