@@ -33,7 +33,7 @@ gem 'jquery-ui-rails'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-gem 'sprockets-rails', '-> 2.3.2'
+gem 'sprockets-rails', '~> 2.3.2'
 
 group :development, :test do
   # Use sqlite3 as the database for Active Record
