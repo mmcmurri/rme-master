@@ -1,20 +1,24 @@
 <!DOCTYPE html>
-<!-- This site was created in Webflow. http://www.webflow.com-->
-<!-- Last Published: Wed Jun 17 2015 12:59:18 GMT+0000 (UTC) -->
-<html data-wf-site="554eaa03e47085a40aa28e10" data-wf-page="55522a8fe0a39bc42a5e734b">
+<!--[if lt IE 7 ]> <html class="ie ie6" lang="<%= I18n.locale %>"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie ie7" lang="<%= I18n.locale %>"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie ie8" lang="<%= I18n.locale %>"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie ie9" lang="<%= I18n.locale %>"> <![endif]-->
+<!--[if gt IE 9]><!--><html lang="<%= I18n.locale %>"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
   <title>Our Service</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="generator" content="Webflow">
   <link rel="stylesheet" type="text/css" href="/assets/normalize.css">
   <link rel="stylesheet" type="text/css" href="/assets/webflow.css">
   <link rel="stylesheet" type="text/css" href="/assets/roofingmadeeasy.webflow.css">
   <link rel="stylesheet" type="text/css" href="/assets/summary.css.scss">
   <link type="text/css" rel="stylesheet" href="/assets/featherlight.min.css" title="Featherlight Styles" />
   <link type="text/css" rel="stylesheet" href="/assets/featherlight.gallery.min.css" title="Featherlight Styles" />
-  
+  <link rel="stylesheet" type="text/css" href="/assets/jquery.timmer.css">
+  <link rel="shortcut icon" type="image/x-icon" href="/assets/New icon.ico">
+  <link rel="apple-touch-icon" href="/assets/metric-webclip.png">
+
   <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+  
   <script>
     WebFont.load({
       google: {
@@ -22,12 +26,13 @@
       }
     });
   </script>
-  <script type="text/javascript" src="/assets/modernizr.js"></script>
-  <script type="text/javascript" src="/assets/custom.js"></script>
-  <script type="text/javascript" src="/assets/jquery.min.js"></script>
-  <script type="text/javascript" src="/assets/jquey-1.11.1.min.js"></script>
-  <link rel="shortcut icon" type="image/x-icon" href="/assets/New icon.ico">
-  <link rel="apple-touch-icon" href="/assets/metric-webclip.png">
+  
+
+  <script type="text/javascript" src="/assets/jquery-2.0.3.min.js"></script>
+  <script type="text/javascript" src="/assets/jquery.payment.js"></script>
+  <script type="text/javascript" src="/assets/summary.js"></script>
+  
+  
 </head>
 <body>
   <div class="w-section section custom" id="top">
@@ -86,7 +91,7 @@
 				<div class="w-col w-col-4 select-row">
 					<div class="img"><img src="http://maps.google.com/maps/api/staticmap?size=255x255&maptype=roadmap&sensor=false&zoom=12&markers=color:pink|label:A|<%= @Lat %>, <%= @Lon%>" alt="Contractor's situation"></img></div>
 					<div class="label">Selected Roof Area</div>
-					<div class="info"><%= @contractor.appro%>KM</div>
+					<div class="info output"><%= @contractor.appro%>KM</div>
 				</div>
 				<div class="w-col w-col-4 select-row">
 					<div class="img"><img src="/assets/<%= @ProductImg %>"></div>
@@ -97,16 +102,18 @@
 				<div class="w-col w-col-4 select-row">
 					<div class="img"><img src="/assets/<%= @contractor.logo %>"></div>
 					<div class="label">Selected Contract</div>
-					<div class="info"><%= @contractor.name %></div>
+					<div class="info output"><%= @contractor.name %></div>
 				</div>
 			</div>
 			<div id="email-submit" class="w-row">
 				<div id="email-area" class="w-col w-col-8 w-row">
 					<div class="label w-col w-col-6">1) Enter your email address to receice a quote : </div>
-					<div class="output w-col w-col-6"><input></div>
+					<div class="w-col w-col-6"><input id="email"></div>
 				</div>
-				<div id="timmer" class="w-col w-col-2"></div>
-				<div class="submit w-col w-col-2"><button>submit</button></div>
+				<div id="timmer" class="w-col w-col-2">
+					<span id="future_date"><span><span id="hms_timer"></span></span></span>
+				</div>
+				<div class="submit w-col w-col-2"><button onclick="email_check();">submit</button></div>
 			</div>
 			<div id="card-submit" class="w-row">
 				<div class="w-col w-col-12">
@@ -116,27 +123,35 @@
 					<div class="w-col w-col-12 card">
 						<div class="w-row w-col w-col-6">
 							<div class="label w-col w-col-6">Card Number : </div>
-							<div class="input w-col w-col-6"><input></div>
+							<div class="input w-col w-col-6">
+								<input class="left" id="card-number" name="field">
+							</div>
 						</div>
 						<div class="w-col w-col-6 w-row">
 							<div class="w-col w-col-6 label">Refoundable Deposit : </div>
-							<div class="w-col w-col-6 output">$<%= @Deposit%></div>
+							<div class="w-col w-col-6 output">$<%= @Deposit %></div>
 						</div>
 					</div>
 					<div class="w-row w-col w-col-12 card">
 						<div class="label w-col w-col-3">Expiry : </div>
-						<div class="w-col w-col-1"><input></div>
-						<div class="w-col w-col-1 expiry-date"><input></div>
+						<div class="w-col w-col-1">
+							<input id="month" type="tel" class="input-lg form-control cc-exp" autocomplete="cc-exp" placeholder="••" required maxlength="2" onblur="month();">
+						</div>
+						<div class="w-col w-col-1 expiry-date">
+							<input id="day" type="tel" class="input-lg form-control cc-exp" autocomplete="cc-exp" placeholder="••" required maxlength="2" onblur="day();">
+						</div>
 						<div class="w-col w-col-8"></div>
 					</div>
 					<div class="w-row w-col w-col-12 card">
 						<div class="w-row w-col w-col-6">
 							<div class="label w-col w-col-6">cv : </div>
-							<div class="w-col w-col-2"><input></div>
+							<div class="w-col w-col-2">
+								<input id="cv" type="tel" class="input-lg form-control cc-cvc" autocomplete="off" placeholder="•••" required maxlength="3">
+							</div>
 						</div>
 						<div class="w-col w-col-4"></div>
 						<div class="w-col w-col-2 submit">
-							<button>submit</button>
+							<button onclick="check_payment();">submit</button>
 						</div>
 					</div>
 				</div>
@@ -185,7 +200,24 @@
       </div>
     </div>
   </div>
-  <script type="text/javascript" src="/assets/webflow.js"></script>
+  
   <!--[if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif]-->
 </body>
+	<script type="text/javascript" src="/assets/jquery.timmer.js"></script>
+	<script type="text/javascript">
+		var currentTime = new Date();
+	var hours = currentTime.getHours();
+	var minutes = currentTime.getMinutes();
+	var second = currentTime.getSeconds();
+	$("#hms_timer").countdowntimer({
+				currentTime : true,
+                hours : hours,
+				minutes : minutes,
+                seconds : second,
+                size : "md-Medium",
+                borderColor : "white",
+                backgroundColor : "white",
+                fontColor : "#fa3305"
+	});
+	</script>
 </html>

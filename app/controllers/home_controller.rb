@@ -100,7 +100,7 @@ class HomeController < ApplicationController
     if @contractor.price
       @Deposit = @contractor.price * 0.1
     else
-      @Deposit = ''
+      @Deposit = 0
     end
     @ProductImg = jobImgs[id][0]
     @Lat = address[0]
