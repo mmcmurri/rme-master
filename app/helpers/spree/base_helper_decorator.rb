@@ -4,11 +4,15 @@ Spree::BaseHelper.class_eval do
   def display_price_level(product_or_variant)
     price_level = "n/a" # Spree.t("no_price_level")
     product_price = product_or_variant.price.to_i
-    @prices = Spree::Price.get_price_levels()
-    if @prices.present? and @prices.any?
-      @prices.each do |price|
-        if price[:min] <= product_price && product_price < price[:max]
-          price_level = price[:name]
+
+    taxons_with_prices = Spree::Taxon.where("name like ?", "$%")
+    if taxons_with_prices.present?
+      taxons_with_prices.each do |taxon|
+        min_max = taxon.description.split(",") if taxon.description.present?
+        min = min_max.first.to_i
+        max = min_max.second.to_i
+        if min <= product_price && product_price < max
+          price_level = taxon.name
         end
       end
     end
@@ -17,7 +21,7 @@ Spree::BaseHelper.class_eval do
 
 
   def display_brand_name(product_or_variant)
-    product = product_or_variant.product if product_or_variant.present? && product_or_variant.product.present? && product_or_variant.instance_of?(Spree::Variant)
+    product = product_or_variant.product if product_or_variant.present? && product_or_variant.instance_of?(Spree::Variant)
     product = product_or_variant if product_or_variant.present? && product_or_variant.instance_of?(Spree::Product)
     brand_name = Spree.t("brand_not_found")
     brand_name_for_search = "Brand"

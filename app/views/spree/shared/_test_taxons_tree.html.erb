@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="col-md-6">
+    <% @taxonomies.each do |taxonomy| %>
+        <% taxonomy.taxons.each do |taxon| %>
+            <% path = taxon.ancestors.reverse.collect { |ancestor| ancestor.name }.join( " >> " ) %>
+            <p><% path += " >> #{taxon.name}" %></p>
+            <p><%= path = path.split(" ").count > 2 ? path : path.split(" ")[1] %></p>
+        <% end %>
+    <% end %>
+  </div>
+  <div class="col-md-6">
+    <% @taxonomies.each do |taxonomy| %>
+        <h4><%= taxonomy.name %></h4>
+        <% taxonomy.taxons.each do |taxon| %>
+            <% if !taxon.parent_id.nil? %>
+                <p><%= taxon.name %></p>
+            <% end %>
+        <% end %>
+    <% end %>
+  </div>
+</div>
