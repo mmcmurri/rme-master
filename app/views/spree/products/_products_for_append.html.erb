@@ -15,7 +15,7 @@
                 <p class="sku"><%= product.sku %></p>
                 <button id="btn_select" class="btn btn-default btn-group-justified"><%= Spree.t(:btn_select) %></button>
                 <button id="btn_like" class="btn btn-default btn-group-justified"><%= Spree.t(:btn_like) %></button>
-                <span class="text"><%= product_description(product) %></span>
+                <span class="text"><%= product.try(:description) %></span>
                 <input type="hidden" class="product_url" value="<%= url %>">
                 <input type="hidden" class="product_image_url" value='<%= product.try(:images).try(:first).try(:attachment).try(:url) %>'>
               </div>
