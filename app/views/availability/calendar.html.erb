@@ -39,6 +39,13 @@
       .available-calendar{
         padding-top: 93px;
       }
+      .calendar-input{
+        margin-top: 10px;
+        border: 2px solid rgb(169, 165, 164);
+      }
+      .calendar-input input{
+        width:80%;
+      }
   </style>
 </head>
 
@@ -87,7 +94,7 @@
     <button class="booking-button" id="edit-booking-activator">Edit Booking</button>
   </span>
 
-  <span class="w-col w-col-12">
+  <span class="w-col w-col-12 calendar-input">
     <div class="booking-details">
       <%= form_for(@booking, html: {id: "booking-form"}) do |f| %>
         <%= render(partial: "bookings/form", locals: {f: f, disabled: !@booking.new_record?}) %>
