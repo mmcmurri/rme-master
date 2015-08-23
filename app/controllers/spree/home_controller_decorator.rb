@@ -28,7 +28,6 @@ Spree::HomeController.class_eval do
     sku = params[:sku]
     arrCategories = split_params params[:categories]
     products = []
-    arrPrices = []
 
     #searching by sku (product code)
     if sku.present?
@@ -40,21 +39,14 @@ Spree::HomeController.class_eval do
     if arrCategories.present?
       taxons = Spree::Taxon.where(id: arrCategories)
 
-      # shop by price level
-      # taxons_with_prices = Spree::Taxon.where("name like ?", "$%")
-      taxons_with_prices = taxons.where("name like ?", "$%")
-      if taxons_with_prices.present?
-        taxons_with_prices.each do |taxon|
-          min_max = taxon.description.split(",") if taxon.description.present?
-          arrPrices << min_max.try(:first)
-          arrPrices << min_max.try(:second)
-        end
-      end
-
-      priceMin, priceMax = get_min_and_max_price_from_string_array(arrPrices)
+      # shop by price level (taxonomy name: $,$$, $$$, etc)
+      # (if set max and min price values in the taxons description like this:
+      # "0,100" where "0" - min product master price and "100" - max product master price, "," - separator)
+      priceMin, priceMax = get_min_and_max_price_from_taxons(taxons)
       if priceMin.present? && priceMax.present?
-        products = Spree::Product.in_taxons(taxons).price_between(priceMin, priceMax).page(page)
+        products = Spree::Product.price_between(priceMin, priceMax).page(page)
       else
+        # searching the products which are related with the selected taxons
         products = Spree::Product.in_taxons(taxons).page(page)
       end
     elsif arrCategories.blank?
@@ -83,6 +75,21 @@ Spree::HomeController.class_eval do
     arrSplit = []
     arrSplit = ajax_params.split(',') if ajax_params.present?
     return arrSplit
+  end
+
+  def get_min_and_max_price_from_taxons(taxons)
+    arrPrices = []
+      taxons_with_prices = taxons.where("name like ?", "$%") if taxons.present? && taxons.any?
+      taxons_with_prices = Spree::Taxon.where("name like ?", "$%") if !taxons_with_prices.present? && !taxons_with_prices.any?
+
+    if taxons_with_prices.present?
+      taxons_with_prices.each do |taxon|
+        min_max = taxon.description.split(",") if taxon.description.present?
+        arrPrices << min_max.try(:first)
+        arrPrices << min_max.try(:second)
+      end
+    end
+    return get_min_and_max_price_from_string_array(arrPrices)
   end
 
   def get_min_and_max_price_from_string_array(productPrices)

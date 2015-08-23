@@ -4,9 +4,8 @@ Spree::BaseHelper.class_eval do
   def display_price_level(product_or_variant)
     price_level = "$" # Spree.t("no_price_level")
     product_price = product_or_variant.price.to_i
-
     taxons_with_prices = Spree::Taxon.where("name like ?", "$%")
-    if taxons_with_prices.present?
+    if taxons_with_prices.present? && taxons_with_prices.any?
       taxons_with_prices.each do |taxon|
         min_max = taxon.description.split(",") if taxon.description.present?
         min = min_max.try(:first).to_i
