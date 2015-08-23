@@ -46,8 +46,8 @@ Spree::HomeController.class_eval do
       if taxons_with_prices.present?
         taxons_with_prices.each do |taxon|
           min_max = taxon.description.split(",") if taxon.description.present?
-          arrPrices << min_max.first
-          arrPrices << min_max.second
+          arrPrices << min_max.try(:first)
+          arrPrices << min_max.try(:second)
         end
       end
 
@@ -58,7 +58,7 @@ Spree::HomeController.class_eval do
         products = Spree::Product.in_taxons(taxons).page(page)
       end
     elsif arrCategories.blank?
-      products = Spree::Product.page(page)  # display all products by default
+      products = Spree::Product.page(page) # display all products by default
     end
 
     respond_to_and_exit(products)
@@ -88,9 +88,11 @@ Spree::HomeController.class_eval do
   def get_min_and_max_price_from_string_array(productPrices)
     intPrices = []
     productPrices.each do |productPrice|
-      splitItems = productPrice.split(",")
-      splitItems.each do |item|
-        intPrices << item.to_i
+      splitItems = productPrice.try(:split, ",")
+      if splitItems.present? && splitItems.any?
+        splitItems.each do |item|
+          intPrices << item.to_i
+        end
       end
     end
 
