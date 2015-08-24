@@ -59,99 +59,52 @@
     </div>
   </div>
 	<div id="summary">
-		<div id="summary-main">
-			<div class="any-id w-row row">
-				<div class="any w-col w-col-6 ">
-					<div class="label">Analysis ID :  </div>
-					<div class="output"><%= @contractor.id %></div>
-				</div>
-				<div class="price w-col w-col-6">
-					<div class="label">Estimated Price:</div>
-					<div class="output">$<%= @contractor.price %></div>
-				</div>
-				
+		<div class="any w-row w-col w-col-12 ">
+			<div class="label">Your Estimate:  </div>
+			<div class="output"><%= @contractor.add %></div>
+		</div>								
+		<div class="price w-col w-col-12">
+			<div class="output">$<%= @contractor.price %></div>
+			<div class="star">*</div>
+		</div>
+		<div class="w-col w-col-12 help-quote">
+			<p>*We’ve calculated an estimate based on your selections. By clicking “Get Quote” we will confirm your measurements with our satellite technology and provide you with an updated quote for your job.</p>
+		</div>
+		<div class="select-info w-row">
+			<div class="w-col w-col-4 select-row">
+				<div class="label">Selected Roof Area</div>
+				<div class="img"><img src="http://maps.google.com/maps/api/staticmap?size=255x255&maptype=roadmap&sensor=false&zoom=12&markers=color:pink|label:A|<%= @Lat %>, <%= @Lon%>" alt="Contractor's situation"></img></div>				
+				<div class="info output"><%= @contractor.appro%>KM</div>
+				<button>EDIT</button>
 			</div>
-			<div class="any-for w-row row">
-				<div class="w-col w-col-12">
-					<div class="label">Our Analysis for :</div>
-					<div class="output"><%= @contractor.add %></div>
-				</div>				
+			<div class="w-col w-col-4 select-row">
+				<div class="label">Selected Product</div>
+				<div class="img"><img src="/assets/<%= @ProductImg %>"></div>					
+				<div class="brand"><img src="/assets/<%= @contractor.certi1 %>"></div>
+				<button>EDIT</button>
 			</div>
-			<div class="start-date w-row row">
-				<div class="w-col w-col-12">
-					<div class="label"> Desired Start Date :</div>
-					<div class="output"><%= @Date %></div>
-				</div>
+			<div class="w-col w-col-4 select-row">
+				<div class="label">Selected Contract</div>
+				<div class="img"><img src="/assets/<%= @contractor.logo %>"></div>				
+				<div class="info output"><%= @contractor.name %></div>
+				<button>EDIT</button>
 			</div>
-			<div class="select-info w-row">
-				<div class="w-col w-col-4 select-row">
-					<div class="img"><img src="http://maps.google.com/maps/api/staticmap?size=255x255&maptype=roadmap&sensor=false&zoom=12&markers=color:pink|label:A|<%= @Lat %>, <%= @Lon%>" alt="Contractor's situation"></img></div>
-					<div class="label">Selected Roof Area</div>
-					<div class="info output"><%= @contractor.appro%>KM</div>
-				</div>
-				<div class="w-col w-col-4 select-row">
-					<div class="img"><img src="/assets/<%= @ProductImg %>"></div>
-					<div class="label">Selected Product</div>
-					<div class="brand"><img src="/assets/<%= @contractor.certi1 %>"></div>
-					<div class="info"></div>
-				</div>
-				<div class="w-col w-col-4 select-row">
-					<div class="img"><img src="/assets/<%= @contractor.logo %>"></div>
-					<div class="label">Selected Contract</div>
-					<div class="info output"><%= @contractor.name %></div>
-				</div>
+		</div>
+		<div class="w-col w-col-12 get-quoat">
+			<div id="title">Get Quote</div>
+			<div id="content"><p>In order to provide you with a final price quote, we need to validate your selected roof area using our own
+			satellite measurements. Once completed, we will provide you with the detailed measurements and final
+			price.</p></div>
+		</div>
+		<div id="email-submit" class="w-row">
+			<div id="email-area" class="w-col w-col-8 w-row">
+				<div class="label w-col w-col-6">Enter your email address : </div>
+				<div class="w-col w-col-6 output"><input id="email"></div>
 			</div>
-			<div id="email-submit" class="w-row">
-				<div id="email-area" class="w-col w-col-8 w-row">
-					<div class="label w-col w-col-6">1) Enter your email address to receice a quote : </div>
-					<div class="w-col w-col-6"><input id="email"></div>
-				</div>
-				<div id="timmer" class="w-col w-col-2">
-					<span id="future_date"><span><span id="hms_timer"></span></span></span>
-				</div>
-				<div class="submit w-col w-col-2"><button onclick="email_check();">submit</button></div>
+			<div id="timmer" class="w-col w-col-2">
+				<span id="future_date"><span><span id="hms_timer"></span></span></span>
 			</div>
-			<div id="card-submit" class="w-row">
-				<div class="w-col w-col-12">
-					2) Enter your credit card details to secure the contractor for your selected date : 
-				</div>
-				<div class="w-row w-col w-col-12">
-					<div class="w-col w-col-12 card">
-						<div class="w-row w-col w-col-6">
-							<div class="label w-col w-col-6">Card Number : </div>
-							<div class="input w-col w-col-6">
-								<input class="left" id="card-number" name="field">
-							</div>
-						</div>
-						<div class="w-col w-col-6 w-row">
-							<div class="w-col w-col-6 label">Refoundable Deposit : </div>
-							<div class="w-col w-col-6 output">$<%= @Deposit %></div>
-						</div>
-					</div>
-					<div class="w-row w-col w-col-12 card">
-						<div class="label w-col w-col-3">Expiry : </div>
-						<div class="w-col w-col-1">
-							<input id="month" type="tel" class="input-lg form-control cc-exp" autocomplete="cc-exp" placeholder="••" required maxlength="2" onblur="month();">
-						</div>
-						<div class="w-col w-col-1 expiry-date">
-							<input id="day" type="tel" class="input-lg form-control cc-exp" autocomplete="cc-exp" placeholder="••" required maxlength="2" onblur="day();">
-						</div>
-						<div class="w-col w-col-8"></div>
-					</div>
-					<div class="w-row w-col w-col-12 card">
-						<div class="w-row w-col w-col-6">
-							<div class="label w-col w-col-6">cv : </div>
-							<div class="w-col w-col-2">
-								<input id="cv" type="tel" class="input-lg form-control cc-cvc" autocomplete="off" placeholder="•••" required maxlength="3">
-							</div>
-						</div>
-						<div class="w-col w-col-4"></div>
-						<div class="w-col w-col-2 submit">
-							<button onclick="check_payment();">submit</button>
-						</div>
-					</div>
-				</div>
-			</div>
+			<div class="submit w-col w-col-2"><button onclick="email_check();">Get Quote</button></div>
 		</div>
 	</div>
 	

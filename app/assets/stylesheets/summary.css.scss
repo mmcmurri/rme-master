@@ -1,189 +1,171 @@
-@mixin border-around($around){
-	margin: $around $around $around $around;
-}
-#summary{
-	border: 2px solid black;
-	@include border-around(10px);
-	#summary-footer{
-		border: 2px solid black;
-		padding: 30px 30px 30px 30px;
-		height: 300px;
-		@include border-around(30px);
-
-		#summary-title{
-			font-size: 20px;
-			font-weight: 500;
-		}
-	}
-	#summary-main{
-		padding: 30px 30px 30px 30px;
-		border:2px solid black ;
-		height: 910px;
-		font-size: 20px;
-		@include border-around(30px);
-
-		.row{
-			margin-bottom: 30px;
-		}
-		.any-id{
-			.label{
-				float: left;
-			}
-			.output{
-				position: relative;
-				left: 24px;
-				text-align: left;
-			}
-			.any{
-
-			}
-			.price{
-				font-size: 25px;
-				text-align: center;
-			}
-		}
-		.any-for{
-			.label{
-				float: left;
-			}
-			.output{
-				position: relative;
-				left: 24px;
-			}
-		}
-		.start-date{
-			.label{
-				float: left;
-			}
-			.output{
-				position: relative;
-				left: 24px;
-			}
-		}
-
-		.select-info{
-			.select-row{
-				text-align: center;
-
-				.img{
-					margin: 0 auto;
-					width: 300px;
-					height: 300px;
-					border: 1px solid black;
-					img{
-						display: block;
-						margin: 0 auto;
-						width: 100%;
-						height: 100%;
-					}
-				}
-				.brand{
-					img{
-						width: 100px;
-						height: 50px;
-					}
-				}
-				@media screen and (max-width: 465px){
-					.img{
-						width: 150px;
-						height: 150px;
-					}					
-				}
-				.label{
-					margin: 10px 0 10px 0;
-				}
-			}
-			@media screen and (max-width: 1100px){
-				.w-col{
-					width: 100%;
-				}
-			} 
-		}
-
-		#email-submit{
-			margin-top: 30px;
-			text-align: center;
-			#hms_timer{
-				text-shadow: 1px 1px 6px #000;
-				color: white !important;
-				border-radius: 6px;
-				font-size: 28px;
-			}
-			
-		}
-		#card-submit{
-			margin-top: 30px;
-
-			.card{
-				margin-top: 30px;
-				.label{
-					text-align: right;
-				}
-				.output{
-					padding-left: 24px;
-				}
-				@media screen and (max-width: 886px){
-					.label{
-						text-align: center;
-					}
-					.output{
-						padding-left: 0;
-						text-align: center;
-					}
-				}
-			}
-			@media screen and (max-width: 886px){
-				.w-col{
-					width: 100%;
-				}
-				.w-col input{
-					display: block;
-					margin: 0 auto;
-				}
-				.expiry-date input{
-					float: none;
-				}
-			}
-		}
-	}
-}
-.submit{
-	padding-left: 0px;
-	padding-right: 0px;
-}
-.submit button{
-	width:100%;
-	height: 40px;	
-	background-color: black;
-	color: white;
-	font-weight: bold;
-	border-radius: 10px;
-}
-input{
-	width: 100%;
+.label{
+	display:block;
 }
 .output{
-	color: #f74116;
-	text-shadow: 1px 1px 6px black;
+	display:block;
 }
-@media screen and (max-width: 1100px){
-	#summary #summary-main{
-		height: 1675px;
+
+#summary{
+	min-width:300px;
+	border: 2px solid #50C0FB;
+	margin: 10px 10px 10px 10px;
+	padding: 30px 30px 30px 30px;
+
+	.any{
+		font-size: 30px;
+		line-height: 180%;
+
+		.label{
+			float:left;
+			margin-right: 30px;
+		}
 	}
-	.expiry-date input{
-		float: right;
+
+	.price{
+		font-weight: bold;
+		font-size: 40px;
+		margin: 30px 0 30px 0;
+
+		.output{
+			float:left;
+			line-height: 100%;
+		}
+
+		.star{
+			font-size:20px;
+		}
 	}
-}
-@media screen and (max-width: 886px){
-	#summary #summary-main{
-		height: 1950px;
+
+	.help-quote{
+		font-size: 30px;
+		line-height: 100%;
+		margin-bottom: 30px;
 	}
-	.expiry-date input{
-		width: 100%;
+
+	.select-info{
+		text-align: center;
+		font-size: 30px;
+		line-height: 180%;
+
+		.label{
+
+		}
+
+		.img img{
+			width: 400px;
+			height:400px;
+		}
+
+		@media screen and (max-width: 1281px){
+			.img img{
+				width: 300px;
+				height:300px;
+			}
+		}
+
+		@media screen and (max-width: 980px){
+			.img img{
+				width: 200px;
+				height:200px;
+			}
+		}
+
+		@media screen and (max-width: 767px){
+			.img img{
+				width: 400px;
+				height:400px;
+			}
+		}
+
+		@media screen and (max-width: 500px){
+			.img img{
+				width: 300px;
+				height:300px;
+			}
+		}
+
+		@media screen and (max-width: 400px){
+			.img img{
+				width: 200px;
+				height:200px;
+			}
+		}
+
+		.select-row button{
+			color: white;
+			width: 35%;
+			line-height: 100%;
+			background-color: #50C0FB;
+			border: 1px solid #50C0FB;
+			border-radius: 6px;
+		}
 	}
-}
-@media screen and (max-width: 465px){
-	#summary #summary-main{
-		height: 1620px;
+
+	.get-quoat{
+		font-size: 30px;
+		margin-top: 40px;
+		margin-bottom: 40px;
+
+		#title{
+			margin-bottom:30px;
+		}
+
+		#content{
+			line-height: 100%;
+		}
+	}
+
+	#email-submit{
+		font-size: 30px;	
+
+		.submit button{
+			color: white;
+			background-color: #05a33d;
+			width: 70%;
+			border: 1px solid;
+			font-size: 30px;
+			line-height: 123%;
+			border-radius: 10px;
+			margin-top: -18px;
+		}
+
+		#hms_timer{
+			display: block;
+			text-shadow: 1px 1px 6px;
+			padding-top: 6px;
+		}
+
+		@media screen and (max-width: 1280px){
+			#email-area{
+				width: 95%;
+			}
+			#timmer{
+				margin: 30px;
+				width:45%;
+				text-align: center;
+			}
+			.submit{
+				width:45%;
+			}
+			.submit button{
+				display: block;
+				margin: 30px auto;
+			}
+		}
+
+		@media screen and (max-width: 767px){
+			#email-area .label, #email-area .output input{
+				width: 100%;
+				margin-bottom: 20px;
+			}
+			#timmer{
+				margin-left: 0px;
+				width:95%;
+			}
+			.submit{
+				width:95%;
+			}
+		}
+
 	}
 }
