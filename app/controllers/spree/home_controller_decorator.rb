@@ -3,7 +3,7 @@ Spree::HomeController.class_eval do
   protect_from_forgery except: :shops_ajax #fixed Security warning: an embedded <script> tag on another site requested protected JavaScript. If you know what you're doing, go ahead and disable forgery protection on this action to permit cross-origin JavaScript embedding.
 
   def index
-    @taxonomies = Spree::Taxonomy.all #includes(root: :children)
+    @taxonomies = Spree::Taxonomy.includes(:taxons).order("spree_taxons.name")
     ## ajax request handler
     #if request.xhr? # get ajax request or in shops_ajax() method
     #  @product_list = [];
