@@ -11,7 +11,11 @@
               </div>
               <div class="panel-body text-center product-body">
                 <%= link_to small_image(product, itemprop: "image"), url, itemprop: 'url' %> <br>
-                <%= link_to truncate(product.name, length: 50), url, class: 'info', itemprop: "name", title: product.name %>
+
+                <p class="product_link">
+                  <%= link_to truncate(product.name, length: 50), url, class: 'info', itemprop: "name", title: product.name %>
+                </p>
+
                 <p class="sku"><%= product.sku %></p>
                 <button id="btn_select" class="btn btn-default btn-group-justified"><%= Spree.t(:btn_select) %></button>
                 <button id="btn_like" class="btn btn-default btn-group-justified"><%= Spree.t(:btn_like) %></button>

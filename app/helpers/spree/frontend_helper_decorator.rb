@@ -31,6 +31,15 @@ Spree::FrontendHelper.class_eval do
     end.join("\n").html_safe
   end
 
-
+  # def truncate_and_add_whitespaces_to_desired_size(str, desired_size)
+  #   omission = ""
+  #   str = str.truncate(desired_size)
+  #   if (str.size < desired_size)
+  #     tempSize = desired_size - str.size
+  #     (1..tempSize).to_a.each {|value| omission += ' '} #adding a whitespaces &#160; &nbsp;
+  #   end
+  #   str += omission
+  #   return str
+  # end
 end
 

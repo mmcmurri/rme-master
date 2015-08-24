@@ -22,8 +22,22 @@ function update_heights() {
     //console.log("hLS:" + heightOfLeftSidebar + " - hPDetails:" + heightProductDetails + "=" + heightProducts);
     $("#products.products").css('height', heightProducts);
 
-    update_rsidebar_heights();//update height of the right sidebar
+    update_rsidebar_heights();  //update height of the right sidebar
+    update_item_to_max_height(".product-list-item img", 100);
+    update_item_to_max_height(".product-list-item p.product_link", 40);
 };
+
+function update_item_to_max_height(selector, default_height) {
+    var item = $(selector)
+    var max = item.first().height() || default_height;
+    item.each(function() {
+        var h = $(this).height();
+        max = h > max ? h : max;
+    });
+    item.each(function() {
+        $(this).css("height", max);
+    });
+}
 
 function update_rsidebar_heights() {
     var heightOfItemsILike = $("#lsidebar").height() - $(".search_by_sku").height() -
