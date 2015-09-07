@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>RME</title>
+  <%= stylesheet_link_tag    'application' %>
+  <%= csrf_meta_tags %>
+</head>
+
+<body>
+
+  <% flash.each do |key, value| %>
+    <span class="w-col w-col-12 alert"><%= value %></span>
+  <% end %>
+
+  <%= yield %>
+
+  <%= javascript_include_tag 'application' %>
+</body>
+</html>

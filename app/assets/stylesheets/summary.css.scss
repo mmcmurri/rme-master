@@ -1,0 +1,176 @@
+.label{
+	display:block;
+}
+.output{
+	display:block;
+}
+
+#summary{
+	min-width:300px;
+	border: 2px solid #50C0FB;
+	margin: 10px 10px 10px 10px;
+	padding: 30px 30px 30px 30px;
+
+	.any{
+		font-size: 30px;
+		line-height: 180%;
+
+		.label{
+			float:left;
+			margin-right: 30px;
+		}
+	}
+
+	.price{
+		font-weight: bold;
+		font-size: 40px;
+		margin: 30px 0 30px 0;
+		line-height: 100%;
+
+		.output{
+			float:left;			
+		}
+	}
+
+	.help-quote{
+		font-size: 30px;
+		line-height: 100%;
+		margin-bottom: 30px;
+	}
+
+	.select-info{
+		text-align: center;
+		font-size: 30px;
+		line-height: 180%;
+
+		.brand img{
+			width: 200px;
+			height: 100px;
+		}
+
+		.certifi-img{
+			width: 200px;
+			height: 50px;
+			border: 1px solid #50C0FB;
+			display: block;
+			margin: 10px auto;
+		}
+
+		.img img{
+			width: 400px;
+			height:400px;
+		}
+
+		@media screen and (max-width: 1281px){
+			.img img{
+				width: 300px;
+				height:300px;
+			}
+		}
+
+		@media screen and (max-width: 980px){
+			.img img{
+				width: 200px;
+				height:200px;
+			}
+		}
+
+		@media screen and (max-width: 767px){
+			.img img{
+				width: 400px;
+				height:400px;
+			}
+		}
+
+		@media screen and (max-width: 500px){
+			.img img{
+				width: 300px;
+				height:300px;
+			}
+		}
+
+		@media screen and (max-width: 400px){
+			.img img{
+				width: 200px;
+				height:200px;
+			}
+		}
+
+		.select-row button{
+			color: white;
+			width: 35%;
+			line-height: 100%;
+			background-color: #50C0FB;
+			border: 1px solid #50C0FB;
+			border-radius: 6px;
+		}
+	}
+
+	.get-quoat{
+		font-size: 30px;
+		margin-top: 40px;
+		margin-bottom: 40px;
+
+		#title{
+			margin-bottom:30px;
+		}
+
+		#content{
+			line-height: 100%;
+		}
+	}
+
+	#email-submit{
+		font-size: 30px;	
+
+		.submit button{
+			color: white;
+			background-color: #05a33d;
+			width: 70%;
+			border: 1px solid;
+			font-size: 30px;
+			line-height: 123%;
+			border-radius: 10px;
+			margin-top: -18px;
+		}
+
+		#hms_timer{
+			display: block;
+			text-shadow: 1px 1px 6px;
+			padding-top: 6px;
+		}
+
+		@media screen and (max-width: 1280px){
+			#email-area{
+				width: 95%;
+			}
+			#timmer{
+				margin: 30px;
+				width:45%;
+				text-align: center;
+			}
+			.submit{
+				width:45%;
+			}
+			.submit button{
+				display: block;
+				margin: 30px auto;
+			}
+		}
+
+		@media screen and (max-width: 767px){
+			#email-area .label, #email-area .output input{
+				width: 100%;
+				margin-bottom: 20px;
+			}
+			#timmer{
+				margin-left: 0px;
+				width:95%;
+			}
+			.submit{
+				width:95%;
+			}
+		}
+
+	}
+}
